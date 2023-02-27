@@ -1,0 +1,43 @@
+<script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script>
+<link rel="stylesheet" type="text/css" href="{{asset('build/css/payment-methods.' ~ country ~ '.css')}}">
+
+<div style="text-align: center;">
+
+  {# <div>{{mp_customer_cards | json_encode}}</div> #}
+ 
+  <form action="{{callbackUrl}}" method="post" id="fastpay" name="fastpay" >
+
+    <input type="hidden" name="masterForm" id="masterForm" value="{{masterFormName}}">
+    
+    {# CARDS #}
+    <div class="select">
+      <select id="cardId" name="cardId" data-checkout='cardId'>
+        {% for card in mp_customer_cards %}
+          <option value="{{card.id}}"
+            first_six_digits="{{card.first_six_digits}}"
+            security_code_length="{{card.security_code.length}}">
+            {{card.payment_method.name}} terminada en {{card.last_four_digits}}
+          </option>
+        {% endfor %}
+        {# <div class="paymentmethod-{{mp_customer_cards.payment_method.name}} paymentmethod-large"></div> #}
+      </select>
+    </div>
+    <p id="hlpr-card" class="help is-danger" style="display:none;text-align: left;"></p>
+
+    {# CVV #}
+    <div class="field" style="margin-top: 10px;">
+      <label class="label" style="font-weight: normal;font-size: 14px;">Código de seguridad:</label>
+      <div class="control" style="max-width: 70px;margin: 0 auto;">
+        <input class="input" type="text" id="cvv" data-checkout="securityCode" placeholder="123" maxlength="4" size="4" style="max-width: 70px;" />
+      </div>
+    </div>
+
+    <input type="hidden" name="amount" id="amount"/>
+    <input type="hidden" name="description"/>
+    <input type="hidden" name="paymentMethodId" />
+    <input class="button is-link {{btnSize}}" type="submit" value="{{btnText}}" id="fastPayBtn" 
+      data-payCurrency="{{currency}}" data-payAmount="{{amountToPay}}" data-mppkey="{{mpPublicKey}}"/>
+
+  </form>
+
+</div>

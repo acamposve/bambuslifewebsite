@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pagina de Error 404 | BambusLife{% endblock %}
+
+{% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block body %}
+
+  <section class="hero is-medium ">
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title">
+          403
+        </h1>
+        <h2 class="subtitle">
+          No tiene permisos suficientes para acceder aqu&iacute;
+        </h2>
+      </div>
+    </div>
+  </section>
+
+{% endblock %}
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

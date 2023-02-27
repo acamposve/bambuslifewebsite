@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Webinar de Telemedicina Cardiológica | BambusLife{% endblock %}
+
+{% block description %}Webinar de Telemedicina Cardiológica | BambusLife{% endblock %}
+
+{% block keywords %}Webinar Telemedicina Cardiológica bambuslife cardiosecur electrocardiograma ECG{% endblock %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {{ encore_entry_link_tags('pressrelease') }}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('pressrelease') }}
+{% endblock %}
+
+{% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block body %}
+
+<div class="container white-box" style="padding: 20px;max-width: 800px;">
+  <h1 class="subtitle is-3" style="margin-top: 10px;margin-bottom: 0px;">
+    Webinar de Telemedicina Cardiológica
+  </h1>
+  <time style="color: #999;font-size: 14px;">24 de Septiembre 2020</time>
+  <div style="display: flex;">
+    <figure class="image is-4by3">
+      <img src="{{ asset('build/images/pressreleases/p_webinar1.png') }}" alt="Webinar de Telemedicina Cardiológica">
+    </figure>
+  </div>
+  <div style="padding-top:15px;">
+    <p>Con motivo de la semana del corazón se realizó la primer Webinar de Telemedicina
+      Cardiológica en la que contamos con participantes de todo el mundo para escuchar al Dr
+      Markus Riemenschneider de Alemania y el Dr. Lucio Padilla de Argentina. En dicha
+      conversación se habló sobre CardioSecur EASI-ECG Electrocardigraml y sobre el Impacto de la
+      Pandemia en la Cardiología.
+    </p>
+    <br>
+    <div style="width: 100%;height: 365px;text-align: center;margin-bottom: 100px;">
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/4vg6xwM_tO0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+
+
+  </div>
+  
+</div>
+
+{% endblock %}
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

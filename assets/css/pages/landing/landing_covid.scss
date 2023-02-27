@@ -1,0 +1,232 @@
+@import "../../variables.scss";
+
+#covid-content {
+    .covid .hero-body {
+        padding: 1rem 3rem;
+    }
+
+    .txt-blue {
+        color: $blue;
+        font-weight: 600;
+    }
+
+    .accordions {
+        .accordion {
+            position: relative;
+            margin-bottom: 3rem;
+
+            .accordion-header {
+                padding: 0;
+                margin: 0;
+                background-color: transparent;
+                color: $blue;
+
+                p {
+                    font-size: 1.75rem;
+
+                    @media screen and (max-width: $mobile) {
+                        font-size: 1.25rem;
+                    }
+                }
+
+                span {
+                    height: 20px;
+                    width: 30px;
+                    background: url('./assets/images/arrow.svg') no-repeat right bottom;
+                    background-size: contain;
+                    display: inline-block;
+                    margin-left: 1rem;
+
+                    @media screen and (max-width: $mobile) {
+                        height: 15px;
+                        width: 20px;
+                    }
+                }
+
+                + .accordion-body {
+                    border: none;
+                    background-color: transparent;
+
+                    .accordion-content {
+                        padding: 0;
+                        font-size: 1.25rem;
+                    }
+                }
+            }
+
+            .accordion-content {
+                overflow: hidden;
+                margin-bottom: 4rem;
+
+                p {
+                    margin-bottom: 1.5rem;
+                    line-height: 1.6;
+                }
+            }
+
+            &.is-active {
+                .accordion-header {
+                    position: absolute;
+                    bottom: 3rem;
+
+                    @media screen and (max-width: $mobile) {
+                        bottom: 1rem;
+                    }
+
+                    span {
+                        transform: rotate(180deg);
+                    }
+                }
+
+                .accordion-body {
+                    max-height: 1000em;
+                }
+            }
+
+            .columns {
+                &.is-variable {
+                    &.is-8 {
+                        @media screen and (max-width: $mobile) {
+                            --columnGap: .75rem;
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+
+    .covid-article-1 {
+        padding: 4rem;
+
+        @media screen and (max-width: $mobile) {
+            padding: 1rem;
+        }
+
+        h2 {
+            color: $blue;
+            font-size: 32px;
+
+            @media screen and (max-width: $mobile) {
+                line-height: 1.2;
+                font-size: 1.8rem;
+            }
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin: .5rem 0 1rem 0;
+
+            @media screen and (max-width: $mobile) {
+                font-size: 1.2rem;
+            }
+        }
+
+        p {
+            font-size: 1.25rem;
+
+            @media screen and (max-width: $mobile) {
+                font-size: 1rem;
+            }
+        }
+
+        .columns {
+            &.is-variable {
+                .column {
+                    @media screen and (max-width: $mobile) {
+                        padding-right: 0;
+                    }
+                }
+            }
+        }
+    }
+
+    .covid-article-2 {
+        background-color: white !important;
+        border-bottom: 2px solid whitesmoke;
+        padding-bottom: 3rem;
+
+        @media screen and (max-width: $mobile) {
+            padding: 1rem;
+        }
+
+        h2 {
+            font-size: 42px;
+
+            @media screen and (max-width: $mobile) {
+                line-height: 1.2;
+                font-size: 1.8rem;
+            }
+        }
+
+        p {
+            font-size: 1.25rem;
+
+            @media screen and (max-width: $mobile) {
+                font-size: 1rem;
+            }
+        }
+
+        ul {
+            list-style: disc outside;
+            margin-left: 2rem;
+        }
+
+        .logos {
+            margin: 2rem 0 1rem;
+
+            img {
+                max-height: 50px;
+            }
+
+
+            @media screen and (max-width: $mobile) {
+                .column {
+                    display: inline-block;
+                    padding: .25rem !important;
+                    width: 23%;
+                    text-align: center;
+
+                    &:first-child {
+                        padding-left: .75rem !important;
+                        width: 26%;
+                    }
+                }
+            }
+        }
+    }
+
+    .covid-calltoaction-bottom {
+        padding: 2rem;
+        background-color: whitesmoke;
+        margin: 2rem 0 4rem 0;
+
+    @media screen and (max-width: $mobile) {
+        padding: 1rem 2rem;
+    }
+
+        ul {
+            li {
+                display: inline-block;
+
+                img {
+                    height: 50px;
+                    margin: 1rem 1rem 2rem;
+
+                    @media screen and (max-width: $mobile) {
+                        margin: .5rem;
+                        height: 40px;
+                    }
+                }
+            }
+        }
+
+        .button {
+            &.is-medium {
+                @media screen and (max-width: $mobile) {
+                    font-size: 1rem;
+                }
+            }
+        }
+    }
+}

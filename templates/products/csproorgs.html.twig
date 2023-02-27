@@ -1,0 +1,234 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CardioSecur Pro / Active | El complemento perfecto para cardiolog&iacute;a | BambusLife{% endblock %}
+
+{% block description %}
+Solución de Telemedinica, con cumplimiento de los estándares de salud SNOMETCT, LOINC y HL7, para integrar a los sistemas HIS de las instituciones y Establecimientos Médicos
+{% endblock %}
+
+{% block extrameta %}
+<meta property="og:title" content="CardioSecur Pro / Active | El complemento perfecto para cardiolog&iacute;a | BambusLife" />
+<meta property="og:description" content="Solución de Telemedinica, con cumplimiento de los estándares de salud SNOMETCT, LOINC y HL7, para integrar a los sistemas HIS de las instituciones y Establecimientos Médicos" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://bambus.life{{ app.request.requestUri }}" />
+<meta property="og:image" content="{{asset('build/images/og/csforentities.png')}}" />
+{% endblock %}
+
+{% block header %}
+{{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{{ include('components/captcha.html.twig') }}
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+{{ encore_entry_script_tags('cs-orgs') }}
+{% endblock %}
+
+{% block body %}
+
+{# {% if flagForm == NULL %}
+    <div style="width: 100%;display: flex;justify-content: center;">
+      <picture style="width: 100%;max-width: 900px;">
+        <source media="(min-width: 426px)" srcset="{{asset('build/images/products/cspro/csproorg.webp')}}" type="image/webp">
+        <source media="(min-width: 426px)" srcset="{{asset('build/images/products/cspro/csproorg.png')}}" type="image/png">
+        <source media="(max-width: 425px)" srcset="{{asset('build/images/products/cspro/csproorg-m.webp')}}" type="image/webp">
+        <source media="(max-width: 425px)" srcset="{{asset('build/images/products/cspro/csproorg-m.png')}}" type="image/png">
+        <img src="{{asset('build/images/products/cspro/csproorg.png')}}" alt="El complemento perfecto para cardiolog&iacute;a" style="width: 100%;max-width: 900px;">
+      </picture>
+    </div>
+  {% endif %} #}
+<div class="container">
+
+    {% if flagForm == NULL %}
+    <section class="section">
+
+        <div class="columns">
+            <div class="column has-text-centered">
+                <h1 class="subtitle is-2">Ecosistema Colaborativo de Salud para Entidades Médicas</h1>
+
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column">
+                <p>Su Entidad Médica ahora puede incorporar a sus sistemas propios de gestión médica y de historia clínica los siguientes servicios:</p>
+                <ul class="list-disc">
+                    <li>Telemetría Cardíaca</li>
+                    <li>Diagnósticos de ECG a distancia</li>
+                    <li>Microservicio de VideoConsultas</li>
+                </ul>
+                <p style="margin-top: 2rem">Para ello disponemos de varias aplicaciones y funcionalidades:</p>
+                <ul class="list-disc">
+                    <li>Interfaz API para integrar la Entidad Médica</li>
+                    <li>Portal de Gestión para uso Médico o Clínicas</li>
+                    <li>Autogestión por el Paciente</li>
+                    <li>Dispositivos de salud inteligentes</li>
+                </ul>
+            </div>
+
+            <div class="column is-one-third">
+                <img src="{{asset('build/images/esquema.svg')}}" alt="Ecosistema Colaborativo de Salud" class="is-fullwidth">
+            </div>
+
+        </div>
+        <div class="columns">
+            <div class="column">
+                <h2 class="subtitle is-2 has-text-centered">Entidades Médicas</h2>
+                <p>Ahora su entidad médica puede integrarse a la vertiginosa transformación digital utilizando herramientas de Telemedicina.</p>
+                <p>Reorganice sus servicios médicos utilizando e integrando en sus sistemas EHR, herramientas disruptivas, involucrando y gestionando a sus equipos de colaboradores en nuevos procesos digitales brindando sus servicios con una gran orientación a sus pacientes, familiares a un menor y más eficiente costo.</p>
+                {# <p>
+                    Lo acompañamos en este proceso de cambios para que evolucione paso a paso y descubra su propia identidad en este concepto general que es la Transformación  Digital.
+                  </p> #}
+
+
+                {# BAMBUSLIFE #}
+                {# <div class="content">
+                  <h3 class="subtitle is-5">BambusLife</h3>
+                  <p>
+                    Su Entidad Médica al pertenecer al sistema integral de BambusLife obtiene información centralizada de todos sus pacientes y médicos dispersos geográficamente en todo el país. La transferencia y almacenamiento de datos se encuentran bajo un estricto cumplimiento de la ley federal de protección de datos (BDSG) y el nuevo GDPR de la UE.
+                  </p>
+                  <p>
+                    Su equipo de médicos cuentan con un dispositivo móvil, práctico y accesible para realizar en todo momento y en todo lugar un electrocardiograma de 22 derivaciones. 
+                  </p>
+                </div> #}
+
+                <h3 class="title is-4">Ecosistema Colaborativo de Salud BambusLife</h3>
+                <p>El Ecosistema Colaborativo de Salud BambusLife es el conjunto de entidades independientes conformado por las plataformas y servicios de intermediación en la nube (BHC), los médicos, profesionales de la salud , entidades médicas, pacientes, familia, dispositivos, proveedores y las correspondientes interrelacciones para que el conjunto opere en forma colaborativa y presentada como una solución integrada a los sistemas propios de la Entidad Médica.</p>
+                <p>Su Entidad Médica o Clínica al integrarse a BHC obtiene información centralizada de todos sus pacientes y médicos que estén dispersos geográficamente en todo el país. La transferencia y almacenamiento de datos se encuentran bajo un estricto cumplimiento de la ley de protección de datos (Habeas Data) y el nuevo GDPR de la UE.</p>
+                <p>En el caso de una clínica o establecimiento médico privado, nuestro EHR Express permite una óptima gestión de su organización y mantenerse actualizado con los estándares de la Historia Clínica Electrónica Nacional (HCEN), SNOMED CT, LOINC, HL7</p>
+                <p>Su equipo de médicos cuentan con un dispositivo móvil, práctico y accesible para realizar un electrocardiograma de 22 derivaciones a distancia y realizar el informe de diagnóstico donde esté el médico cardiólogo.</p>
+
+
+
+                {# OPTIMIZACION #}
+                <h3 class="title is-4">Optimización del uso de los dispositivos dentro de la Entidad Médica</h3>
+                <p>Una funcionalidad relevante de BHC es que permite implementar dentro de la Entidad Médica una modalidad de uso compartido de los dispositivos por los pacientes y/o profesionales de salud de la Entidad.</p>
+                <p>En caso del dispositivo para uso por sus pacientes, podría asignarlos por día, semana o quincena, inclusive la Entidad Médica puede arrendarlos a sus pacientes por esos períodos y por ende tener una nueva fuente de ingresos.</p>
+
+
+                {# INTEGRACION FACIL Y RAPIDA #}
+                <h3 class="title is-4">Integraci&oacute;n f&aacute;cil y r&aacute;pida</h3>
+                <p>Los dispositivos de CardioSecur ya están conectados a BHC por lo que la Entidad Médica dispondrá de todos los análisis en sus propios sistemas y tratarlos según sus criterios médicos y de servicios. </p>
+                <p>BHC permite que la entidad médica tenga acceso a toda la información de los análisis almacenados mediante la publicación de una API REST basada en HL7® FHIR®-compatible (STU3) con salida en formato JSON o XML.</p>
+                <p>La cobertura de la implementación se concentra en brindar el acceso a los datos de análisis (observaciones), reportes de diagnósticos y dispositivos principalmente móviles. Por otro lado, se pueden conectar otros dispositivos móviles que no sean provistos por BambusLife y que la Entidad Médica tenga en uso o requieran de conectar.</p>
+                <div class="has-text-centered">
+                    <img src="{{asset('build/images/entidades-medicas.jpg')}}" alt="El complemento perfecto para cardiolog&iacute;a">
+                </div>
+
+                <div class="columns">
+                    <div class="column has-text-centered call-to-action-bottom">
+                        <ul>
+                            <li><img src="{{ asset('build/images/logo-cardio-secur.svg') }}"></li>
+                            <li><img src="{{ asset('build/images/logo-bambuslife.svg') }}"></li>
+                        </ul>
+                        <a class="button is-primary is-rounded is-medium" href="{{ path('prod_scientific_studies') }}">Ver estudios científicos realizados</a>
+                    </div>
+                </div>
+
+                {# NORMATIVAS #}
+                {# <div class="content">
+                  <h3 class="subtitle is-5">Normativas</h3>
+                  <p>
+                    Los servicios que brinda BambusLife cumplen con la normativa de privacidad de datos y de la información de las normas uruguayas y europeas, en particular el artículo 28 del Reglamento General de Protección de Datos de la UE (RGPD). 
+                  </p>
+                </div> #}
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+    {# FORM #}
+    <section class="section white-box">
+        <div class="content">
+            <h3 class="subtitle is-5">Contacto</h3>
+            {% if flagForm != 1 %}
+            <p>Complete el formulario para solicitar m&aacute;s informaci&oacute;n y nos pondremos en contacto.</p>
+            {% endif %}
+
+            {% if flagForm == 1 %}
+            <div class="notification is-success is-light">
+                Enviado correctamente. Nos pondremos en contacto a la brevedad. Gracias por contactarnos.
+            </div>
+            <a class="button is-white" href="{{ path('prod_cspro_orgs') }}">
+                <span>Volver</span>
+            </a>
+            {% endif %}
+            {% if flagForm == 2 %}
+            <div class="notification is-warning">
+                Ocurri&oacute; un error. Intente nuevamente m&aacute;s tarde.
+            </div>
+            {% endif %}
+            {% if flagForm == 3 %}
+            <div class="notification is-warning">
+                Ocurri&oacute; un problema. Intente nuevamente por favor.
+            </div>
+            {% endif %}
+
+            {% if flagForm != 1 %}
+            <div class="columns">
+                <div class="column is-6-desktop is-12-mobile">
+                    <form name="orgContactForm" id="orgContactForm" method="post" action="{{ path('prod_cspro_orgs_post') }}">
+                        <p class="help">Todos los campos de este formulario son obligatorios.</p><br>
+                        <div class="field">
+                            <label class="label">Nombre de la entidad m&eacute;dica</label>
+                            <div class="control">
+                                <input class="input " type="text" value="" name="orgname" id="orgname" required placeholder="Nombre de la entidad m&eacute;dica">
+                            </div>
+                            <div class="messages"></div>
+                        </div>
+                        <div class="field">
+                            <label class="label">Pa&iacute;s</label>
+                            <div class="control">
+                                <input class="input " type="text" value="" name="country" id="country" required placeholder="Pa&iacute;s">
+                            </div>
+                            <div class="messages"></div>
+                        </div>
+                        <div class="field">
+                            <label class="label">Nombre de contacto</label>
+                            <div class="control">
+                                <input class="input " type="text" value="" name="contactName" id="contactName" required placeholder="Nombre de contacto">
+                            </div>
+                            <div class="messages"></div>
+                        </div>
+                        <div class="field">
+                            <label class="label">Correo electr&oacute;nico</label>
+                            <div class="control">
+                                <input class="input " type="email" value="" name="contactEmail" id="contactEmail" required placeholder="Correo electr&oacute;nico">
+                            </div>
+                            <div class="messages"></div>
+                        </div>
+                        <div class="field">
+                            <label class="label">Mensaje</label>
+                            <div class="control">
+                                <textarea class="textarea" value="" rows="5" name="messageText" id="messageText" required placeholder="Ingrese un mensaje"></textarea>
+                            </div>
+                            <div class="messages"></div>
+                        </div>
+                        <div class="field">
+                            <p class="control">
+                                <button class="button is-primary is-rounded" type="submit" id="btnSend" name="btnSend">
+                                    Enviar
+                                </button>
+                            </p>
+                        </div>
+
+                        <input type="hidden" name="recaptcha_response" id="recaptchaResponse">
+
+                        <div style="font-size: 11px;color: #AAA;">
+                            Este sitio est&aacute; protegido por reCAPTCHA y se aplica la
+                            <a href="https://policies.google.com/privacy" style="color: #AAA;text-decoration: underline;">Pol&iacute;tica de Privacidad</a> y
+                            <a href="https://policies.google.com/terms" style="color: #AAA;text-decoration: underline;">T&eacute;rminos y Condiciones</a> de Google.
+                        </div>
+                    </form>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </section>
+
+</div>
+
+{% endblock %}
+
+{% block footer %}
+{{ include('components/footer.html.twig') }}
+{% endblock %}

@@ -1,0 +1,120 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {{ encore_entry_link_tags('product') }}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('product') }}
+  {% if product != NULL %}
+    {{ include('sd/breadcrumbs.html.twig', { 'items': [{'name':'Productos',"url":path('order_index')},{'name':product.item_name,"url":path('product', {'prdName':cUrlEncode(product.item_name),'prdCode':product.code})}] }) }}
+  {% endif %}
+{% endblock %}
+
+{% block title %}{% if product != NULL %}{{product.item_name}} | BambusLife{% else %}Producto | BambusLife{% endif %}{% endblock %}
+
+{% block description %}
+  {% if product != NULL %}
+    {{product.description | striptags}}
+  {% endif %}
+{% endblock %}
+
+{% block extrameta %}
+  {% if product != NULL %}
+    <meta property="og:title" content="{{product.item_name}} | BambusLife" />
+    <meta property="og:description" content="{{product.description | truncate_words(15, '...') | striptags }}" />
+    <meta property="og:type"  content="website" />
+    <meta property="og:url"   content="https://bambus.life{{path('product', {'prdName':cUrlEncode(product.item_name),'prdCode':product.code})}}" />
+    <meta property="og:image" content="https://bambus.life{{asset('build/images/products/accessories/'~product.code~'.jpg')}}" />
+  {% endif %}
+{% endblock %}
+
+{% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block body %}
+
+  <div class="container ">
+
+    {% if error_msg is defined and error_msg != NULL %}
+
+      <div class="columns is-8">
+        <div class="column">
+          <article class="message is-danger">
+            <div class="message-body">
+              {{ error_msg | raw }}
+            </div>
+          </article>
+        </div>
+      </div>
+
+    {% else %}
+
+      <div class="columns is-multiline is-mobile" style="padding: 20px 0px 100px 0px;background-color: #FEFEFE;">
+
+        <div class="column is-half-desktop is-half-tablet is-full-mobile">
+          <picture>
+            <source srcset="{{asset('build/images/products/accessories/'~product.code~'.webp')}}" type="image/webp">
+            <source srcset="{{asset('build/images/products/accessories/'~product.code~'.jpg')}}" type="image/jpeg">
+            <img src="{{asset('build/images/products/accessories/'~product.code~'.jpg')}}" alt="{{product.description | truncate_words(10) | striptags}}">
+          </picture>
+        </div>
+
+        <div class="column is-half-desktop is-half-tablet is-full-mobile" style="padding: 20px;">
+
+          <form action="{{ path('cart_add') }}" method="post" id="formBuy">
+            <input type="hidden" name="item_code" value="{{product.code}}" data-price="{{product.price}}"
+                  data-stock="{{product.stock}}" data-islocal="{{product.isLocal ? '1' : '0'}}">
+
+            <h1 class="subtitle is-3">{{product.item_name}}</h1>
+
+            <div class="content" style="margin: 10px 0px;">{{product.description | raw}}</div>
+
+            {# PRICES #}
+            {% if product.stock >= 0 %}
+              <div class="price-tag" style="margin: 20px 0px;">
+                <table>
+                  <tr>
+                    <td class="price-tag-label" style="min-width: 129px;padding-top: 5px;">Precio:</td>
+                    <td style="padding-left:10px">
+                      <span style="font-size: 80%;">{{product.currency}}</span> 
+                      <span id="priceTag">{{product.price}}</span>
+                      {% if deliveryAvailable %}
+                        <span id="isRemoteLbl" style="color: #999;font-size: 14px;display:none"><a id="priceDisclaimerDetailsBtn" href="#">Más información</a></span>
+                      {% endif %}
+                      <span id="isLocalLbl" style="color: #999;font-size: 14px;display:none"></span>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            {% endif %}
+
+            {% if product.stock > 0 %}
+              <div class="columns is-multiline is-1">
+                <div class="column is-narrow">
+                  <button type="submit" class="button is-medium is-info" id="btnBuy">Comprar</button>
+                </div>
+              </div>
+            {% else %}
+              <div style="margin-top: 20px;color: #FF9800;">
+                <i class="fas fa-exclamation-triangle"></i>
+                Moment&aacute;neamente sin stock
+              </div>
+            {% endif %}
+
+          </form>
+
+        </div>
+      </div>
+
+    {% endif %}
+  </div>
+
+{% endblock %}
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Garantía de Hardware | BambusLife{% endblock %}
+
+{% block description %}Garantía de Hardware | BambusLife{% endblock %}
+
+{% block keywords %}Garantía de Hardware{% endblock %}
+
+{% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block body %}
+
+<div class="container white-box" style="padding: 20px;">
+  <h1 class="subtitle is-3" style="margin-top: 10px;">Garantía comercial de hardware de BambusLife</h1>
+  <div class="content">
+    <p>
+      Esta Garantía comercial se aplica si es usted un consumidor o una entidad u organización médica y ha comprado su producto BambusLife (“Producto BambusLife”) en los territorios que estamos operando en Latinoamérica, salvo que se indique lo contrario en uno de los siguientes artículos que haga referencia a un país específico.
+    </p>
+    <p>
+      Esta Garantía comercial constituye una garantía voluntaria del fabricante en conjunto con BambusLife. En ella se disponen derechos independientes de los que le concede la ley ordinaria. Esta Garantía comercial no restringe ni reduce dichos derechos reglamentarios. Ello significa que los beneficios de la Garantía comercial se añaden a sus derechos reglamentarios, sin por ello sustituirlos. Si su Producto BambusLife es defectuoso le asistirán derechos reglamentarios que podrá invocar frente a la empresa distribuidora que le haya vendido el Producto BambusLife y se detallan en el sitio web <a href="https://bambus.life">Bambus.Life</a>, en concreto de cara a la reparación y sustitución de su Producto BambusLife defectuoso, o bien, de forma alternativa, en algunos casos y países, un reembolso, una reducción de precio o el derecho a cancelar el contrato de venta y realizar una reclamación por daños y gastos.
+    </p>
+    <p>
+      <strong>¿Qué cubre esta garantía y cuánto tiempo dura?</strong> BambusLife garantiza que el Producto BambusLife estará libre de defectos de material y de fabricación bajo circunstancias normales de uso acordes a lo descrito en la documentación del producto publicada. En el caso de un consumidor, durante 3 meses desde la fecha de compra original efectuada por usted en el sitio web <a href="https://bambus.life">Bambus.life</a> o en cualquier <a href="{{ path('distribuidores') }}">distribuidores autorizados</a> (“Garantía comercial”). En el caso de una entidad u organización médica, durante el período del contrato con la entidad médica si el contrato fue realizado con cualquier representante autorizado
+    </p>
+      <strong>¿Qué aspectos no cubre esta garantía?</strong> Esta Garantía comercial solo es válida y exigible en los países que BambusLife está operando y sólo será de aplicación en caso de que sea usted (un usuario o entidad médica), haya comprado el Producto BambusLife en nuestro sitio web o arrendado el mismo a alguno de nuestros distribuidores autorizados. Esta Garantía comercial solo se aplica a componentes de hardware (y no a elementos de software) del Producto BambusLife, sin que sea de aplicación a daños causados por: (1) el uso y desgaste habituales en caso de compra; (2) accidentes; (3) uso inapropiado (incluida cualquier falta de cumplimiento de la documentación de producto publicada); (4) negligencia; (5) desmontaje (incluida la apertura o el intento de abrir la carcasa exterior de su Producto BambusLife); (6) alteraciones; y (7) causas externas como, por ejemplo, daños provocados por el agua, la exposición a objetos afilados, la exposición a una fuerza excesiva, anomalías en la corriente eléctrica que alimenta al dispositivo y condiciones térmicas o ambientales extremas. Esta Garantía comercial no garantiza que el uso del Producto BambusLife sea ininterrumpido o libre de errores.
+    <p>
+      <strong>¿Cómo actuará BambusLife?</strong> Si surge un defecto cubierto por esta Garantía comercial y usted devuelve el Producto BambusLife comprado durante dentro del período de 3 meses o durante el período del contrato con la entidad médica, BambusLife, según su propio criterio, procederá a (i) reparar el Producto BambusLife con piezas nuevas o renovadas, con el fin de facilitarle un Producto BambusLife cuya funcionalidad sea al menos equivalente a la de un dispositivo nuevo; (ii) sustituir el Producto BambusLife por uno nuevo o renovado cuya funcionalidad sea al menos equivalente a la de un dispositivo nuevo; o (iii) aceptar la devolución de su Producto BambusLife a cambio de un reembolso del precio de compra que usted haya pagado por el mismo. Si BambusLife sustituye o repara su Producto BambusLife, el Producto BambusLife sustituido o reparado seguirá estando en garantía durante el tiempo que reste del período original de la garantía o bien durante 90 días a contar desde la entrega del Producto BambusLife sustituido o reparado, cualquiera de las opciones que represente el plazo más amplio. Todas las piezas devueltas de las cuales haya recibido usted una sustitución pasarán a ser propiedad de BambusLife. Ningún aspecto de esta Garantía comercial mermará ni afectará de modo alguno a sus derechos reglamentarios respecto a su Producto BambusLife.
+    </p>
+    <p>
+      <strong>¿Cómo puede realizar una reclamación?</strong> Para realizar una reclamación al amparo de esta Garantía comercial, póngase en contacto con el equipo de asistencia de BambusLife para su Producto BambusLife al mail <a href="mailto:reclamos@bambus.life">reclamos@bambus.life</a>. Nos hará falta su nombre, datos de contacto y el número de serie de su Producto BambusLife. Si no tenemos el registro de su compra, tendrá que facilitarnos un justificante de compra para iniciar la reclamación de garantía. Puede remitirse a la siguiente Política de privacidad para obtener mayor información sobre cómo tratar dichos datos: <a href="{{ path('privacy_policy') }}">https://bambus.life/privacy-policy</a>. Si hace uso de esta Garantía comercial de acuerdo con sus términos, BambusLife será responsable de los costes de embalaje y expedición asociados con la devolución del Producto BambusLife a BambusLife, desde cualquier punto de los países que se opera comercialmente. Si se facilita una sustitución o reparación, BambusLife será igualmente responsable de los costes de embalaje y expedición asociados con el envío destinado a usted del Producto BambusLife ya sustituido o reparado, a cualquier punto en los países que se operan.
+    </p>
+    <p>
+      Esta Garantía comercial es ofrecida por BambusLife SA, con domicilio social sito en el Br. España 2630 of. 301, 11.300 Montevideo, Uruguay.
+    </p>
+    <p>
+      Por el presente documento, BambusLife manifiesta que el equipo CardioSecur cumple con la normativa europea de Privacidad de Datos RGPD. El texto completo del documento de la UE se puede consultar en <a href="https://ec.europa.eu/commission/priorities/justice-and-fundamental-rights/data-protection/2018-reform-eu-data-protection-rules_es">RGPD y modificaciones 2018</a>.
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+  </div>
+</div>
+
+{% endblock %}
+
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

@@ -1,0 +1,1 @@
+import "../../css/pages/landing/landing-portal-medico.scss";

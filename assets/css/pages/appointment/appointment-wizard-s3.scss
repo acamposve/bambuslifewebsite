@@ -1,0 +1,61 @@
+@import "./appointment-wizard.scss";
+
+
+
+.av-table{
+  margin-top: 10px;
+  display: flex;
+  color: #333;
+
+  .av-table-navbtn{
+    display: block;
+    margin-top: 10px;
+    padding: 5px 10px;
+  }
+  .av-table-day{
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    align-items: center;
+    .av-table-day-name{
+      font-weight: 400;
+      color: #222;
+    }
+    .av-table-day-date{
+      color: #777;font-size: 12px;
+    }
+  }
+  .av-table-slots {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    a {
+      color: #333;
+    }
+
+    .av-table-slot {
+      padding: 4px 7px;
+      margin: 2px 0px;
+      border-radius: 5px;
+      cursor:pointer;
+      font-size: 14px;
+      
+      &.av-table-slot-free:hover{
+        background-color: #7db4d8;
+      }
+
+      &.av-table-slot-free {
+        background-color: #dcf1ff;
+      }
+      &.av-table-slot-busy {
+        // background-color: black;
+        // display:none;
+        background-color: #F5F5F5;
+        color: #BBB;
+        cursor: default;
+      }
+    }
+
+  }
+}

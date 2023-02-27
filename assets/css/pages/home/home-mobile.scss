@@ -1,0 +1,58 @@
+@media (max-width: 787px) {
+  .cover {
+    .coverimg {
+      width: 100vw;
+      margin-left: 0px;
+    }
+    .covertext-sh {
+      padding: 5px;
+      top: 5px;
+    }
+
+    .covertext {
+      padding-bottom: 0;
+
+      h1 {
+        font-size: 26px;
+        line-height: 25px;
+      }
+
+      h2 {
+        font-size: 16px;
+        line-height: 20px;
+      }
+    }
+
+    .h4_to_h2 {
+      h4{
+        font-size: 29px;
+        color:black;
+      }
+    }
+
+    .covertext_2 {
+      position: relative;
+      color: #333;
+      left: 0px;
+      top: 0px;
+      width: 100%;
+      padding: 0px 10px 20px 10px;
+
+      h4 {
+        font-size: 30px;
+        line-height: 34px;
+        margin: 11px 0px;
+      }
+
+      h3 {
+        font-size: 22px;
+      }
+
+      p {
+        font-size: 17px;
+        line-height: 22px;
+      }
+
+    }
+  }
+}

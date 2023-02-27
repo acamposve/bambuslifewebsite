@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Servicios de Laboratorio | BambusLife{% endblock %}
+
+{% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block body %}
+<div class="container">
+</div>
+{% endblock %}
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

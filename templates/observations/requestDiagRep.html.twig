@@ -1,0 +1,416 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Solicitud de informe | BambusLife{% endblock %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {{ encore_entry_link_tags('request-diag-rep') }}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('request-diag-rep') }}
+{% endblock %}
+
+{% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block body %}
+
+  <div class="container" style="min-height: 600px;padding:10px;max-width: 700px;">
+    {# ERROR MSG #}
+    {% if error_msg is defined and error_msg != NULL %}
+      <div class="columns is-mobile" style="">
+        <div class="column is-8-desktop is-offset-2-desktop is-10-mobile is-offset-1-mobile">
+          <article class="message is-danger">
+            <div class="message-body">
+              {{ error_msg | raw }}
+            </div>
+          </article>
+        </div>
+      </div>
+      <div style="width: 100%;text-align: center;margin: 30px 0px;">
+        <a class="button" href="{{ path('observations') }}">Volver</a>
+      </div>
+    {% else %}
+
+      {% if requested %}
+        <div class="columns">
+          <div class="column is-full" style="text-align: center;max-width: 400px;margin: 0px auto;">
+            <i class="far fa-check-circle" style="font-size: 45px;padding: 30px;color: #4CAF50;"></i>
+            <h4 class="title is-4">Solicitud enviada</h4>
+            <p>
+              El informe será realizado por el médico según su disponibilidad y el nivel de alerta recibido y 
+              lo recibirá por correo electrónico o accediendo a su perfil</p>
+          </div>
+        </div>
+        <div style="width: 100%;text-align: center;margin: 30px 0px;">
+          <a class="button" href="{{ path('observations') }}">Volver</a>
+        </div>
+      {% else %}
+        <div class="columns">
+          <div class="column is-full">
+            <h3 style="margin-top: 20px;" class="subtitle is-4">Solicitud de informe de an&aacute;lisis</h3>
+            <p>
+              Complete el formulario para solicitar un informe de análisis.
+            </p>
+            
+            {# MAIN FORM #}
+            <form name="reqDiagRepForm" id="reqDiagRepForm" method="post" action="{{path('doRequestDiagRep')}}">
+
+              <div class="content" style="margin-top: 20px;padding: 10px;">
+                Se enviará una solicitud de informe sobre los siguientes análisis:
+                {% if obsIncluded is defined %}
+                  <ul class="obs-list">
+                    {% for obs in obsIncluded %}
+                      <li>
+                        <h4>{{obs.type}} <span style="font-weight: normal;font-size: 80%;"> (#{{obs.id}})</span></h4>
+                        <p>Tomado {{obs.niceDate}}</p>
+                        <p>
+                          Nivel de alerta: 
+                          {% if obs.autoeval == 'HIGH' %}
+                            <span class="obs-status obs-status-red"></span>
+                          {% elseif obs.autoeval == 'LOW' %}
+                            <span class="obs-status obs-status-yellow"></span>
+                          {% else %}
+                            <span class="obs-status obs-status-green"></span>
+                          {% endif %}
+                          {{obs.niceAutoeval}}
+                        </p>
+                        <input type="hidden" id="obsId" name="obsId" value="{{obs.id}}">
+                      </li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+              </div>
+
+              {# QUESTIONNAIRE #}
+              {% if qform != NULL and qform.formData is defined %}
+                <div class="columns is-8 is-variable is-multiline is-mobile questionnaire">
+                  <input type="hidden" id="questionnaireId" name="questionnaireId" value="{{qform.id}}">
+                  {% for group in qform.formData.groups %}
+                    <div class="column is-12-desktop is-12-tablet is-12-mobile group">
+                      <h4>{{group.title}}</h4>
+                      {% for question in group.questions %}
+                        {% if question.type == 'INTEGER' or question.type == 'TEXT' %}
+                          <div class="field question" data-qcoding="{{question.coding}}" data-qcode="{{question.code}}">
+                            <label class="label">{{question.text}}</label>
+                            <div class="control">
+                              <input class="input" type="text" placeholder="{{question.text}}" 
+                                  name="q^{{qform.id}}^{{question.id}}" id="q^{{qform.id}}^{{question.id}}"
+                                  {% if question.currentValue is defined %}
+                                    value="{{question.currentValue.value}}"
+                                  {% endif %}
+                                  >
+                            </div>
+                            <div class="messages"></div>
+                          </div>
+                        {% elseif question.type == 'CHOICE' %}
+                          <div class="field question" data-qcoding="{{question.coding}}" data-qcode="{{question.code}}">
+                            <label class="label">{{question.text}}</label>
+                            <div class="control">
+                              <div class="select">
+                                <select name="q^{{qform.id}}^{{question.id}}" id="q^{{qform.id}}^{{question.id}}">
+                                  {% for option in question.options %}
+                                    {% if option.value != NULL %}
+                                      <option value="{{option.value}}">{{option.display}}</option>
+                                    {% else %}
+                                      <option value="c^{{option.coding}}^{{option.code}}">{{option.display}}</option>
+                                    {% endif %}
+                                  {% endfor %}
+                                </select>
+                              </div>
+                            </div>
+                            <div class="messages"></div>
+                          </div>
+                        {% elseif question.type == 'MULTIPLE_CHOICE' %}
+                          <div class="field question" data-qcoding="{{question.coding}}" data-qcode="{{question.code}}">
+                            <label class="label">{{question.text}}</label>
+                            <div class="control multiplechoice">
+                              {% for option in question.options %}
+                                <label class="checkbox">
+                                  <input type="checkbox" name="q^{{qform.id}}^{{question.id}}^{{option.value}}^{{option.coding}}^{{option.code}}"
+                                    id="q^{{qform.id}}^{{question.id}}^{{option.value}}^{{option.coding}}^{{option.code}}">
+                                  {{option.display}}
+                                </label>
+                              {% endfor %}
+                            </div>
+                          </div>
+                        {% elseif question.type == 'DATE' %}
+                          <div class="field question" data-qcoding="{{question.coding}}" data-qcode="{{question.code}}">
+                            <label class="label">{{question.text}}</label>
+                            <div class="control">
+                              <input class="input" type="date" placeholder="{{question.text}}" 
+                                  name="q^{{qform.id}}^{{question.id}}" id="q^{{qform.id}}^{{question.id}}"
+                                  {% if question.currentValue is defined %}
+                                    value="{{question.currentValue.value}}"
+                                  {% endif %}
+                                  >
+                            </div>
+                          </div>
+                        {% elseif question.type == 'CHECKBOX' %}
+                          <div class="field question" data-qcoding="{{question.coding}}" data-qcode="{{question.code}}">
+                            <div class="control">
+                              <label class="checkbox">
+                                <input type="checkbox" data-qid="{{question.id}}"
+                                  id="qcond^{{qform.id}}^{{question.id}}^{{question.answerValue}}^{{question.answerCoding}}^{{question.answerCode}}"
+                                  name="qcond^{{qform.id}}^{{question.id}}^{{question.answerValue}}^{{question.answerCoding}}^{{question.answerCode}}">
+                                  {{question.text}}
+                                  {% if question.currentValue is defined %}
+                                    {% if question.currentValue is defined %}
+                                      checked
+                                    {% endif %}
+                                  {% endif %}
+                              </label>
+                            </div>
+                            {% if question.askSeverity or question.askOnsetDatetime %}
+                              <div class="cond-add-info-cntr" data-qid="{{question.id}}">
+                                {% if question.askSeverity %}
+                                  <div class="field is-horizontal cond-add-info" >
+                                    <div class="field-label is-normal">
+                                      <label class="label" style="color: #666;font-weight: normal;">Severidad</label>
+                                    </div>
+                                    <div class="field-body">
+                                      <div class="field is-narrow">
+                                        <div class="control">
+                                          <div class="select">
+                                            <select name="qcondsev^{{qform.id}}^{{question.id}}" id="qcondsev^{{qform.id}}^{{question.id}}">
+                                              <option value=""></option>
+                                              <option value="MILD">Leve</option>
+                                              <option value="MODERATE">Moderado</option>
+                                              <option value="SEVERE">Grave</option>
+                                            </select>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                {% endif %}
+                                {% if question.askOnsetDatetime %}
+                                  <div class="field is-horizontal cond-add-info">
+                                    <div class="field-label is-normal">
+                                      <label class="label" style="color: #666;font-weight: normal;">Comienzo</label>
+                                    </div>
+                                    <div class="field-body">
+                                      <div class="field is-narrow">
+                                        <div class="control">
+                                          <input class="input" type="date" placeholder="{{question.text}}" 
+                                            name="qcondstart^{{qform.id}}^{{question.id}}" 
+                                            id="qcondstart^{{qform.id}}^{{question.id}}"
+                                            {% if question.currentValue is defined %}
+                                              value="{{question.currentValue.value}}"
+                                            {% endif %}
+                                            >
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                {% endif %}
+                                {% if question.askAbatementDatetime %}
+                                  <div class="field is-horizontal cond-add-info">
+                                    <div class="field-label is-normal">
+                                      <label class="label" style="color: #666;font-weight: normal;">Suprimido</label>
+                                    </div>
+                                    <div class="field-body">
+                                      <div class="field is-narrow">
+                                        <div class="control">
+                                          <input class="input" type="date" placeholder="{{question.text}}" 
+                                            name="qcondend^{{qform.id}}^{{question.id}}" 
+                                            id="qcondend^{{qform.id}}^{{question.id}}"
+                                            {% if question.currentValue is defined %}
+                                              value="{{question.currentValue.value}}"
+                                            {% endif %}
+                                            >
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                {% endif %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        {% endif %}
+                      {% endfor %}
+                    </div>
+                  {% endfor %}
+                </div>
+              {% endif %}
+
+              <div class="columns is-8 is-variable is-multiline is-mobile">
+                {# PRIORIDAD/MOTIVO #}
+                <div class="column is-12-desktop is-12-tablet is-12-mobile">
+                  <div class="field">
+                    <label class="label" style="border-top: 1px solid #DDD;">Prioridad / Motivo</label>
+                    <div class="control radio-tile-group">
+                      <label class="radio">
+                        <input id="priority-control" class="radio-button" type="radio" name="priority" value="ROUTINE" />
+                        <div class="radio-tile">
+                          <div class="icon">
+                            {% include 'components/icons/priority-routine.svg.twig' %}
+                          </div>
+                          <label for="priority-control" class="radio-tile-label">Control</label>
+                        </div>
+                      </label>
+                      <label class="radio">
+                        <input id="priority-asap" class="radio-button" type="radio" name="priority" value="ASAP" />
+                        <div class="radio-tile">
+                          <div class="icon">
+                            {% include 'components/icons/priority-asap.svg.twig' %}
+                          </div>
+                          <label for="priority-asap" class="radio-tile-label">Lo antes posible</label>
+                        </div>
+                      </label>
+                      <label class="radio">
+                        <input id="priority-urgent" class="radio-button" type="radio" name="priority" value="URGENT" />
+                        <div class="radio-tile">
+                          <div class="icon">
+                            {% include 'components/icons/priority-urgent.svg.twig' %}
+                          </div>
+                          <label for="priority-urgent" class="radio-tile-label">Urgente</label>
+                        </div>
+                      </label>
+                    </div>
+                    <div class="messages"></div>
+                  </div>
+                </div>
+                {# COMENTARIOS #}
+                <div class="column is-12-desktop is-12-tablet is-12-mobile">
+                  <div class="field">
+                    <label class="label" style="border-top: 1px solid #DDD;">Comentarios adicionales</label>
+                    <div class="control">
+                      <textarea class="textarea" placeholder="Ingrese notas adicionales para el médico" rows="5"
+                        id="comments" name="comments"></textarea>
+                    </div>
+                    <div class="messages"></div>
+                  </div>
+                </div>
+                {# BUTTONS #}
+                {# <div class="column is-12-desktop is-12-tablet is-12-mobile">
+                  <div class="buttons">
+                    <input type="submit" class="button is-primary" value="Solicitar" id="btnRequest">
+                    <a class="button" href="{{ path('observations') }}">Volver</a>
+                  </div>
+                </div> #}
+              </div>
+            </form>
+          </div>
+        </div>
+
+        {# DELIVERY DESCRIPTION #}
+         <div class="columns is-variable is-multiline is-mobile">
+          <div class="column is-12-desktop is-12-tablet is-12-mobile">
+            <div class="field" style="border-top: 1px solid #DDD;">
+              <p style="font-size: 14px;margin: 10px 0px;">
+                El informe de diagnóstico será realizado por un médico cardiólogo incluyendo el trazado del ECG
+                con los eventuales hallazgos en caso de haber alguno. 
+              </p>
+              <p style="font-size: 14px;margin-bottom: 10px;">
+                El mismo será enviado por correo electrónico y quedará disponible en su perfil en la sección de observaciones una vez realizado.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {# EXTRA INFO #}
+        <div style="font-size: 10px;color: #AAA;display:none">
+          Organizaci&oacute;n: {{servicePricing.organizationName}} ({{servicePricing.organizationId}})<br>
+          {% if servicePricing.practitioner is defined %}
+            Medico: {{servicePricing.practitioner.practitionerName}} ({{servicePricing.practitioner.specialityName}}) <br> 
+          {% endif %}
+          SKU: {{servicePricing.sku}} ({{servicePricing.name}})<br>
+          Monto: {{servicePricing.currency}} {{servicePricing.amount}}<br>
+          {% if servicePricing.tax is defined %}
+            Impuestos: {{servicePricing.tax.rate}}% ({{servicePricing.tax.description}})<br>
+          {% endif %}
+          Monto total: {{servicePricing.currency}}: {{servicePricing.total_amount}}<br>
+          Actualizado: {{servicePricing.lastUpdated}}
+        </div>
+        {# PAYMENT OPTIONS #}
+        {% if servicePricing.amount is defined and servicePricing.amount > 0 %}
+          <div class="columns is-variable is-multiline is-mobile">
+            <div class="column is-12-desktop is-12-tablet is-12-mobile">
+              <label class="label" style="border-top: 1px solid #DDD;">Pago</label>
+              {# COST AMOUNT #}
+              <div>
+                <span>Costo: </span>
+                <span style="font-size:80%;color: #333;">{{servicePricing.currency}}</span>
+                <span style="color: #333;font-size: 17px;font-weight: 500;"> {{servicePricing.total_amount}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="columns is-variable is-multiline is-mobile" style="margin: 10px 0px 50px 0px;">
+            {# EXISTING CARDS #}
+            <div class="column is-6-desktop is-6-tablet is-12-mobile" style="display: flex;flex-direction: column;justify-content: flex-start;align-items: center;">
+              <label class="label" style="font-weight: normal;font-size: 14px;">Pagar con</label>
+              {{ render(controller('App\\Controller\\Components\\MercadoPagoController::renderFastPay', {
+                'callbackUrl'    : path('do_fast_payment', {'sid': sid}),
+                'userEmail'      : user.email,
+                'amountToPay'    : servicePricing.amount,
+                'currency'       : servicePricing.currency,
+                'countryCode'    : countryCode,
+                'masterFormName' : 'reqDiagRepForm',
+                'btnText'        : 'Pagar y solicitar'
+                })) 
+              }}
+            </div>
+            {# NEW CARD #}
+            <div class="column is-6-desktop is-6-tablet is-12-mobile" style="border-left: 1px solid #DDD;display: flex;flex-direction: column;justify-content: flex-start;align-items: center;">
+
+              <label class="label" style="font-weight: normal;font-size: 14px;">O pagar con una tarjeta nueva</label>
+              {{ render(controller('App\\Controller\\Components\\MercadoPagoController::indexCustom', {
+                'callbackUrl'  : path('checkout_payment_post', {'sid': sid}),
+                'userEmail'    : user.email,
+                'amountToPay'  : servicePricing.amount,
+                'currency'     : servicePricing.currency,
+                'countryCode'  : countryCode,
+                'btnText'      : 'Pagar y solicitar'
+                })) 
+              }}
+            </div>
+          </div>
+          <div style="width: 100%;text-align: center;margin: 30px 0px;">
+            <a class="button" href="{{ path('observations') }}">Volver</a>
+          </div>
+        {% else %}
+          <div class="columns is-variable is-multiline is-mobile" style="margin: 20px 0px 50px 0px;">
+            <div class="column is-12-desktop is-12-tablet is-12-mobile" style="display: flex;flex-direction: column;justify-content: flex-start;align-items: center;">
+              <button type="button" class="button is-primary" id="btnDiagReq" name="btnDiagReq">
+                <span>Solicitar informe</span>
+              </button>
+            </div>
+            <div class="column is-12-desktop is-12-tablet is-12-mobile" style="display: flex;flex-direction: column;justify-content: flex-start;align-items: center;">
+              <div style="width: 100%;text-align: center;margin: 30px 0px;">
+                <a class="button" href="{{ path('observations') }}">Volver</a>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+
+      {% endif %}
+
+    {% endif %}
+  </div>
+
+  <div id="modalProgress" class="modal" style="position: fixed;">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+      <div style="background-color: #FFF;
+          text-align: center;
+          padding: 40px;
+          border-radius: 4px;">
+        <div style="color: #607D8B;font-size: 50px;"><i class="fas fa-cog fa-spin"></i></div>
+        <div class="subtitle is-3">Procesando solicitud...</div>
+        <div>
+          Por favor espere, la transaccion puede tomar varios segundos<br>
+          No cierre ni recargue su navegador
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

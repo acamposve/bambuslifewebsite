@@ -1,0 +1,107 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Representantes y distribuidores autorizados | BambusLife{% endblock %}
+
+{% block description %}Representantes y distribuidores autorizados | BambusLife{% endblock %}
+
+{% block keywords %}Representantes y distribuidores autorizados{% endblock %}
+
+{% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block body %}
+
+<div class="container white-box" style="padding: 20px;">
+  <h1 class="subtitle is-3" style="margin-top: 10px;">Representantes</h1>
+    <div class="columns is-multiline is-mobile">
+      <div class="column is-4-desktop is-4-tablet is-12-mobile">
+        <h3 class="subtitle is-5" style="margin-top: 20px;font-weight: 400;">Uruguay</h3>
+        <h4 class="subtitle is-5" style="margin: 0px;font-size: 17px;">BambusLife SA</h4>
+        <p>
+          Rio Negro 1306, piso 6, 11200<br>
+          Montevideo<br>
+          info@bambus.life <br>
+        </p>
+      </div>
+      <div class="column is-4-desktop is-4-tablet is-12-mobile">
+        <h3 class="subtitle is-5" style="margin-top: 20px;font-weight: 400;">Paraguay</h3>
+        <h4 class="subtitle is-5" style="margin: 0px;font-size: 17px;">Synergy SRL</h4>
+        <p>
+          Mayor José Duarte 1461<br>
+          Asunción<br>
+          info@bambus.life <br>
+        </p>
+      </div>
+      <div class="column is-4-desktop is-4-tablet is-12-mobile">
+        <h3 class="subtitle is-5" style="margin-top: 20px;font-weight: 400;">Chile</h3>
+        <h4 class="subtitle is-5" style="margin: 0px;font-size: 17px;">BambusTech SpA</h4>
+        <p>
+          Alfonso Ojeda 6828<br>
+          Santiago de Chile<br>
+          info@bambus.life<br>
+        </p>
+      </div>
+    </div>
+
+
+    <div class="columns is-multiline is-mobile">
+      <div class="column is-4-desktop is-4-tablet is-12-mobile">
+        <h3 class="subtitle is-5" style="margin-top: 20px;font-weight: 400;">Argentina</h3>
+        <h4 class="subtitle is-5" style="margin: 0px;font-size: 17px;">Tingelmar Argentina SA</h4>
+        <p>
+          Bernardo de Irigoyen 190, piso 10°(1072)<br>
+          CABA<br>
+          info@bambus.life <br>
+        </p>
+      </div>
+      <div class="column is-4-desktop is-4-tablet is-12-mobile">
+        <h3 class="subtitle is-5" style="margin-top: 20px;font-weight: 400;">Perú</h3>
+        <h4 class="subtitle is-5" style="margin: 0px;font-size: 17px;">Policlinico Particular San Mateo -AQP EIRL</h4>
+        <p>
+          Jr Simón Noguera Nro 649 Dpto 401 <br>Urbanización Tupac Amaru, Distrito San Luis<br>
+          Lima<br>
+          info@bambus.life <br>
+        </p>
+      </div>
+
+    </div>	
+	
+    </div>
+	
+  </div>
+  {#
+  <div style="margin-top: 40px">
+    <h2 class="subtitle is-4">Distribuidores</h2>
+    <div class="columns is-multiline is-mobile">
+      <div class="column is-4-desktop is-4-tablet is-12-mobile">
+        <h3 class="subtitle is-5" style="margin-top: 20px;font-weight: 400;">Uruguay</h3>
+        <h4 class="subtitle is-5" style="margin: 0px;font-size: 17px;">ITC SA</h4>
+        <p>
+          Yaguarón nº 1407, Oficina 81<br>
+          Montevideo<br>
+          comercial@itc.com.uy<br>
+        </p>
+      </div>
+    </div> #}
+</div>
+
+<div class="container white-box" style="padding: 20px;">
+  <h1 class="subtitle is-3" style="margin-top: 10px;">Proveedores de Servicios Médicos</h1>
+    <div class="columns is-multiline is-mobile">
+      <div class="column is-4-desktop is-4-tablet is-12-mobile">
+        <h3 class="subtitle is-5" style="margin-top: 20px;font-weight: 400;">Uruguay</h3>
+        <h4 class="subtitle is-5" style="margin: 0px;font-size: 17px;">CASMU</h4>
+        <p>
+          Asilo 3336, 11600<br>
+          Montevideo<br>
+          casmu@bambus.life<br>
+        </p>
+      </div>
+   </div>
+</div>  
+{% endblock %}
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

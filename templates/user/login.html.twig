@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Iniciar sesi&oacute;n en tu cuenta | BambusLife{% endblock %}
+
+{% block description %}Inicia sesi&oacute;n en BambusLife para poder comprar y administrar tus dispositivos | BambusLife{% endblock %}
+
+{% block keywords %}Iniciar sesion, Login{% endblock %}
+
+{% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+  <div class="columns" style="min-height: 600px;">
+    {# <div class="column is-three-fifths is-hidden-mobile">
+      <div>
+        <picture>
+          <source srcset="{{asset('build/images/login.webp')}}" type="image/webp">
+          <source srcset="{{asset('build/images/login.png')}}" type="image/png">
+          <img src="{{asset('build/images/login.png')}}" alt="loginImg">
+        </picture>
+      </div>
+    </div> #}
+    <div class="column is-5">
+      <form method="post" action="{{loginUrlPost}}" style="padding: 40px 20px;">
+        <h1 class="subtitle is-3">Iniciar sesi&oacute;n</h1>
+        
+        {% if error %}
+          <article class="message is-danger">
+            <div class="message-body">
+              {{ error }}
+            </div>
+          </article>
+        {% endif %}
+
+          {% if info_msg is defined and info_msg != NULL %}
+            <div class="columns is-8">
+              <div class="column">
+                <article class="message is-success">
+                  <div class="message-body">
+                    {{ info_msg | raw }}
+                  </div>
+                </article>
+              </div>
+            </div>
+          {% endif %}
+        
+        <div class="field">
+          <label class="label">Correo electr&oacute;nico</label>
+          <div class="control">
+            <input class="input " type="email"  value="{{ last_username }}"
+                    name="email" id="inputEmail" required
+                    placeholder="Ingrese su direcci&oacute;n de correo electr&oacute;nico" >
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Contrase&ntilde;a</label>
+          <div class="control">
+            <input class="input" type="password" 
+                    name="password" id="inputPassword" required
+                    placeholder="Ingrese su Contrase&ntilde;a" >
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" name="_remember_me">
+              Recu&eacute;rdame
+            </label>
+          </div>
+        </div>
+
+        <div class="field">
+          <p class="control">
+            <button class="button is-primary is-fullwidth-mobile" type="submit">
+              Iniciar sesi&oacute;n
+            </button>
+          </p>
+        </div>
+
+        <div class="field">
+          <div class="control">
+            <a href="{{path('forgot_password')}}">
+              Olvid&eacute; mi contrase&ntilde;a
+            </a>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

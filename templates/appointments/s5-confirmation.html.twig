@@ -1,0 +1,121 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reservar | BambusLife{% endblock %}
+
+{% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {{ encore_entry_link_tags('resources-search') }}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('resources-search') }}
+{% endblock %}
+
+{% block body %}
+
+<div class="container" style="min-height: 600px;padding:10px">
+  
+  {# ERROR MSG #}
+  {% if error_msg is defined and error_msg != NULL %}
+    <div class="columns is-8" style="">
+      <div class="column">
+        <article class="message is-danger">
+          <div class="message-body">
+            {{ error_msg | raw }}
+          </div>
+        </article>
+      </div>
+    </div>
+  {% endif %}
+
+  <div class="appwzrd-cntr">
+    <div class="columns is-mobile is-multiline">
+
+      {# REASON AND TYPE #}
+      <div class="column is-12-desktop is-12-tablet is-12-mobile">
+        <div class="appwzrd-header">
+          <div class="appwzrd-title">
+            <span class="icon">
+              <i class="fas fa-check"></i>
+            </span>
+            <span>
+              Confirmación
+            </span>
+          </div>
+          <div class="appwzrd-subtitle">
+            Revise los datos y confirme su reserva
+          </div>
+        </div>
+      </div>
+      {# BOOKING CARD #}
+      <div class="column is-12-desktop is-12-tablet is-12-mobile">
+        <div class="appn-sum-box appn-sum-box-final">
+          <div class="appn-sum-section">
+            <label>Especialidad</label>
+            <div class="appn-sum-title">Cardiologia</div>
+          </div>
+          <div class="appn-sum-section">
+            <label>Profesional</label>
+            <div class="appn-sum-title">{{appointment.practName}}</div>
+          </div>
+          <div class="appn-sum-section">
+            <label>Lugar</label>
+            {# <div class="appn-sum-title">{{appointment.orgName}}</div> #}
+            {% if appointment.isVirtual == 1 %}
+              <div class="appn-sum-title">Videollamada</div>
+            {% else %}
+              <div class="appn-sum-title">{{appointment.locName}}</div>
+            {% endif %}
+          </div>
+          <div class="appn-sum-section">
+            <label>Fecha</label>
+            <div class="appn-sum-title">{{appointment.dateNice}}</div>
+            <div>{{appointment.slotStartNice}}</div>
+          </div>
+          <div class="appn-sum-section">
+            <label>Razón</label>
+            <div class="appn-sum-title">
+              {{appointment.reason}}
+            </div>
+          </div>
+
+          <div>
+            <a class="button is-primary is-rounded"  href="{{ path('confirmAppointment') }}">
+              Confirmar cita
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  {# Back #}
+  <div class="columns is-8" style="padding: 20px 20px 100px 20px;">
+    <div class="column">
+      <div class="control">
+        <a class="button is-white"  href="{{ path('selectReason', {
+          date: appointment.date, 
+          slotStart: appointment.slotStart, 
+          slotEnd: appointment.slotEnd}) }}">
+          <span class="icon">
+            <i class="fas fa-chevron-left"></i>
+          </span>
+          <span>Volver</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

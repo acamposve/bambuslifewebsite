@@ -1,0 +1,137 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reservar | BambusLife{% endblock %}
+
+{% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {{ encore_entry_link_tags('resources-search') }}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('resources-search') }}
+{% endblock %}
+
+{% block body %}
+
+<div class="container white-box" style="min-height: 600px;padding:10px">
+
+  {# STEPS #}
+  <div class="bl-steps">
+    <ul class="steps is-narrow is-medium is-centered has-content-centered">
+      <li class="steps-segment has-gaps">
+        <span class="steps-marker">
+          <span class="icon">
+            <i class="fas fa-search"></i>
+          </span>
+        </span>
+        <div class="steps-content">
+          <p class="heading">Buscar recursos</p>
+        </div>
+      </li>
+      {# <li class="steps-segment has-gaps">
+        <span class="steps-marker">
+          <span class="icon">
+            <i class="fas fa-user"></i>
+          </span>
+        </span>
+        <div class="steps-content">
+          <p class="heading">Datos cl&iacute;nicos</p>
+        </div>
+      </li> #}
+      <li class="steps-segment has-gaps">
+        <span class="steps-marker">
+          <span class="icon">
+            <i class="fas fa-id-card-alt"></i>
+          </span>
+        </span>
+        <div class="steps-content">
+          <p class="heading">Seleccionar recurso</p>
+        </div>
+      </li>
+      <li class="steps-segment has-gaps">
+        <span class="steps-marker">
+            <span class="icon">
+            <i class="fas fa-calendar-alt"></i>
+            </span>
+        </span>
+        <div class="steps-content">
+            <p class="heading">Hora y dia</p>
+        </div>
+      </li>
+      <li class="steps-segment has-gaps">
+        <span class="steps-marker">
+            <span class="icon">
+            <i class="fas fa-laptop-medical"></i>
+            </span>
+        </span>
+        <div class="steps-content">
+            <p class="heading">Razon y tipo de consulta</p>
+        </div>
+      </li>
+      <li class="steps-segment has-gaps">
+        <span class="steps-marker">
+            <span class="icon">
+            <i class="fas fa-check"></i>
+            </span>
+        </span>
+        <div class="steps-content is-active">
+            <p class="heading" style="color: #38b09d;">Confirmacion</p>
+        </div>
+      </li>
+      <li class="steps-segment has-gaps">
+        <span class="steps-marker">
+            <span class="icon">
+            <i class="fas fa-notes-medical"></i>
+            </span>
+        </span>
+        <div class="steps-content">
+            <p class="heading">Datos pre consulta</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  {# ERROR MSG #}
+  {% if error_msg is defined and error_msg != NULL %}
+    <div class="columns is-8" style="">
+      <div class="column">
+        <article class="message is-danger">
+          <div class="message-body">
+            {{ error_msg | raw }}
+          </div>
+        </article>
+      </div>
+    </div>
+  {% else %}
+    <div>
+        <h1>Cita agendada correctamente.</h1>
+        <div>Para ver todas sus citas puede ir a su perfil.</div>
+    </div>
+  {% endif %}
+
+  {# Back #}
+  <div class="columns is-8" style="padding: 20px 20px 100px 20px;">
+    <div class="column">
+      <div class="control">
+        <a class="button is-white" href="{{ path('profile') }}">
+          <span class="icon">
+            <i class="fas fa-chevron-left"></i>
+          </span>
+          <span>Volver</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

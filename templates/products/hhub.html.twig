@@ -1,0 +1,118 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}HealthHub - EHR Express | BambusLife{% endblock %}
+
+{% block description %}
+
+{% endblock %}
+
+{% block extrameta %}
+  <meta property="og:title" content="HealthHub - EHR Express | BambusLife" />
+  <meta property="og:description" content="" />
+  <meta property="og:type"  content="website" />
+  <meta property="og:url"   content="https://bambus.life{{ app.request.requestUri }}" />
+  <meta property="og:image" content="{{asset('build/images/og/csforentities.png')}}" />
+{% endblock %}
+
+{% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block body %}
+
+  <div class="container">
+    <section class="section" style="padding: 17px 24px;">
+      <div style="max-width: 600px;margin: 50px auto ;text-align: center;">
+        <h1 class="title is-4">Conozca el practico EHR Express que ayuda a profesionales y pequeñas clinicas a prosperar</h1>
+        <h2 class="subtitle is-4">Nosotros nos enfocamos en el sistema para que usted se enfoque en lo que importa, sus pacientes.</h2>
+      </div>
+      <div class="content">
+        <p>
+          Basado en estándares mundiales de definiciones, procesos y sistemas, para brindarle un sistema fácil e práctico
+          que le ahorre tiempo y haga sus servicios mas eficientes.
+        </p>
+        <p>
+          EHR Express le permite gestionar toda su practica, pacientes, encuentros, agenda con un sistema basado en la
+          nube, accesible desde dispositivos de escritorio y moviles.
+        </p>
+      </div>
+      <div style="background-color: #EEE;max-width: 500px;margin: 20px auto 50px auto;">
+        <div style="text-align: center;padding: 10px;">
+          <div style="font-size: 30px;">44.2%</div> del tiempo de los médicos es usado en los sistemas informáticos actuales
+        </div>
+        <div style="background-color: #CCC;font-size: 11px;padding: 4px;text-align: right;">
+          Estudio realizado en Estados Unidos en Septiembre 2017. <a style="color: #777;" href="http://www.annfammed.org/content/15/5/419.full">Fuente</a>
+        <div>
+      </div>
+    </section>
+    <section class="section" style="padding: 17px 24px;background-color: #F8F8F8;">
+      <h2 class="subtitle is-4">Componentes</h2>
+      <h3 style="font-weight: 500;">Pacientes</h3>
+      <p>Gestione sus pacientes, construyendo un perfil completo y una historia de fácil y rápido acceso, con la información 
+      disponible en todo momento.
+      </p>
+      <h3 style="font-weight: 500;margin-top:15px">Encuentros</h3>
+      <p>Registre los encuentros y concentre la información recolectada.</p>
+      <h3 style="font-weight: 500;margin-top:15px">Observaciones</h3>
+      <p>Registre las observaciones y realice informes de análisis de las mismas, envíe los resultados por correo electrónico
+      a sus pacientes.</p>
+      <h3 style="font-weight: 500;margin-top:15px">Dispositivos</h3>
+      <p>Utilice dispositivos de lectura asociados a pacientes para registrar las observaciones de forma automática y 
+      proveer de una telemetría de datos vitales en tiempo real, recibiendo alertas en caso de detectarlas.</p>
+    </section>
+    <section class="section" style="padding: 20px 24px;">
+      <h2 class="subtitle is-4">Empiece hoy sin costo</h2>
+      <div class="content">
+        <p>
+          Con la compra de un dispositivo <a href="{{path('prod_cspro')}}">CardioSecur Pro</a> o ingresando 
+          en el registro de médicos
+          ya puede usar EHR Express gratis.
+        </p>
+        <p>
+          Comience a utilizar EHR Express en minutos, es solo registrarse, no necesita instalar nada.
+          HealthHub esta alojado en uno de los datacenters mas avanzados de latinoamérica con los últimos sistemas 
+          de seguridad y alta disponibilidad para que su información y la de sus pacientes esten siempre disponibles y
+          bajo alta seguridad, <a href="https://www.antel.com.uy/web/datacenter" alt="Datacenter ANTEL">Datacenter ANTEL</a>.
+        </p>
+      </div>
+      <div style="padding: 30px;text-align: center;">
+        <a class="button is-primary" href="{{ path('practitioner_register') }}">
+          Registrése ahora
+        </a>
+      </div>
+    </section>
+    <section class="section" style="padding: 20px 24px;background-color: #F8F8F8;">
+      <h2 class="subtitle is-4">Soporte</h2>
+      <h3 style="font-weight: 500;">Soporte técnico 24/7</h3>
+      <div class="content">
+        <p>
+          Cuenta con soporte técnico por cualquier inconveniente
+        </p>
+      </div>
+      <h3 style="font-weight: 500;"><span style="color:red">Soporte de especialistas médicos</span></h3>
+      <div class="content">
+        <p>
+          <span style="color:red">Puede solicitar servicios de informe de análisis para sus pacientes por nuestros 
+          especialistas.</span>
+        </p>
+      </div>
+    </section>
+    <section class="section">
+      <h2 class="subtitle is-4">Estandares</h2>
+      <p>Basado en los estándares HL7, SNOMED CT y Loinc 
+      API FHIR disponible para interconectar con otros sistemas existentes que disponga.
+      </p>
+    </section>
+    <div style="padding: 30px;text-align: center;">
+      <a class="button is-primary" href="{{ path('practitioner_register') }}">
+        Registrése ahora
+      </a>
+    </div>
+  </div>
+
+
+{% endblock %}
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

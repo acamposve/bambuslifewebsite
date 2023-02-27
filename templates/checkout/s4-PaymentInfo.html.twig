@@ -1,0 +1,430 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Compra - Resumen de compra | BambusLife{% endblock %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {{ encore_entry_link_tags('checkout-s4-payment') }}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('checkout-s4-payment') }}
+{% endblock %}
+
+{% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block body %}
+
+<div class="container" style="background-color: #FEFEFE;padding: 10px;">
+
+  {# STEPS #}
+  <div class="bl-steps">
+    <ul class="steps is-narrow is-medium is-centered has-content-centered">
+      <li class="steps-segment">
+        <a href="{{ path('checkout_userinfo') }}" class="has-text-dark">
+          <span class="steps-marker">
+            <span class="icon">
+              <i class="fas fa-user"></i>
+            </span>
+          </span>
+          <div class="steps-content">
+            <p class="heading" >Datos personales</p>
+          </div>
+        </a>
+      </li>
+      {# <li class="steps-segment ">
+        <a href="{{ path('checkout_patientinfo') }}" class="has-text-dark">
+          <span class="steps-marker">
+            <span class="icon">
+              <i class="fas fa-user"></i>
+            </span>
+          </span>
+          <div class="steps-content">
+            <p class="heading" >Datos cl&iacute;nicos</p>
+          </div>
+        </a>
+      </li> #}
+      <li class="steps-segment">
+        <a href="{{ path('checkout_shipping') }}" class="has-text-dark">
+          <span class="steps-marker">
+            <span class="icon">
+              <i class="fas fa-truck"></i>
+            </span>
+          </span>
+          <div class="steps-content">
+            <p class="heading">Datos de env&iacute;o</p>
+          </div>
+        </a>
+      </li>
+      <li class="steps-segment is-active has-gaps">
+        <span class="steps-marker">
+            <span class="icon">
+            <i class="fas fa-credit-card"></i>
+            </span>
+        </span>
+        <div class="steps-content">
+            <p class="heading" style="color: #38b09d;">Pago</p>
+        </div>
+      </li>
+      <li class="steps-segment has-gaps">
+        <span class="steps-marker ">
+            <span class="icon">
+            <i class="fas fa-check"></i>
+            </span>
+        </span>
+        <div class="steps-content">
+            <p class="heading">Confirmaci&oacute;n</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  {# ERROR MSG #}
+  {% if error_msg is defined and error_msg != NULL %}
+    <div class="columns is-8" style="margin-top: 20px;">
+      <div class="column">
+        <article class="message is-danger">
+          <div class="message-body">
+            {{ error_msg | raw }}
+          </div>
+        </article>
+      </div>
+    </div>
+  {% endif %}
+
+  {# SUCCESS MSG #}
+  {% if success_msg and success_msg | length > 0 %}
+    <div class="columns is-8">
+      <div class="column">
+        <article class="message is-success">
+          <div class="message-body">
+            {{ success_msg | raw }}
+          </div>
+        </article>
+      </div>
+    </div>
+  {% endif %}
+
+
+  {# Shopping cart items #}
+  <div class="columns" style="max-width: 700px;margin: 20px auto 0px auto;border-top: 1px solid #EEE;">
+    <div class="column ">
+      <div class="content">
+        <h4 class="subtitle is-5">Detalles del pedido</h4>
+        {{ render(controller('App\\Controller\\Components\\InvoiceLinesController::index', {'data': details, 'show_remove': FALSE})) }}
+      </div>
+    </div>
+  </div>
+
+  {# Subscription info #}
+  {% if details is defined and details.subscriptions is defined %}
+    <div class="columns" style="max-width: 700px;margin: 20px auto 0px auto;border-top: 1px solid #EEE;">
+      <div class="column">
+        <div class="content">
+          <h4 class="subtitle is-5">Detalles de subscripci&oacute;n</h4>
+          <p style="margin: 0px;font-size: 95%;">Con la compra de los dispositivos y para que estos funcionen se debe abonar una suscripci&oacute;n mensual.</p>
+          <p style="font-size: 95%;">Las siguientes subscripciones ser&aacute;n cargadas a la misma tarjeta que utiliz&oacute; en esta compra.  </p>
+          {{ render(controller('App\\Controller\\Components\\SubscriptionLinesController::index', {'data': details})) }} 
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+
+  {# CHECK COUPONS #}
+  {# {% if navCountry == 'UY' %} #}
+    <div class="columns" style="max-width: 700px;margin: 0 auto;border-top: 1px solid #EEE;">
+      <div class="column">
+        <div class="content">
+          {# <form action="{{ path('checkout_pay_coupon') }}" method="POST" id="formCoupon">
+            <div class="field is-horizontal">
+              <div class="field-label is-normal">
+                <label class="label" style="white-space: nowrap;">Cupon de descuento</label>
+              </div>
+              <div class="field-body">
+                <div class="field has-addons">
+                  <p class="control">
+                    <input class="input" type="text" name="couponCode" placeholder="Código del cupon">
+                  </p>
+                  <p class="control">
+                    <input class="button" type="submit" value="Aplicar">
+                  </p>
+                </div>
+                <div class="messages"></div>
+              </div>
+            </div>
+          </form> #}
+          <div class="button" id="btnDiscount" style="font-size: 15px;" data-country="{{navCountry}}">
+            <i class="fas fa-gift" style="color: #777;margin-right: 6px;"></i> Aplicar cupon de descuento
+          </div>
+        </div>
+      </div>
+    </div>
+  {# {% endif %} #}
+
+  {# More info #}
+  <div class="columns" style="max-width: 800px;margin: 0 auto;border-top: 1px solid #EEE;">
+    <div class="column is-4-desktop is-12-mobile">
+      <h4 class="subtitle is-5">Detalles de Entrega</h4>
+      {% if shippingAddress.address_type == 'Pickup' %}
+        A retirar de : <br><strong>{{shippingAddress.address_recipient}}</strong><br>
+        {{shippingAddress.address_line1}}<br>
+        {% if shippingAddress.address_line2 is defined and shippingAddress.address_line2 | length > 0 %}
+          {{shippingAddress.address_line2}}<br>
+        {% endif %}
+        {% if shippingAddress.pincode is defined %}
+          {{shippingAddress.pincode}},&nbsp;
+        {% endif %}
+        {{shippingAddress.city}}, {{shippingAddress.country}}<br> 
+      {% else %}
+        A nombre de : <br><strong>{{shippingAddress.address_recipient}}</strong><br>
+        {{shippingAddress.address_line1}}<br>
+        {% if shippingAddress.address_line2 is defined and shippingAddress.address_line2 | length > 0 %}
+          {{shippingAddress.address_line2}}<br>
+        {% endif %}
+        {% if shippingAddress.pincode is defined %}
+          {{shippingAddress.pincode}},&nbsp;
+        {% endif %}
+        {{shippingAddress.city}}, {{shippingAddress.country}}<br> 
+      {% endif %}
+    </div>
+    <div class="column is-8-desktop is-12-mobile">
+      {% include 'components/next-steps.html.twig' %}
+    </div>
+  </div>
+
+  {# pay button #}
+  <div class="columns " style="padding: 10px;max-width: 700px;margin: 0 auto;">
+    <div class="column is-full">
+      {{ render(controller('App\\Controller\\Components\\MercadoPagoController::indexCustom', {
+        'callbackUrl'  : path('checkout_payment_post', {'sid': sid}),
+        'userEmail'    : user.email,
+        'amountToPay'  : amountToPay,
+        'currency'     : currency.code,
+        'countryCode'  : countryCode,
+        'btnSize'      : 'is-medium'
+        })) 
+      }}
+        {#'/checkout/payment/'~sid, #}
+      {# {{ render(controller('App\\Controller\\Components\\MercadoPagoController::index', {
+        'amountToPay'  : amountToPay, 
+        'currencyName' : currency.name, 
+        'currency'     : currency.code, 
+        'callbackUrl'  : '/checkout/payment/'~sid})) }} #}
+    </div>
+  </div>
+
+  {# Buttons #}
+  <div class="columns " style="padding: 10px">
+    <div class="column is-full">
+      <div class="control">
+        <a class="button is-white" href="{{ path('checkout_shipping') }}">
+          <span class="icon">
+            <i class="fas fa-chevron-left"></i>
+          </span>
+          <span>Atras</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+{# MODAL DISCOUNTS #}
+<div id="modalDiscount" class="modal" style="position: fixed;">
+  <div class="modal-background" id="modalDiscountBack"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Aplicar cupón de descuento</p>
+    </header>
+    <section class="modal-card-body">
+      <form action="{{ path('checkout_pay_coupon') }}" method="POST" id="formCoupon">
+        <div style="margin-bottom: 10px;border-bottom: 1px dashed #CCC;padding-bottom: 10px;">
+          <div class="field is-horizontal">
+            <div class="field-label is-normal" style="min-width: 200px;text-align:left">
+              <label class="label">Seleccione el beneficiario</label>
+            </div>
+            <div class="field-body">
+              <div class="field">
+                <div class="control">
+                  <div class="select">
+                    <select name="beneficiary" id="beneficiary">
+                      <option value=""></option>
+                      {% if navCountry == 'UY' %}
+                        <option value="ANTEL">Antel</option>
+                        <option value="CEP">Club El País</option>
+                      {% endif %}
+                      <option value="OTHERS">Otros</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="messages"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="discountsPanel">
+          {% if navCountry == 'UY' %}
+            {# ################################
+                ANTEL PANEL 
+            ################################ #}
+            <div id="discAntel">
+              {# FORM #}
+              <div style="border-bottom: 1px dashed #DDD;padding: 10px 0px;">
+                {# CEL NUMBER #}
+                <div class="field is-horizontal">
+                  <div class="field-label is-normal" style="min-width: 200px;text-align:left">
+                    <label class="label">Nro de celular</label>
+                  </div>
+                  <div class="field-body">
+                    <div class="field">
+                      <div class="control">
+                        <input class="input" type="text" name="discAntelCelnum" id="discAntelCelnum" style="width: 200px;">
+                      </div>
+                      <div class="messages" id="discAntelCelnumErr"></div>
+                    </div>
+                  </div>
+                </div>
+                {# COUPON CODE #}
+                <div class="field is-horizontal">
+                  <div class="field-label is-normal" style="min-width: 200px;text-align:left">
+                    <label class="label">Código de cupón</label>
+                  </div>
+                  <div class="field-body">
+                    <div class="field">
+                      <div class="control">
+                        <input class="input" type="text" name="discAntelDiscCode" id="discAntelDiscCode" style="width: 200px;">
+                      </div>
+                      <div class="messages" id="discAntelDiscCodeErr"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {# BENEFIT #}
+              <div style="margin-top: 20px;padding: 6px;border-radius: 3px;font-size: 15px;">
+                <i class="fas fa-gift" style="color: #FF5722;"></i> 
+                <span style="font-size: 16px;font-weight: 500;">Beneficio</span><br>
+                <div style="padding: 5px 20px;">
+                  20% de descuento en la compra de  dispositivos ECG Móvil. 
+                  El descuento aplica a los dispositivos CardioSsecur Pro y CardioSecur Active.
+                </div>
+              </div>
+              {# EXPLANATION #}
+              <div style="margin-top: 20px;padding: 6px;border-radius: 3px;font-size: 15px;">
+                <i class="fas fa-exclamation-circle" style="color: #2196F3;"></i> 
+                <span style="font-size: 16px;font-weight: 500;">Cómo conseguir un cupón</span><br>
+                <ol style="padding-left: 40px;">
+                  <li>Desde su celular llame al número *789# o mediante la aplicación móvil MiAntel buscando en Beneficios a BambusLife</li>
+                  <li>Siga las instrucciones en pantalla para recibir el código de cupón</li>
+                  <li>Ingrese su número de celular y el código de descuento recibido</li>
+                  <li>El carrito le va a confirmar el descuento aplicado y el precio se actualizará acorde</li>
+                </ol>
+              </div>
+              {# LEGAL #}
+              <div style="margin: 15px 0px 0px 0px;font-size: 12px;color: #888;">
+                Beneficio sujeto a vigencia del convenio<br>
+                Aviso Legal: El rol de Antel radica únicamente en la comunicación de los beneficios a sus clientes, 
+                no asumiendo responsabilidad de ningún tipo respecto al producto en sí mismo y a su aprovisionamiento.
+              </div>
+            </div>
+            {# ################################
+              CLUB EL PAIS PANEL 
+              ################################ #}
+            <div id="discCEP">
+              {# FORM #}
+              <div style="border-bottom: 1px dashed #DDD;padding: 10px 0px;">
+                {# CI #}
+                <div class="field is-horizontal">
+                  <div class="field-label is-normal" style="min-width: 200px;text-align: left;">
+                    <label class="label">Nro de tarjeta del club</label>
+                  </div>
+                  <div class="field-body">
+                    <div class="field">
+                      <div class="control">
+                        <input class="input" type="text" name="discCEPCI" id="discCEPCI" style="width: 200px;">
+                      </div>
+                      <div class="messages" id="discCEPCIErr"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {# BENEFIT #}
+              <div style="margin-top: 20px;padding: 6px;border-radius: 3px;font-size: 15px;">
+                <i class="fas fa-gift" style="color: #FF5722;"></i> 
+                <span style="font-size: 16px;font-weight: 500;">Beneficio</span><br>
+                <div style="padding: 5px 20px;">
+                  Promoción especial del 20% en la compra de dispositivos ECG Móvil. 
+                  El descuento aplica a los dispositivos CardioSecur Pro y CardioSecur Active.
+                </div>
+              </div>
+              {# EXPLANATION #}
+              <div style="margin-top: 20px;padding: 6px;border-radius: 3px;font-size: 15px;">
+                <i class="fas fa-exclamation-circle" style="color: #2196F3;"></i> 
+                <span style="font-size: 16px;font-weight: 500;">Cómo usar el beneficio</span><br>
+                <p>
+                  Ingrese su número de tarjeta del Club para aplicar el descuento.
+                </p>
+              </div>
+              {# LEGAL #}
+              <div style="margin: 15px 0px 0px 0px;font-size: 12px;color: #888;">
+                Beneficio sujeto a vigencia del convenio.<br>
+                Aviso Legal: El rol de Club El País radica únicamente en la comunicación de los beneficios a sus 
+                clientes, no asumiendo responsabilidad de ningún tipo respecto al producto en sí mismo y a su 
+                aprovisionamiento.
+              </div>
+            </div>
+          {% endif %}
+          {# OTROS PANEL #}
+          <div id="discBambus">
+            <div style="border-bottom: 1px dashed #DDD;padding: 10px 0px;">
+              <div class="field is-horizontal">
+                <div class="field-label is-normal" style="min-width: 200px;text-align: left;">
+                  <label class="label">Código de cupón</label>
+                </div>
+                <div class="field-body">
+                  <div class="field">
+                    <div class="control">
+                      <input class="input" type="text" placeholder="" name="discBambusCouponCode" id="discBambusCouponCode" style="width: 200px;">
+                    </div>
+                    <div class="messages"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </section>
+    <footer class="modal-card-foot" style="justify-content: flex-end;">
+      <button class="button is-link" id="modalDiscountOK">Aplicar</button>
+      <button class="button" id="modalDiscountCancel">Cancelar</button>
+    </footer>
+  </div>
+</div>
+
+{# MODAL PAYMENT IN PROGRESS #}
+<div id="modalProgress" class="modal" style="position: fixed;">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+    <div style="background-color: #FFF;
+        text-align: center;
+        padding: 40px;
+        border-radius: 4px;">
+      <div style="color: #607D8B;font-size: 50px;"><i class="fas fa-cog fa-spin"></i></div>
+      <div class="subtitle is-3">Procesando su orden...</div>
+      <div>
+        Por favor espere, la transaccion puede tomar varios segundos<br>
+        No cierre ni recargue su navegador
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

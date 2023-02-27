@@ -1,0 +1,290 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {{ encore_entry_link_tags('checkout-s2-patient') }}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('checkout-s2-patient') }}
+{% endblock %}
+
+{% block title %}Compra - Datos clinicos | BambusLife{% endblock %}
+
+{% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block body %}
+
+<div class="container" style="background-color: #FEFEFE;padding: 10px;">
+
+  {# STEPS #}
+  <div style="margin: 10px 0px;">
+    <ul class="steps is-narrow is-medium is-centered has-content-centered">
+      <li class="steps-segment  is-active has-gaps">
+        <a href="{{ path('checkout_userinfo') }}" class="has-text-dark">
+          <span class="steps-marker">
+            <span class="icon">
+              <i class="fas fa-user"></i>
+            </span>
+          </span>
+          <div class="steps-content">
+            <p class="heading"  style="color: #38b09d;">Datos comprador</p>
+          </div>
+        </a>
+      </li>
+      {# <li class="steps-segment is-active has-gaps">
+        <span class="steps-marker">
+          <span class="icon">
+            <i class="fas fa-user"></i>
+          </span>
+        </span>
+        <div class="steps-content">
+          <p class="heading" style="color: #38b09d;">Datos cl&iacute;nicos</p>
+        </div>
+      </li> #}
+      <li class="steps-segment has-gaps">
+        <span class="steps-marker">
+          <span class="icon">
+            <i class="fas fa-truck"></i>
+          </span>
+        </span>
+        <div class="steps-content">
+          <p class="heading">Datos de env&iacute;o</p>
+        </div>
+      </li>
+      <li class="steps-segment has-gaps">
+        <span class="steps-marker">
+            <span class="icon">
+            <i class="fas fa-credit-card"></i>
+            </span>
+        </span>
+        <div class="steps-content">
+            <p class="heading">Pago</p>
+        </div>
+      </li>
+      <li class="steps-segment has-gaps">
+        <span class="steps-marker">
+            <span class="icon">
+            <i class="fas fa-check"></i>
+            </span>
+        </span>
+        <div class="steps-content">
+            <p class="heading">Confirmaci&oacute;n</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  {# FORMS #}
+  {# <div class="columns is-8" style="margin-top: 20px;">
+    <div class="column">
+      <div Class="info-box-grey">
+        Para facilitar la asistencia m&eacute;dica y de diagn&oacute;stico, por favor ingrese los datos cl&iacute;nicos de quien utilizar&aacute; el o los dispositivos.
+      </div>
+    </div>
+  </div> #}
+
+  {# ERROR MSG #}
+  {% if error_msg is defined and error_msg != NULL %}
+    <div class="columns is-mobile" style="">
+      <div class="column is-8-desktop is-offset-2-desktop is-10-mobile is-offset-1-mobile">
+        <article class="message is-danger">
+          <div class="message-body">
+            {{ error_msg | raw }}
+          </div>
+        </article>
+      </div>
+    </div>
+  {% endif %}
+
+  <form name="userInfoLogin" id="userInfoLogin" method="post" action="{{ path('checkout_patientinfo_post') }}" enctype="multipart/form-data">
+    
+    {# DATOS #}
+    <div class="columns is-8" style="padding: 20px;">
+      <div class="column">
+        <h5 class="title is-5">Prescripci&oacute;n m&eacute;dica necesaria</h5>
+        {#<h5 class="title is-5">Datos del paciente</h5>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" id="forOther" name="forOther"
+                {{ patient.forOther ? 'selected' : '' }}>
+              El dispositivo es para otra persona
+            </label>
+          </div>
+        </div> #}
+      </div>
+    </div>
+    {# <div class="columns is-8" style="padding: 20px;"> #}
+
+      {# DATOS BASICOS DE PACIENTE #}
+      {# <div class="column is-half ">
+
+        <div style="max-width: 350px;">
+          <div class="field">
+            <label class="label">Nombre</label>
+            <div class="control">
+              <input class="input" type="text" placeholder="Ingrese su nombre" 
+                name="firstname" id="firstname" value="{{patient.firstname}}">
+            </div>
+            <div class="messages"></div>
+          </div>
+          <div class="field">
+            <label class="label">Apellido</label>
+            <div class="control">
+              <input class="input" type="text" placeholder="Ingrese su apellido" 
+                name="lastname" id="lastname" value="{{patient.lastname}}">
+            </div>
+            <div class="messages"></div>
+          </div>
+          <div class="field">
+            <label class="label">Correo electronico</label>
+            <div class="control">
+              <input class="input" type="email" placeholder="Ingrese su corre electronico" 
+                name="email" id="email" style="display:none" value="{{patient.email}}">
+              <div class="form-readyonly-field">{{user.email}}</div>
+            </div>
+            <div class="messages"></div>
+          </div>
+          <div class="field">
+            <label class="label">Telefono</label>
+            <div class="control">
+              <input class="input" type="text" placeholder="Ingrese su telefono" 
+                name="phonenumber" id="phonenumber" value="{{patient.phone}}">
+            </div>
+            <div class="messages"></div>
+          </div>
+          <div class="field">
+            <label class="label">Pais</label>
+            <div class="control">
+              <div class="select" style="display:none">
+                <select id="country" name="country">
+                  <option value="UY">Uruguay</option>
+                  <option value="CL">Chile</option>
+                </select>
+              </div>
+              <div class="form-readyonly-field">{{patient.countryName}} ({{patient.countryCode}})</div>
+              <input type="hidden" value="{{patient.countryCode}}" id="countryCode" name="countryCode">
+            </div>
+          </div>
+        </div>
+      </div> #}
+
+      {# DATOS CLINICOS DE PACIENTE #}
+      {# <div class="column is-half">
+
+        <div class="field">
+          <label class="label">Fecha de nacimiento</label>
+          <div class="control">
+            <input class="input" type="text" placeholder="Ingrese su fecha de nacimiento" 
+              name="birthdate" id="birthdate" value="{{patient.birthdate}}">
+          </div>
+          <div class="messages"></div>
+        </div>
+        <div class="field">
+          <label class="label">G&eacute;nero</label>
+          <div class="control">
+            <div class="select" >
+              <select name="gender" id="gender">
+                <option value="female">Mujer</option>
+                <option value="male">Hombre</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Peso</label>
+          <div class="control">
+            <div class="select">
+              <input class="input" type="number" placeholder="Ingrese su peso en kg" 
+                name="weight" id="weight" value="{{patient.weight}}">
+            </div>
+          </div>
+          <div class="messages"></div>
+        </div>
+        <div class="field">
+          <label class="label">Altura</label>
+          <div class="control">
+            <div class="select">
+              <input class="input" type="number" placeholder="Ingrese su altura en centimetros" 
+                name="height" id="height"  value="{{patient.weight}}">
+            </div>
+          </div>
+          <div class="messages"></div>
+        </div>
+            
+          
+      </div> #}
+
+    {# </div> #}
+
+    {# PRESCRIPTION #}
+    <div class="columns is-8 is-vcentered" style="padding: 10px;max-width: 800px;margin: 0 auto; background-color: #FFF8E1;border-radius: 6px;">
+      <div class="column is-8" style="position: relative;">
+        <div style="position: absolute;font-size: 20px;left: 10px;">
+          <span class="icon" style="color: #FFC107;">
+            <i class="fas fa-info-circle"></i>
+          </span>
+        </div>
+        <div style="padding-left: 30px;">
+          Por cuestiones regulatorias de su pa&iacute;s, es necesario que nos env&iacute;e la receta m&eacute;dica 
+          donde le prescriben el uso del dispositivo.
+        </div>
+      </div>
+      <div class="column is-4">
+        <div class="file is-centered has-name is-boxed">
+          <label class="file-label">
+            <input class="file-input" type="file" accept=".png, .gif,. jpeg, .pdf" name="resume">
+            <span class="file-cta">
+              <span class="file-icon">
+                <i class="fas fa-upload"></i>
+              </span>
+              <span class="file-label">
+                Seleccione un archivo...
+              </span>
+            </span>
+            <span class="file-name" style="max-width:100%;justify-content:center">
+              Archivo de prescripci&oacute;n
+            </span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    {# STEPS BUTTON #}
+    <div class="columns is-mobile" style="padding: 20px;">
+      <div class="column is-6-mobile is-4-desktop is-offset-2-desktop">
+        <div class="control">
+          <a class="button is-white" href="{{ path('checkout_userinfo') }}" id="btnBack">
+            <span class="icon">
+              <i class="fas fa-chevron-left"></i>
+            </span>
+            <span>Atras</span>
+          </a>
+        </div>
+      </div>
+      <div class="column is-6-mobile is-4-desktop ">
+        <div class="control" style="text-align: right;">
+          <!--<button type="submit" class="button is-primary" id="btnContinue" name="btnContinue">Continuar</button>-->
+          <button type="submit" class="button is-primary"  id="btnContinue">
+            <span>Continuar</span>
+            <span class="icon">
+              <i class="fas fa-chevron-right"></i>
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </form>
+
+</div>
+
+{% endblock %}
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

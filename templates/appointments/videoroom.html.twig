@@ -1,0 +1,109 @@
+{% extends 'base.html.twig' %}
+
+{% set supportDisabled = TRUE %}
+
+{% block title %}Encuentro | BambusLife{% endblock %}
+
+{# {% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %} #}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {{ encore_entry_link_tags('appointment-virtual') }}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('appointment-virtual') }}
+   <script src="https://video.bambus.tech/js/bundle.js"></script>
+{% endblock %}
+
+{% block body %}
+
+<div class="container" style="min-height: 600px;padding:10px">
+
+  {# ERROR MSG #}
+  {% if error_msg is defined and error_msg != NULL %}
+    <div class="columns is-8" style="">
+      <div class="column">
+        <article class="message is-danger">
+          <div class="message-body">
+            {{ error_msg | raw }}
+          </div>
+        </article>
+      </div>
+    </div>
+  {% else %}
+    <div id="videoinit" class="columns is-mobile is-multiline" 
+      data-token="{{participant.token}}" data-publicurl="{{videoroomsPublicUrl}}">
+      <div class="column is-12 has-text-centered">
+        <div style="padding:20px;font-size:90px"><i class="fas fa-calendar-alt" style="color: #AAA;"></i></div>
+      </div>
+      <div class="column is-12 has-text-centered">
+        <div>Ingresando a la cita...</div>
+      </div>
+      <div id="msgprompt" class="column is-12 has-text-centered" style="display:none;background-color: #FFE082;padding: 7px 15px;border-radius: 26px;width: auto;margin: 0 auto;">
+        <div>
+          <i class="fas fa-info-circle" style="color: #FF8A65;"></i> 
+          <span>
+            Por favor, habilite el acceso del navegador a la cámara y al micrófono para poder acceder.
+          </span>
+        </div>
+      </div>
+      <div id="msgdenied" class="column is-12 has-text-centered" style="display:none;background-color: #FFE082;padding: 7px 15px;border-radius: 8px;width: auto;margin: 0 auto;">
+        <div>
+          <i class="fas fa-info-circle" style="color: #FF8A65;"></i>
+          <span>
+            Los permisos a la cámara y el micrófono no estan habilitados. <br>
+            Por favor, habilite el acceso del navegador a la cámara y al micrófono para poder acceder a la cita.</div>
+          </span>
+      </div>
+    </div>
+
+    <div id="videocntr">
+      <div id="videoel">
+      </div>
+    </div>
+
+    <div id="callend" style="display:none; margin: 0 auto;max-width: 400px;box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.4);padding: 15px 30px;border-radius: 5px;">
+      <div class="columns is-mobile is-multiline">
+        <div class="column is-12 has-text-centered">
+          <div style="font-size:20px;font-weight:600;margin-top: 30px;">Ha abandonado la llamada de la cita</div>
+        </div>
+        <div class="column is-12 has-text-centered">
+          <div class="column is-12 has-text-centered" style="color: #888;text-transform: uppercase;font-size: 13px;margin: 20px 0px 30px 0px;">
+            Puede cerrar el navegador o esta pestaña
+          </div>
+        </div>
+      </div>
+      <div class="columns" style="flex-direction: column;">
+        <div style="font-size: 14px;text-align: center;margin-top: 10px;max-width: 400px;margin: 0 auto;background-color: #FAFAFA;border-radius: 5px;border: 1px solid #EEE;padding: 6px;">
+          <div>
+            En caso que haya abandonado la llamada por error, puede volver a entrar haciendo click en el boton de abajo.
+          </div>
+          <a id="reEnter" class="button is-link is-rounded" style="margin-top: 12px;align-self: center;">
+            <span>Volver a la llamada</span>
+          </a>
+        </div>
+      </div>
+      <div class="columns" style="padding: 20px 20px 100px 20px;">
+        <div class="column has-text-centered">
+          <div class="control" style="text-align: center;">
+            <a class="button is-white" href="{{ path('profile') }}">
+              <span>Volver</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+</div>
+
+
+{% endblock %}
+
+{# {% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %} #}

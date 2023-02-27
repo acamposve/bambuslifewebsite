@@ -1,0 +1,235 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Subscripci&oacute;n | BambusLife{% endblock %}
+
+{% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {{ encore_entry_link_tags('billing-details') }}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('billing-details') }}
+{% endblock %}
+
+{% block body %}
+
+
+{# 
+-subscription
+Estado(status) X
+date from
+date to
+Fecha de creacion(creation_date)
+Vencimiento (due_date)
+-payment entry
+fecha de pago (transaction_date)
+metodo de pago (hhub_payment_gateway)x
+numero de transaccion (transaction_date)
+ultimos 4 digitos de la tarjeta (hhub_card_last4)x
+
+#}
+<div class="container" style="min-height: 600px;">
+
+  {# ERROR MSG #}
+  {% if error_msg is defined and error_msg != NULL %}
+    <div class="columns is-8" style="margin-top: 20px;">
+      <div class="column">
+        <article class="message is-danger">
+          <div class="message-body">
+            {{ error_msg | raw }}
+          </div>
+        </article>
+      </div>
+    </div>
+ 
+  {% else %}
+
+     {% if payment is defined and payment == 1 and subscriptions.result.status != "Cancelled" %}
+        <div class="columns is-8" style="margin-top: 20px;">
+          <div class="column">
+            <article class="message is-danger">
+              <div class="message-body" style="color: #333;">
+                <div style="position: relative;margin-bottom: 10px;">
+                  <i class="fas fa-exclamation-triangle" style="left:0px;top:0px;position:absolute;font-size: 20px;color: #FFC107;"></i>
+                  <h3 class="subtitle is-5" style="padding-left:30px;">Su cuenta se encuentra suspendida</h3>
+                </div>
+                <p>No hemos podido procesar su ultimo pago de su subscripci&oacute;n.</p>
+                <p>Intente nuevamente con la tarjeta actual o acutalice sus datos de pago para continuar usando el servicio</p>
+                <div style="margin-top:10px">
+                  <a class="button is-primary" href="{{ path('invoice_details', {'invoiceToken': invoices[0].hashedName}) }}">Intentar nuevamente</a>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+     {% endif %}
+  
+  <div class="columns">
+    <div class="column is-full">
+      <h3 style="margin-top: 20px;" class="subtitle is-4">
+        Subscripci&oacute;n <span style="font-size: 50%;color: #999;">#{{subscriptions.result.name}}</span>
+      </h3>
+    </div>
+  </div>
+
+  {# DATOS DE USUARIO #}
+  <div class="columns white-box-sh" style="padding-top: 8px;">
+    <div class="column is-full" style="padding: 5px 15px;">
+      {# <div class="has-text-grey" style="font-size: 13px;text-transform: uppercase;">Subscripcion:</div>
+      <div class="has-text-grey" style="font-size: 13px;text-transform: uppercase;margin-top: 12px;">Estado:</div>
+      <div><strong>{{subscriptions.result.status}}</strong></div>
+      <div class="has-text-grey" style="font-size: 13px;text-transform: uppercase;margin-top: 12px;">Pr&oacute;xima factura:</div>
+      <div>{{subscriptions.result.current_invoice_end}}</div>
+      <div class="has-text-grey" style="font-size: 13px; margin-top: 20px;text-transform: uppercase;">Planes:</div> #}
+
+      <table class="table" style="width: 100%;background-color:transparent">
+        <tr>
+          <th class="has-text-grey" style="font-size: 12px;font-weight: 400;">ESTADO</th>
+          <th class="has-text-grey" style="font-size: 12px;font-weight: 400;white-space: nowrap;">FACTURA ACTUAL</th>
+          <th class="has-text-grey" style="font-size: 12px;font-weight: 400;">TOTAL</th>  
+        </tr>
+        <tr>
+          <td>{{subscriptions.result.status | subscriptionStatusIcon | raw}} {{ subscriptions.result.status | subscriptionStatus }}</td>
+          <td>{{ subscriptions.result.current_invoice_start_to_show }}</td>
+          <td>
+            <span style="font-size: 80%;color: #888;">{{ subscriptions.result.total_currency }} </span>
+            {{ subscriptions.result.total_price_to_show }}
+            <span style="font-size: 90%;color: #999;">(por mes)</span>
+          </td>
+        </tr>
+      </table>
+
+      {# {{subscriptions.result.plans | json_encode}} #}
+
+      <table class="table" style="background-color:transparent">
+        {# <tr>
+          <th>Plan</th>
+          <th>Cantidad</th>
+          <th>Total</th>  
+        </tr> #}
+        <tr>
+          <th colspan="3" class="has-text-grey" style="font-size: 12px;font-weight: 400;">
+            PLANES INCLUIDOS
+          </th>
+        </tr>
+        {% for plan in subscriptions.result.plans %}
+          <tr>
+            <td>
+              <div>{{ plan.plan_name }}<div>
+              {% if plan.fees > 0 %}
+                <div style="color: #999;font-size: 80%;">Cuotas: {{plan.current_fee}} de {{plan.fees}}</div>
+              {% endif %}
+              <div>
+            </td>
+            <td style="vertical-align: top;">{{ plan.qty }}</td>
+            <td style="vertical-align: top;">
+              <span style="font-size: 80%;color: #888;">{{plan.currency}} </span>  
+              {{ plan.total_to_show }}
+            </td>
+          </tr>
+        {% endfor %}
+        {% if subscriptions.result.discount_amount > 0 %}
+          <tr>
+            <td colspan="2" style="text-align:right;border-bottom:0px">
+              Descuento
+            </td>
+            <td style="text-align:right;border-bottom:0px">  
+              <span style="font-size: 80%;color: #888;">{{ subscriptions.result.total_currency }} </span>
+              -{{ subscriptions.result.discount_amount_to_show }}
+            </td>
+          </tr>
+        {% endif %}
+        {% if subscriptions.result.taxes_price > 0 %}
+          <tr>
+            <td colspan="2" style="text-align:right;border-bottom:0px">
+              Impuestos
+            </td>
+            <td style="text-align:right;border-bottom:0px">  
+              <span style="font-size: 80%;color: #888;">{{ subscriptions.result.total_currency }} </span>
+              {{ subscriptions.result.taxes_price_to_show }}
+            </td>
+          </tr>
+        {% endif %}
+        <tr>
+          <td colspan="2" style="text-align:right;border-bottom:0px">
+            Total
+          </td>
+          <td style="text-align:right;border-bottom:0px">
+            <span style="font-size: 80%;color: #888;">{{ subscriptions.result.total_currency }} </span>
+            {{ subscriptions.result.total_price_to_show }}
+          </td>
+        </tr>
+        
+      </table>
+
+      {# <div class="has-text-grey" style="font-size: 13px;text-transform: uppercase;margin-top: 12px;">Total mensual:</div>
+      <div><strong><span>{{ subscriptions.result.total_currency }}<span>  {{ subscriptions.result.total_price_to_show }}</strong></div> #}
+      
+      {# <div class="has-text-grey" style="font-size: 13px;text-transform: uppercase;margin-top: 12px;">Total mensual:</div>
+      <div><strong><span>{{ subscriptions.result.total_currency }}<span>  {{ subscriptions.result.total_price }}</strong></div> #}
+
+      <div style="font-size: 12px;color: #666;margin: 5px 0;">
+        La mensualidad se factura al principio de cada per&iacute;odo y por lo tanto podr&iacute;an aparecer en su cuenta algunos d&iacute;as despu&eacute;s de la fecha de facturaci&oacute;n.
+      </div>
+
+    </div>
+  </div>
+
+  <div class="columns white-box-sh" style="margin-top: 20px;">
+    <div class="column is-full" style="padding: 10px;">
+      <div class="has-text-grey" style="font-size: 13px;text-transform: uppercase; margin-left: 9px;">Facturas</div>
+      <ul class="retable">
+        <li class="retableHeading columns">
+          <div class="column billDate">Fecha</div>
+          <div class="column ">Per&iacute;odo</div>
+          <div class="column ">Total</div>
+          <div class="column ">Estado</div>
+          <div class="column "></div>
+        </li>
+        {% for invoice in invoices %}
+          <li class="retableRow columns">
+            <div class="column billDate">
+              <a class="button is-text"href="{{ path('invoice_details', {'invoiceToken': invoice.hashedName}) }}">{{ invoice.creationToShow }}</a>
+            </div>
+            <div class="column billPeriod">
+              {{ invoice.from_date_to_show }} - {{ invoice.to_date_to_show }}
+            </div>
+            <div class="column billTotal">
+              {# <span>{{invoice.currency}}<span> {{ invoice.rounded_total_toshow }} #}
+              <span>USD<span> {{ invoice.base_grand_total_toshow }}
+            </div>
+            <div class="column billStatus">
+              {{ invoice.status | invoiceStatus }}
+            </div>
+            <div class="column ">
+              {% if invoice.status == 'Unpaid' %}
+                <a class="button is-text is-fullwidth-mobile" href="{{ path('invoice_details', {'invoiceToken': invoice.hashedName}) }}">Pagar</a>
+              {% endif %}
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+
+    </div>
+  </div>
+
+  <div>Se muestran las &uacute;ltimas 6 facturas. Por m&aacute;s informaci&oacute;n por favor solic&iacute;tela a trav&eacute;s de nuestros contactos.</div>
+
+  <div style="width: 100%;text-align: center;margin: 30px 0px;">
+    <a class="button" href="{{ path('profile') }}">Volver</a>
+  </div>
+
+  {% endif %}
+</div>
+
+{% endblock %}
+
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

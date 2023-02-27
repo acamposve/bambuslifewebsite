@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {{ encore_entry_link_tags('register') }}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('register') }}
+{% endblock %}
+
+{% block title %}Registro de paciente | BambusLife{% endblock %}
+{% block description %}
+Ingrese al Portal de Gestión de sus Datos Clínicos
+{% endblock %}
+
+{% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block body %}
+
+  <div class="container" style="background-color: #FEFEFE;padding: 10px;">
+
+    <div class="columns" style="min-height: 600px;">
+      <div class="column">
+        {# ERROR MSG #}
+        {% if error_msg is defined and error_msg != NULL %}
+          <div class="columns is-8" style="">
+            <div class="column">
+              <article class="message is-danger">
+                <div class="message-body">
+                  {{ error_msg | raw }}
+                </div>
+              </article>
+            </div>
+          </div>
+        {% endif %}
+
+        {% if not completed %}
+          {{ render(controller('App\\Controller\\Components\\LoginController::index' , {title:'Registro', showBillAsOption: FALSE, email:NULL})) }}
+          <div style="display:none" data-url="{{ path('registerPatient') }}?c=1" id="postlogin"></div>
+        {% else %}
+          <h1 class="subtitle is-3">Registro completo</h1>
+          <h2>Gracias por registrarse con nosotros</h2>
+
+          <p style="margin-top: 20px;">
+            Usted como paciente tiene las funcionalidades para que pueda interactuar con los médicos a 
+            distancia, ya sea enviando algunos datos clínicos como también reservar una consulta presencial 
+            o por videollamada.
+          </p>
+
+          <div style="margin-top: 40px;">
+            <a  class="button is-primary" href="{{ path('clinicalProfile') }}">
+              Completar datos clínicos
+            </a>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

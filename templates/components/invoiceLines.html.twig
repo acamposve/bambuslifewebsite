@@ -1,0 +1,161 @@
+
+<table class="table is-narrow is-fullwidth cart">
+  <thead>
+    <tr>
+      <th>Item</th>
+      <th style="text-align: center;">Cantidad</th>
+      <th style="text-align: center;">Precio</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    {# LINES #}
+    {% for item in data.items %}
+      <tr>
+        <td>
+          <div style="display: inline-flex;flex-direction: column;">
+            <div>{{item.name}}</div> 
+            {% if item.subscription_code is defined and item.subscription_code != NULL %}
+              {% if item.subscription_code == 'CS-PRO-SUBS-12' %}
+                <div style="font-size: 90%;color: #999;">con subscription de 12 leads</div>
+              {% elseif item.subscription_code == 'CS-PRO-SUBS-22' %}
+                <div style="font-size: 90%;color: #999;">con subscription de 22 leads</div>
+              {% elseif item.interpretation_code is defined and item.interpretation_code != NULL and item.interpretation_code | length > 0 %}
+                <div style="font-size: 90%;color: #999;">con interpretaci&oacute;n</div>
+              {% endif %}
+            {% endif %}
+          </div>
+          {% if show_remove %}
+            <div style="display: inline-flex;flex-direction: column;justify-content: center;">
+              <a class="button" href="{{ path('cart_remove', {idx: loop.index0}) }}" style="margin-left: 10px;color: #BBB;border: 0px;">
+                <span class="icon">
+                  <i class="fas fa-trash-alt"></i>
+                </span>
+              </a>
+            </div>
+          {% endif %}
+        </td>
+        <td  style="text-align:center">
+          {{item.qty}}
+        </td>
+        <td style="text-align:right">
+          {# <span style="font-size: 80%;">{{item.currency}}</span> {{item.totalToShow}} #}
+          <span style="font-size: 80%;color: #888;">USD</span> {{item.base_totalToShow}}
+        </td>
+      </tr>
+    {% endfor %}
+
+    {# DISCOUNTS (on Net Total) #}
+    {% if data.discount is defined and data.discount != NULL and data.discount.discountAmount != 0 and (data.discount.apply_discount_on == "Net Total" or data.discount.apply_discount_on == "Net total") %}
+      <tr>
+        <td style="text-align:right;border: 0px;" colspan="2">
+          Descuento<br>
+          <i style="color: #777;">{{data.discount.name}}</i>
+        </td>
+        <td style="text-align:right;">
+          <span style="font-size: 80%;color: #888;">USD</span> -{{data.discount.discountAmountToShow}}
+        </td>
+      </tr>
+    {% endif %}
+
+    {# SUBTOTAL #}
+    <tr>
+      <td style="text-align:right;border: 0px;" colspan="2">
+        Subtotal
+      </td>
+      <td style="text-align:right;">
+        {# <span style="font-size: 80%;">{{data.total.currency}}</span> {{data.total.priceToShow}} #}
+        <span style="font-size: 80%;color: #888;">USD</span> {{data.total.base_priceToShow}}
+      </td>
+    </tr>
+
+    {# SHIPPING INTERNATIONAL #}
+    {% if data.shippingIntl is defined and data.shippingIntl.base_price > 0 %}
+      <tr>
+        <td style="text-align:right;border: 0px;" colspan="2">
+          Env&iacute;o internacional
+        </td>
+        <td style="text-align:right;">
+          <span style="font-size: 80%;color: #888;">USD</span> {{data.shippingIntl.base_priceToShow}}
+        </td>
+      </tr>
+    {% endif %}
+
+    {# SHIPPING LOCAL #}
+    {% if data.shippingLocal is defined and data.shippingLocal.base_price > 0 %}
+      <tr>
+        <td style="text-align:right;border: 0px;" colspan="2">
+          Env&iacute;o nacional
+        </td>
+        <td style="text-align:right;">
+          <span style="font-size: 80%;color: #888;">USD</span> {{data.shippingLocal.base_priceToShow}}
+        </td>
+      </tr>
+    {% endif %}
+
+    {# SHIPPING (para cuando no se sabe si es intl o local) #}
+    {% if data.shipping is defined and data.shipping.base_price > 0 %}
+      <tr>
+        <td style="text-align:right;border: 0px;" colspan="2">
+          Env&iacute;o
+        </td>
+        <td style="text-align:right;">
+          <span style="font-size: 80%;color: #888;">USD</span> {{data.shipping.base_priceToShow}}
+        </td>
+      </tr>
+    {% endif %}
+
+    {# DISCOUNTS (on Grand Total) #}
+    {% if data.discount is defined and data.discount != NULL and data.discount.discountAmount != 0 and data.discount.apply_discount_on == "Grand Total" %}
+      <tr>
+        <td style="text-align:right;border: 0px;" colspan="2">
+          Descuento<br>
+          <i style="color: #777;">{{data.discount.name}}</i>
+        </td>
+        <td style="text-align:right;">
+          <span style="font-size: 80%;color: #888;">USD</span> -{{data.discount.discountAmountToShow}}
+        </td>
+      </tr>
+    {% endif %}
+
+    {# TAXES #}
+    {% if data.taxes is defined and data.taxes.base_taxes_amount > 0 %}
+      <tr>
+        <td style="text-align:right;border: 0px;" colspan="2">Impuestos</td>
+        <td style="text-align:right;">
+          {# <span style="font-size: 80%;">{{data.taxes.currency}}</span> {{data.taxes.taxes_amountToShow}} #}
+          <span style="font-size: 80%;color: #888;">USD</span> {{data.taxes.base_tax_amount_after_discount_amountToShow}}
+        </td>
+      </tr>
+    {% endif %}
+
+    {# ADJUSTMENTS #}
+    {# {% if data.rounding_adjustment is defined and data.rounding_adjustment.price != 0  %}
+      <tr>
+        <td style="text-align:right;border: 0px;" colspan="2">Redondeo</td>
+        <td style="text-align:right;">
+          {# <span style="font-size: 80%;">{{data.rounding_adjustment.currency}}</span> {{data.rounding_adjustment.priceToShow}} #}
+          {# <span style="font-size: 80%;color: #888;">USD</span> {{data.rounding_adjustment.base_priceToShow}}
+        </td>
+      </tr>
+    {% endif %} #}
+
+    {# TOTAL | GRAND_TOTAL #}
+    {# {% if data.rounded_total is defined %}
+      <tr>
+        <td class="cart-total-lbl" colspan="2">Total:</td>
+        <td class="cart-total-val" id="grandTotal" data-grandTotalAmount="{{data.grand_total.price}}" data-grandTotalCurrency="{{data.grand_total.currency}}">
+          <span>USD</span> {{data.rounded_total.base_priceToShow}}
+        </td>
+      </tr>
+    {% else %} #}
+      <tr>
+        <td></td>
+        <td class="cart-total-lbl">Total:</td>
+        <td class="cart-total-val" id="grandTotal" data-grandTotalAmount="{{data.grand_total.price}}" data-grandTotalCurrency="{{data.grand_total.currency}}">
+          <span>USD</span> {{data.grand_total.base_priceToShow}}
+        </td>
+      </tr>
+    {# {% endif %} #}
+  </tbody>
+</table>

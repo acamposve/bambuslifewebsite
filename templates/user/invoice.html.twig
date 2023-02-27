@@ -1,0 +1,201 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Factura - {{invoice is defined and invoice != NULL ? invoice.invoice_name : "Factura "}} | BambusLife{% endblock %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {{ encore_entry_link_tags('invoice') }}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('invoice') }}
+{% endblock %}
+
+{% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block body %}
+  <div class="container" style="background-color: #FEFEFE;padding: 10px;">
+
+    {# ERROR MSG #}
+    {% if error_msg is defined and error_msg != NULL %}
+    
+      <div class="columns is-8" style="margin-top: 20px;">
+        <div class="column">
+          <article class="message is-danger">
+            <div class="message-body">
+              {{ error_msg | raw }}
+            </div>
+          </article>
+        </div>
+      </div>
+
+    {% endif %}
+
+    {# SUCCESS MSG #}
+    {% if paid_out is defined and paid_out | length > 0 and invoice.status == 'Paid' %}
+      <div class="columns is-8">
+        <div class="column">
+          <article class="message is-success">
+            <div class="message-body">
+              Se confirmo el pago.
+            </div>
+          </article>
+        </div>
+      </div>
+    {% endif %}
+
+    <div class="columns">
+      <div class="column is-12">
+        <h1 class="subtitle is-4">Factura {{invoice.invoice_name}}</h1>
+      </div>
+    </div>
+
+    <div class="columns">
+      <div class="column is-6-desktop is-12-mobile">
+        <table class="table table-borderless table-thinpad">
+        <tr>
+            <td style="vertical-align: top;">
+              <picture>
+                <source srcset="{{asset('build/images/BambusLogo50.webp')}}" type="image/webp">
+                <source srcset="{{asset('build/images/BambusLogo50.png')}}" type="image/png">
+                <img src="{{asset('build/images/BambusLogo50.png')}}" >
+              </picture>
+            </td>
+            <td>
+              <p>
+                BambusLife<br>
+                Bulevar España 2630, 11300<br>
+                Montevideo Uruguay<br>
+              </p>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="column is-6-desktop is-12-mobile">
+        <table class="table table-borderless table-thinpad">
+          <tr>
+            <td>
+              A nombre de:<br>
+              <strong>{{ invoice.customerData.name }}</strong><br>
+              {{ invoice.customerData.address.address_line1 }}<br>
+              {% if invoice.customerData.address.address_line2 | length > 0 %}
+                {{ invoice.customerData.address.address_line2 }}<br>
+              {% endif %}
+              {{ invoice.customerData.address.city }}, {{ invoice.customerData.address.country }}<br>
+              Tel: {{ invoice.customerData.phone }}<br>
+              {{ invoice.customerData.email }}<br>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="columns">
+      <div class="column is-6-desktop is-12-mobile">
+        <table class="table table-borderless table-thinpad">
+          <tr>
+            <td>Nro. de factura:</td>
+            <td><strong>{{ invoice.invoice_name }}</strong></td>
+          </tr>
+          <tr>
+            <td>Fecha:</td>
+            <td>{{ invoice.creation }}</td>
+          </tr>
+          <tr>
+            <td>Estado:</td>
+            <td>{{ invoice.status | invoiceStatus }}</td>
+          </tr>
+        </table>
+      </div>
+      {% if invoice.status == 'Paid' %}
+        <div class="column is-6-desktop is-12-mobile">
+          <table class="table table-borderless table-thinpad">
+            <tr>
+              <td>M&eacute;todo de pago:</td>
+              <td>{{ invoice.hhub_payment_gateway }}</td>
+            </tr>
+            <tr>
+              <td>Tarjeta:</td>
+              <td>**** **** **** {{ invoice.hhub_card_last4 }}</td>
+            </tr>
+            <tr>
+              <td>Per&iacute;odo:</td>
+              <td>{{ invoice.from_date }} - {{ invoice.to_date }}</td>
+            </tr>
+            <tr>
+              <td>Transacci&oacute;n:</td>
+              <td><strong>{{ invoice.hhub_payment_trxid }}</strong></td>
+            </tr>
+          </table>
+        </div>
+      {% endif %}
+    </div>
+    
+    <div class="columns is-1">
+      <div class="column is-full">
+        <h4 class="subtitle is-5">Items</h4>
+        {{ render(controller('App\\Controller\\Components\\InvoiceLinesController::index', {'data': data, 'show_remove': FALSE})) }}
+      </div>
+    </div>
+
+    {# pay button #}
+    {% if invoice.status != 'Paid' and currency != NULL %}
+      <div class="columns" style="padding: 20px;">
+        <div class="column">
+          {# {{ render(controller('App\\Controller\\Components\\MercadoPagoController::index', {
+            'amountToPay'  : data.rounded_total.price_float, 
+            'currencyName' : currency.name, 
+            'currency'     : currency.code, 
+            'callbackUrl'  : '/invoice/' ~ data.order_hashed_id ~ '/' ~ sid 
+          })) }} #}
+          {{ render(controller('App\\Controller\\Components\\MercadoPagoController::indexCustom', {
+            'callbackUrl'  :'/invoice/' ~ data.order_hashed_id ~ '/' ~ sid ,
+            'userEmail'    : user.email,
+            'amountToPay'  : data.grand_total.price, 
+            'currency'     : currency.code,
+            'countryCode'  : payCountry
+            }))
+          }}
+        </div>
+      </div>
+      <div id="modalProgress" class="modal" style="position: fixed;">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+          <div style="background-color: #FFF;
+              text-align: center;
+              padding: 40px;
+              border-radius: 4px;">
+            <div style="color: #607D8B;font-size: 50px;"><i class="fas fa-cog fa-spin"></i></div>
+            <div class="subtitle is-3">Procesando su pago...</div>
+            <div>
+              Por favor espere, la transaccion puede tomar varios segundos<br>
+              No cierre ni recargue su navegador
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+
+    {# Back #}
+    <div class="columns is-8" style="padding: 20px 20px 100px 20px;">
+      <div class="column">
+        <div class="control">
+          <a class="button is-white" href="{{ path('profile') }}">
+            <span class="icon">
+              <i class="fas fa-chevron-left"></i>
+            </span>
+            <span>Atras</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+      
+  </div>
+{% endblock %}
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

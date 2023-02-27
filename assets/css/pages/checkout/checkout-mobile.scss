@@ -1,0 +1,34 @@
+@media (max-width: 787px) {
+  .bl-steps {
+    .steps {
+      display: flex !important;
+      flex-direction: row !important;
+      .steps-segment {
+        // overflow: hidden;
+        flex-direction: column;
+        display: flex !important;
+        align-items: center;
+        max-width: 25%;
+        width: 25%;
+        .steps-content {
+          display: none;
+          padding: 0px;
+          margin: 4px 0px 0px 0px;
+          text-align: center;
+          padding-top: 0px !important;
+        }
+        &.is-active{
+          .steps-content {
+            display: flex;
+          }
+        }
+        &::after {
+          left: 33% !important;
+          top: 18px !important;
+          width: 100% !important;
+          height: 4px !important;
+        }
+      }
+    }
+  }
+}

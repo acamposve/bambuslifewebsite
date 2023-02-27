@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Elije un producto | Monitor cardiaco | BambusLife{% endblock %}
+
+{% block description %}Elija el producto que se adecua mejor a usted. CardioSecur Active para uso personal o CardioSecur Pro para uso profesional | BambusLife{% endblock %}
+
+{% block keywords %}Comprar CardioSecur, elegir producto{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+{{ include('sd/breadcrumbs.html.twig', { 'items': [{'name':'Productos',"url":path('order_index')}] }) }}
+{% endblock %}
+
+{% block header %}
+{{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <section class="section services has-bottom-line">
+        <div class="columns">
+            <div class="column has-text-centered">
+                <a id="productos"></a>
+                <h2 class="title">Productos y Servicios</h2>
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column has-text-centered">
+                <h5 class="doctor">MÉDICOS</h5>
+                <a href="">
+                    <img src="{{ asset('build/images/producto-doctor.png') }}" class="is-fullwidth">
+                </a>
+                <ul>
+                    <li>Compra o arrendamiento del dispositivo y suscripción por un año.</li>
+                    <li>Equipo alemán certificado como producto sanitario clase IIa (CE).</li>
+                    <li>ECG de hasta 22 derivaciones.</li>
+                    <li>Portal de gestión médica para informes de diagnóstico.</li>
+                    <li>Atención de sus pacientes a traves de telemedicina cardíaca.</li>
+                    <li>Envío de dispositivo a domicilio.</li>
+                </ul>
+
+                <p><a class="button is-primary is-rounded is-medium" href="{{ path('order_cspro') }}"><span>Suscripción</span><span class="is-size-6">MÉDICO</span></a></p>
+            </div>
+            <div class="column has-text-centered">
+                <h5 class="family">PACIENTE Y FAMILIA</h5>
+                <div class="has-left-line">
+                    <a href="">
+                        <img src="{{ asset('build/images/producto-paciente.png') }}" class="is-fullwidth">
+                    </a>
+                    <ul>
+                        <li>Arriendamiento de dispositivo y suscripción por un año.</li>
+                        <li>Conexión con su médico tratante y/o entidad médica.</li>
+                        <li>Realización de informes de diagnóstico con su médico a través de telemedicina.</li>
+                        <li>Alerta de estado cardíaco inmediata y automática.</li>
+                        <li>Envío de dispositivo a su domicilio.</li>
+                        <li>Soporte para hasta 3 usuarios con el mismo dispositivo.</li>
+                    </ul>
+                </div>
+                <p><a class="button is-primary is-rounded is-medium" href="{{ path('order_csactive') }}"><span>Suscripción</span><span class="is-size-6">PACIENTE Y FAMILIA</span></a></p>
+            </div>
+        </div>
+    </section>
+</div>
+
+{% endblock %}
+
+{% block footer %}
+    {{ include('components/footer.html.twig') }}
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Invitación de familiar o amigo | BambusLife{% endblock %}
+
+{% block header %}
+{{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block body %}
+
+
+<div class="container" style="min-height: 600px;">
+
+  {# ERROR MSG #}
+  {% if error_msg is defined and error_msg != NULL %}
+    <div class="columns is-8" style="margin-top: 20px;">
+      <div class="column">
+        <article class="message is-danger">
+          <div class="message-body">
+            {{ error_msg | raw }}
+          </div>
+        </article>
+      </div>
+    </div>
+ 
+  {% else %}
+    
+    <div class="columns is-8" style="margin-top: 20px;">
+      <div class="column">
+        <h5 class="title is-5">Invitación enviada</h5>
+        <p>
+          Hemos enviado la invitacion a {{recipientName}} a su correo {{recipientEmail}}.
+        </p>
+        <p>
+          Le avisaremos cuando acepte la invitación.
+        </p>
+      </div>
+    </div>
+
+  {% endif %}
+
+
+  <div style="width: 100%;text-align: center;margin: 30px 0px;">
+    <a class="button" href="{{ path('profile') }}">Volver</a>
+  </div>
+
+</div>
+
+{% endblock %}
+
+{% block footer %}
+{{ include('components/footer.html.twig') }}
+{% endblock %}

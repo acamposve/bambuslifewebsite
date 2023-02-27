@@ -1,0 +1,40 @@
+// Footer ------------------------------------------------
+
+.footer {
+    background-color: $grey-light !important;
+    color: white;
+    padding-top: 1rem !important;
+
+    a {
+        color: white;
+    }
+
+    h4 {
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+        font-weight: 200;
+    }
+    
+    p {
+        font-size: 0.8rem;
+    }
+
+    ul {
+        margin: 0 !important;
+
+        li {
+            list-style-type: none;
+            font-size: 14px;
+            line-height: 22px;
+
+            a {
+                color: white;
+            }
+
+            &:hover {
+                // opacity: 0.5;
+                text-decoration: underline;
+            }
+        }
+    }
+}

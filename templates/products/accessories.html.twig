@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {{ encore_entry_link_tags('accessories') }}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('accessories') }}
+  {{ include('sd/breadcrumbs.html.twig', { 'items': [{'name':'Productos',"url":path('order_index')},{'name':'Accesorios',"url":path('prod_accessories')}] }) }}
+{% endblock %}
+
+{% block title %}Accesorios | BambusLife{% endblock %}
+
+{% block description %}
+ Lista de accesorios. BambusLife
+{% endblock %}
+
+{% block keywords %}Accesorios{% endblock %}
+
+{% block extrameta %}
+  <meta property="og:title" content="Accesorios | BambusLife" />
+  <meta property="og:description" content="Lista de accesorios." />
+  <meta property="og:type"  content="website" />
+  <meta property="og:url"   content="https://bambus.life{{ app.request.requestUri }}" />
+  {# <meta property="og:image" content="{{asset('build/images/og/cspro.png')}}" /> #}
+{% endblock %}
+
+{% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block body %}
+  <div class="container">
+    <div class="columns is-multiline is-mobile" style="padding: 20px 10px 100px 10px;">
+      <div class="column">
+        <div class="has-text-centered">
+          <h1 class="subtitle is-4">Accesorios</h1>
+          {# <p>Accesorios recomendados para sus dispositivos</p> #}
+        </div>
+        <div class="columns is-multiline is-mobile" style="padding: 30px 0px 160px 0px;">
+            {% for item in items %}
+              <div class="column is-3-desktop is-4-tablet is-12-mobile">
+                {% include 'components/products/product-list-item.html.twig' with {'item': item} %}
+              </div>
+            {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

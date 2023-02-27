@@ -1,0 +1,9 @@
+<script src="https://www.google.com/recaptcha/api.js?render=6Ld15JQUAAAAAON56hlEMAsgMy9SMqvQKEepQqAi"></script>
+<script>
+    grecaptcha.ready(function () {
+        grecaptcha.execute('6Ld15JQUAAAAAON56hlEMAsgMy9SMqvQKEepQqAi', { action: 'contact' }).then(function (token) {
+            var recaptchaResponse = document.getElementById('recaptchaResponse');
+            recaptchaResponse.value = token;
+        });
+    });
+</script>

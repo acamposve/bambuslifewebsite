@@ -1,0 +1,120 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mis reservas | BambusLife{% endblock %}
+
+{% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {{ encore_entry_link_tags('appointment-list') }}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('appointment-list') }}
+{% endblock %}
+
+{% block body %}
+
+<div class="container" style="min-height: 600px;padding:10px">
+
+  {# ERROR MSG #}
+  {% if error_msg is defined and error_msg != NULL %}
+    <div class="columns is-8" style="">
+      <div class="column">
+        <article class="message is-danger">
+          <div class="message-body">
+            {{ error_msg | raw }}
+          </div>
+        </article>
+      </div>
+    </div>
+  {% endif %}
+
+  {# SUCCESS MSG #}
+  {% if info_msg is defined and info_msg != NULL %}
+    <div class="columns is-8" style="">
+      <div class="column">
+        <article class="message is-success">
+          <div class="message-body">
+            {{ info_msg | raw }}
+          </div>
+        </article>
+      </div>
+    </div>
+  {% endif %}
+
+  <h3 style="margin-top: 20px;" class="subtitle is-3">Mis reservas</h3>
+  <p style="margin-bottom: 20px;">
+    Estos son sus reservas de consulta con medico.
+  </p>
+  <div style="max-width:700px;margin:0 auto">
+    <div class="columns is-hidden-mobile" style="border-bottom: 1px solid #E5E5E5">
+      <div class="column is-3-desktop is-3-tablet is-12-mobile has-text-centered">Doctor</div>
+      <div class="column is-3-desktop is-3-tablet is-12-mobile has-text-centered">Fecha</div>
+      <div class="column is-3-desktop is-3-tablet is-12-mobile has-text-centered">Estado</div>
+      <div class="column is-3-desktop is-3-tablet is-12-mobile has-text-centered"></div>
+    </div>
+    <div class="appointment-list">
+      {% for appointment in appointments %}
+        <div class="columns is-multiline is-mobile {{ appointment.status == 'CANCELLED' ? 'passed' : ''}}" style="border-bottom: 1px solid #E5E5E5;">
+          <div class="column is-3-desktop is-3-tablet is-6-mobile" style="align-items: end;">
+            <div style="color: #111;">
+              {{appointment.practitionerName}} 
+            </div>
+            <div style="color: #888;">
+              Especialidad
+            </div>
+            <div>
+              {% if appointment.roomId != NULL %}
+                Consulta virtual
+              {% endif %}
+            </div>
+          </div>
+          <div class="column is-3-desktop is-3-tablet is-6-mobile has-text-centered">
+            <div style="color: #111;">
+              {{appointment.startDateNice}} 
+            </div>
+            <div style="font-size: 13px;">
+              {{appointment.startDateNice2}} 
+            </div>
+            <div style="color: #111;">
+              {{appointment.startHourNice}}
+            </div>
+          </div>
+          <div class="column is-3-desktop is-3-tablet is-6-mobile has-text-centered">
+            <div>
+              {{appointment.statusNice}}
+            </div>
+          </div>
+          <div class="column is-3-desktop  is-3-tablet is-6-mobile has-text-centered" style="align-self: center;text-align: right;">
+            <a href="{{ path('appointment', {appId: appointment.id}) }}" class="button is-text">Ver detalles</a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  {# Back #}
+  <div class="columns is-8" style="padding: 20px 20px 100px 20px;">
+    <div class="column">
+      <div class="control">
+        <a class="button is-white" href="{{ path('profile') }}">
+          <span class="icon">
+            <i class="fas fa-chevron-left"></i>
+          </span>
+          <span>Volver</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

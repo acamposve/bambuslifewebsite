@@ -1,0 +1,200 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Seleccione su país | BambusLife{% endblock %}
+
+{% block description %}Seleccione su país | BambusLife{% endblock %}
+
+
+{% block header %}
+  {{ include('components/header.html.twig') }}
+{% endblock %}
+
+{% block body %}
+
+  <div class="container white-box" style="padding: 20px">
+
+    <h1 class="title is-4">Seleccione su país</h1>
+    <p>La lista de países que se detallan, corresponden a donde estamos comercializando, realizando los trámites 
+      regulatorios o definiendo el representante local. Si su país no está todavía habilitado para realizar
+      el envío de los productos, podrá realizar el envío a la dirección que usted desee en unos de los países ya habilitados.
+      </p>
+    <br>
+    <div>
+      <i class="fas fa-certificate" style="color: #4CAF50;"></i>
+      Países habilitados para la comercialización local, se permite envíos directos a ese país.
+    </div>
+    <br>
+    <div class="columns is-multiline is-mobile" style="max-width: 700px;margin: 0 auto;">
+      <div class="column is-4-desktop is-4-tablet is-6-mobile">
+        <a class="locale" href="{{ path('selectLocal', {'_selLocal':'uy'}) }}{{lastUrl}}">
+          <img src="{{asset('build/images/flags/uy.svg')}}">
+          <span>
+            Uruguay
+            <i class="fas fa-certificate"></i>
+          </span>
+        </a>
+      </div>
+      <div class="column is-4-desktop is-4-tablet is-6-mobile">
+        <a class="locale" href="{{ path('selectLocal', {'_selLocal':'cl'}) }}{{lastUrl}}">
+          <img src="{{asset('build/images/flags/cl.svg')}}">
+          <span>
+            Chile
+            <i class="fas fa-certificate"></i>
+          </span>
+        </a>
+      </div>
+      <div class="column is-4-desktop is-4-tablet is-6-mobile">
+         <a class="locale" href="{{ path('selectLocal', {'_selLocal':'ar'}) }}{{lastUrl}}">
+          <img src="{{asset('build/images/flags/ar.svg')}}">
+          <span>
+            Argentina
+          </span>
+        </a>
+      </div>
+      <div class="column is-4-desktop is-4-tablet is-6-mobile">
+         <a class="locale" href="{{ path('selectLocal', {'_selLocal':'bo'}) }}{{lastUrl}}">
+          <img src="{{asset('build/images/flags/bo.svg')}}">
+          <span>
+            Bolivia
+          </span>
+        </a>
+      </div>
+      <div class="column is-4-desktop is-4-tablet is-6-mobile">
+         <a class="locale" href="{{ path('selectLocal', {'_selLocal':'br'}) }}{{lastUrl}}">
+          <img src="{{asset('build/images/flags/br.svg')}}">
+          <span>
+            Brasil
+          </span>
+        </a>
+      </div>
+      <div class="column is-4-desktop is-4-tablet is-6-mobile">
+         <a class="locale" href="{{ path('selectLocal', {'_selLocal':'co'}) }}{{lastUrl}}">
+          <img src="{{asset('build/images/flags/co.svg')}}">
+          <span>
+            Colombia
+          </span>
+        </a>
+      </div>
+      <div class="column is-4-desktop is-4-tablet is-6-mobile">
+         <a class="locale" href="{{ path('selectLocal', {'_selLocal':'cr'}) }}{{lastUrl}}">
+          <img src="{{asset('build/images/flags/cr.svg')}}">
+          <span>
+            Costa Rica
+          </span>
+        </a>
+      </div>
+      <div class="column is-4-desktop is-4-tablet is-6-mobile">
+         <a class="locale" href="{{ path('selectLocal', {'_selLocal':'cu'}) }}{{lastUrl}}">
+          <img src="{{asset('build/images/flags/cu.svg')}}">
+          <span>
+            Cuba
+          </span>
+        </a>
+      </div>
+      <div class="column is-4-desktop is-4-tablet is-6-mobile">
+         <a class="locale" href="{{ path('selectLocal', {'_selLocal':'ec'}) }}{{lastUrl}}">
+          <img src="{{asset('build/images/flags/ec.svg')}}">
+          <span>
+            Ecuador
+          </span>
+        </a>
+      </div>
+      <div class="column is-4-desktop is-4-tablet is-6-mobile">
+         <a class="locale" href="{{ path('selectLocal', {'_selLocal':'gt'}) }}{{lastUrl}}">
+          <img src="{{asset('build/images/flags/gt.svg')}}">
+          <span>
+            Guatemala
+          </span>
+        </a>
+      </div>
+      <div class="column is-4-desktop is-4-tablet is-6-mobile">
+         <a class="locale" href="{{ path('selectLocal', {'_selLocal':'sv'}) }}{{lastUrl}}">
+          <img src="{{asset('build/images/flags/sv.svg')}}">
+          <span>
+            El Salvador
+          </span>
+        </a>
+      </div>
+      <div class="column is-4-desktop is-4-tablet is-6-mobile">
+         <a class="locale" href="{{ path('selectLocal', {'_selLocal':'hn'}) }}{{lastUrl}}">
+          <img src="{{asset('build/images/flags/hn.svg')}}">
+          <span>
+            Honduras
+          </span>
+        </a>
+      </div>
+      <div class="column is-4-desktop is-4-tablet is-6-mobile">
+         <a class="locale" href="{{ path('selectLocal', {'_selLocal':'mx'}) }}{{lastUrl}}">
+          <img src="{{asset('build/images/flags/mx.svg')}}">
+          <span>
+            México
+          </span>
+        </a>
+      </div>
+      <div class="column is-4-desktop is-4-tablet is-6-mobile">
+         <a class="locale" href="{{ path('selectLocal', {'_selLocal':'ni'}) }}{{lastUrl}}">
+          <img src="{{asset('build/images/flags/ni.svg')}}">
+          <span>
+            Nicaragua
+          </span>
+        </a>
+      </div>
+      <div class="column is-4-desktop is-4-tablet is-6-mobile">
+         <a class="locale" href="{{ path('selectLocal', {'_selLocal':'py'}) }}{{lastUrl}}">
+          <img src="{{asset('build/images/flags/py.svg')}}">
+          <span>
+            Paraguay
+          </span>
+        </a>
+      </div>
+      <div class="column is-4-desktop is-4-tablet is-6-mobile">
+         <a class="locale" href="{{ path('selectLocal', {'_selLocal':'pe'}) }}{{lastUrl}}">
+          <img src="{{asset('build/images/flags/pe.svg')}}">
+          <span>
+            Perú
+          </span>
+        </a>
+      </div>
+      <div class="column is-4-desktop is-4-tablet is-6-mobile">
+         <a class="locale" href="{{ path('selectLocal', {'_selLocal':'pa'}) }}{{lastUrl}}">
+          <img src="{{asset('build/images/flags/pa.svg')}}">
+          <span>
+            Panamá
+          </span>
+        </a>
+      </div>
+      <div class="column is-4-desktop is-4-tablet is-6-mobile">
+         <a class="locale" href="{{ path('selectLocal', {'_selLocal':'pr'}) }}{{lastUrl}}">
+          <img src="{{asset('build/images/flags/pr.svg')}}">
+          <span>
+            Puerto Rico
+          </span>
+        </a>
+      </div>
+      <div class="column is-4-desktop is-4-tablet is-6-mobile">
+         <a class="locale" href="{{ path('selectLocal', {'_selLocal':'do'}) }}{{lastUrl}}">
+          <img src="{{asset('build/images/flags/do.svg')}}">
+          <span>
+            República Dominicana
+          </span>
+        </a>
+      </div>
+      <div class="column is-4-desktop is-4-tablet is-6-mobile">
+         <a class="locale" href="{{ path('selectLocal', {'_selLocal':'ve'}) }}{{lastUrl}}">
+          <img src="{{asset('build/images/flags/ve.svg')}}">
+          <span>
+            Venezuela
+          </span>
+        </a>
+      </div>
+    </div>
+    <br>
+
+  </div>
+
+{% endblock %}
+
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

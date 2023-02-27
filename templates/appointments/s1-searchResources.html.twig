@@ -1,0 +1,187 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reservar | BambusLife{% endblock %}
+
+{% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {{ encore_entry_link_tags('resources-search') }}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('resources-search') }}
+{% endblock %}
+
+{% block body %}
+
+<div class="container" style="min-height: 600px;padding:10px">
+
+  {# STEPS #}
+  {# <div class="bl-steps">
+    <ul class="steps is-narrow is-medium is-centered has-content-centered">
+      <li class="steps-segment is-active has-gaps">
+        <span class="steps-marker">
+          <span class="icon">
+            <i class="fas fa-search"></i>
+          </span>
+        </span>
+        <div class="steps-content">
+          <p class="heading" style="color: #38b09d;">Buscar recursos</p>
+        </div>
+      </li>
+      <li class="steps-segment has-gaps">
+        <span class="steps-marker">
+          <span class="icon">
+            <i class="fas fa-id-card-alt"></i>
+          </span>
+        </span>
+        <div class="steps-content">
+          <p class="heading">Seleccionar recurso</p>
+        </div>
+      </li>
+      <li class="steps-segment has-gaps">
+        <span class="steps-marker">
+            <span class="icon">
+            <i class="fas fa-calendar-alt"></i>
+            </span>
+        </span>
+        <div class="steps-content">
+            <p class="heading">Hora y dia</p>
+        </div>
+      </li>
+      <li class="steps-segment has-gaps">
+        <span class="steps-marker">
+            <span class="icon">
+            <i class="fas fa-laptop-medical"></i>
+            </span>
+        </span>
+        <div class="steps-content">
+            <p class="heading">Razon y tipo de consulta</p>
+        </div>
+      </li>
+      <li class="steps-segment has-gaps">
+        <span class="steps-marker">
+            <span class="icon">
+            <i class="fas fa-check"></i>
+            </span>
+        </span>
+        <div class="steps-content">
+            <p class="heading">Confirmacion</p>
+        </div>
+      </li>
+      <li class="steps-segment has-gaps">
+        <span class="steps-marker">
+            <span class="icon">
+            <i class="fas fa-notes-medical"></i>
+            </span>
+        </span>
+        <div class="steps-content">
+            <p class="heading">Datos pre consulta</p>
+        </div>
+      </li>
+    </ul>
+  </div> #}
+
+  {# ERROR MSG #}
+  {% if error_msg is defined and error_msg != NULL %}
+    <div class="columns is-8" style="">
+      <div class="column">
+        <article class="message is-danger">
+          <div class="message-body">
+            {{ error_msg | raw }}
+          </div>
+        </article>
+      </div>
+    </div>
+  {% else %}
+    <div class="appwzrd-cntr">
+      <div class="appwzrd-header">
+        <div class="appwzrd-title">
+          <span class="icon">
+            <i class="fas fa-search"></i>
+          </span>
+          <span>
+            Buscar médico
+          </span>
+        </div>
+        <div class="appwzrd-subtitle">
+          Seleccione por especialidad o ingrese el nombre y/o apellido del especialista.
+        </div>
+      </div>
+      <form name="searchForm" id="searchForm" method="post" action="{{ path('selectResource') }}" style="padding: 40px 20px;max-width: 600px;">
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Especialidad</label>
+          </div>
+          <div class="field-body">
+            <div class="control">
+              <div class="select">
+                <select name="speciality" id="speciality">
+                  {% for spec in specialities %}
+                  <option value="{{spec.id}}">{{spec.name}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Nombre del médico</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <p class="control ">
+                <input class="input" type="text" id="practitionerName" name="practitionerName">
+              </p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="field is-horizontal">
+          <div class="field-label">
+            <!-- Left empty for spacing -->
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <div class="control">
+                <button class="button is-primary" type="submit" name="btnSend">
+                  Buscar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </form>
+    </div>
+    
+
+    
+  {% endif %}
+
+  {# Back #}
+  <div class="columns is-8" style="padding: 20px 20px 100px 20px;">
+    <div class="column">
+      <div class="control">
+        <a class="button is-white" href="{{ path('profile') }}">
+          <span class="icon">
+            <i class="fas fa-chevron-left"></i>
+          </span>
+          <span>Volver</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

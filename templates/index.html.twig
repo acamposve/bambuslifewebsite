@@ -1,0 +1,333 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BambusLife{% endblock %}
+
+{% block description %}
+    Registre un electrocardiograma de nivel hospitalario en su teléfono celular cuando los síntomas ocurren y reciba una respuesta en solo 30 segundos.
+{% endblock %}
+
+{% block keywords %}BambusLife, inicio, home{% endblock %}
+
+{% block extrameta %}
+    <meta property="og:title" content="BambusLife"/>
+    <meta property="og:description"
+          content="Registre un electrocardiograma de nivel hospitalario en su teléfono celular cuando los síntomas ocurren y reciba una respuesta en solo 30 segundos."/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="https://bambus.life{{ app.request.requestUri }}"/>
+    <meta property="og:image" content="{{ asset('build/images/og/bambuslife2.png') }}"/>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('home') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('home') }}
+{% endblock %}
+
+
+{% block header %}
+    {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block body %}
+    {# COVER TEST 1 #}
+    {# <div style="position:relative">
+      <video autoplay muted loop style="width: 100%;    opacity: 0.8;">
+        <source src="{{asset('build/images/test1.mp4')}}" type="video/mp4">
+        Image Placeholder
+      </video>
+      <div style="padding: 20px;position: absolute;bottom: 5px;background-color: rgba(0,0,0,0.6);width: 100%;color: #FFF;">
+        <h1 style="    font-size: 29px;">Nuestro futuro aun nos precisa</h1>
+        <p style="font-size: 18px;">Aseguremos estar ahi para transmitir los secretos de la vida</p>
+      </div>
+    </div> #}
+
+{#
+    <!-- Banner Sorteo Casmu  - Cp
+    <section class="hero is-primary container covid">
+        <div class="hero-body columns">
+            <div class="column" style="max-width:150px">
+              <div Class="circle-logo">
+                <img src="{{ asset('build/images/home/sdc2021-3.png') }}" width="100" height="100">
+              </div>
+            </div>
+            <div class="column" style="justify-content: center;">
+                <div style="text-align: center;">
+                  <strong>SEMANA DEL CORAZÓN</strong>
+                  <div>24 al 30 de setiembre</div>
+                </div>
+            </div>
+            <div class="column">
+              <div style="justify-content: center;text-align: center;">
+                <p>Sorteo CASMU - TeleAsistencia Cardiológica durante 6 meses</p>
+              </div>
+            </div>
+            <div class="column">
+                <a href="{{ path('landing_casmu') }}" class="button is-white is-rounded is-medium">Más información</a>
+            </div>
+        </div>
+    </section>
+    -->
+#}	
+ 
+    <!-- Banner COVID -->
+    <section class="hero is-primary container covid">
+      <div class="hero-body columns is-centered">
+        <div class="column">
+          <font style="font-size: 30px">TELECARDIOLOGIA DOMICILIARIA - ESTUDIO MiECG 7</font>
+        </div>
+        <div class="column is-narrow">
+          <a href="{{ path('landing_miecg7') }}"class="button is-white is-rounded is-medium">Más información</a>
+        </div>
+      </div>
+    </section>
+
+{# 
+    <!-- Banner webinar -->
+    <section class="hero container webinar">
+        <a href="https://us02web.zoom.us/webinar/register/7716003550978/WN_H6R7eh_tRsejuwbaq8aQJA">
+            <img src="{{asset('build/images/webinar/portada_webinar_mobile.png')}}" class="is-hidden-desktop is-hidden-tablet" />
+            <img src="{{asset('build/images/webinar/portada_webinar_desktop.png')}}" class="is-hidden-mobile" />
+        </a>
+    </section> #}
+
+    <!-- Banner principal -->
+    <section class="hero is-medium container hero-bg">
+        <div class="hero-body">
+            <h1 class="title">
+                <span class="highlight">TeleCardiología</span><br><span class="txt-grey"></span>
+            </h1>
+            <h2 class="subtitle">
+                cuidá tu <span class="txt-blue">corazón</span><br>
+                en <span class="txt-blue">todo momento</span><br>
+                a <span class="txt-blue">distancia</span>
+            </h2>
+            <a href="#productos" class="button is-primary is-rounded is-large">
+                Ver Dispositivos
+            </a>
+        </div>
+    </section>
+
+    <div class="container">
+        <section class="section has-bottom-line description">
+            <div class="columns">
+                <div class="column is-three-quarters">
+                    <div class="columns">
+                        <div class="column is-one-third has-text-centered">
+                            <img src="{{ asset('build/images/esquema.svg') }}" alt="Bambus Life">
+                        </div>
+                        <div class="column">
+                            <div class="text">
+                                <p>Monitoreo del <span class="txt-blue">corazón</span> a través de un dispositivo médico
+                                    alemán que permite realizar electrocardiogramas en pocos pasos desde su <span
+                                            class="txt-blue">celular.</span>
+                                </p>
+                                <p>Registra hasta <span class="txt-blue">22 derivaciones</span> con solo <span
+                                            class="txt-blue">4 electrodos.</span>
+                                </p>
+                                <p>De utilidad para <span class="txt-blue">médicos</span> y <span class="txt-blue">pacientes.</span>
+                                </p>
+                                <p>Realización de diagnósticos, monitoreo y control por su <span class="txt-blue">médico cardiólogo.</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="columns logos">
+                        <div class="column is-2">
+                            <a href="https://www.german-ma.de/en/">
+                                <img src="{{ asset('build/images/made-in-germany.png') }}" alt="Made In Germany" title="Made In Germany">
+                            </a>
+                        </div>
+                        <div class="column is-2">
+                            <a href="">
+                                <img src="{{ asset('build/images/ce.png') }}" alt="" title="">
+                            </a>
+                        </div>
+                        <div class="column is-2">
+                            <a href="">
+                                <img src="{{ asset('build/images/tuv.png') }}" alt="" title="">
+                            </a>
+                        </div>
+                        <div class="column is-2">
+                            <a href="">
+                                <img src="{{ asset('build/images/iso.png') }}" alt="" title="">
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="column">
+                    <!-- desktop -->
+                    <div class="is-hidden-mobile" style="position: relative;width: auto;display: flex;">
+                        <div>
+                            <picture>
+                                <source srcset="{{ asset('build/images/dispositivo02.png') }}" type="image/png">
+                                <img src="{{ asset('build/images/dispositivo02.png') }}" alt="">
+                            </picture>
+                        </div>
+                        <video autoplay="" loop="" muted=""
+                               title="Chequee su corazón y sepa al instante que hacer luego"
+                               src="{{ asset('build/images/en_app_presentation.mp4') }}">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <!-- mobile -->
+                    <div class="is-hidden-desktop is-hidden-tablet"
+                         style="position: relative;width: auto;display: flex;">
+                        <div>
+                            <picture>
+                                <source srcset="{{ asset('build/images/dispositivo00.png') }}" type="image/png">
+                                <img src="{{ asset('build/images/dispositivo00.png') }}" alt="">
+                            </picture>
+                        </div>
+                        <video autoplay="" loop="" muted=""
+                               title="Chequee su corazón y sepa al instante que hacer luego"
+                               src="{{ asset('build/images/en_app_presentation.mp4') }}"
+                               style="position: absolute;top: 13%;left: 52%;width: 31%">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section has-bottom-line">
+            <div class="columns">
+                <div class="column has-text-centered">
+                    <h2 class="title is-spaced">CardioSecur es fácil de usar</h2>
+                    <p class="subtitle">En 3 simples pasos obtendrá resultados</p>
+                </div>
+            </div>
+            <div class="columns steps">
+                <div class="column step1"></div>
+                <div class="column step2"></div>
+                <div class="column step3"></div>
+            </div>
+            <div class="columns">
+                <div class="column has-text-centered">
+                    <p><a class="button  is-primary is-rounded is-medium" href="">¿Cómo funciona?</a></p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section services has-bottom-line">
+            <div class="columns">
+                <div class="column has-text-centered">
+                    <a id="productos"></a>
+                    <h2 class="title">Productos y Servicios</h2>
+                </div>
+            </div>
+            <div class="columns">
+                <div class="column has-text-centered">
+                    <h5 class="doctor">MÉDICOS</h5>
+                    <a href="">
+                        <img src="{{ asset('build/images/producto-doctor.png') }}" class="is-fullwidth">
+                    </a>
+                    <ul>
+                        <li>Arrendamiento del dispositivo y suscripción por un año.</li>
+                        <li>Equipo alemán certificado como producto sanitario clase IIa (CE).</li>
+                        <li>ECG de hasta 22 derivaciones.</li>
+                        <li>Portal de gestión médica para informes de diagnóstico.</li>
+                        <li>Atención de sus pacientes a traves de telemedicina cardíaca.</li>
+                        <li>Envío de dispositivo a domicilio.</li>
+                    </ul>
+
+                    <p><a class="button is-primary is-rounded is-medium" href="{{ path('prod_cspro') }}"><span>Consulte</span><span
+                                    class="is-size-6">Uso por Médicos</span></a></p>
+                </div>
+                <div class="column has-text-centered">
+                    <h5 class="family">PACIENTE Y FAMILIA</h5>
+                    <div class="has-left-line">
+                        <a href="">
+                            <img src="{{ asset('build/images/producto-paciente.png') }}" class="is-fullwidth">
+                        </a>
+                        <ul>
+                           <!--  <li>Arrendamiento de dispositivo y suscripción por un año.</li>  -->
+                            <li>Conexión con su médico tratante y/o entidad médica.</li>
+                            <li>Realización de informes de diagnóstico con su médico a través de telemedicina.</li>
+                            <li>Alerta de estado cardíaco inmediata y automática.</li>
+                            <li>Envío de dispositivo a su domicilio.</li>
+                           <!-- <li>Soporte para hasta 3 usuarios con el mismo dispositivo.</li> -->
+
+                        </ul>  
+                    </div>
+                    <p><a class="button is-primary is-rounded is-medium" href="{{ path('landing_miecg7') }}"><span>Consulte</span><span
+                                    class="is-size-6">Estudio Domiciliario</span></a></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Logos -->
+        <section class="section logos">
+            <div class="columns is-mobile is-multiline is-centered">
+                <div class="column is-narrow">
+                    <a href="https://www.german-ma.de/en/">
+                        <img src="{{ asset('build/images/certificaciones/made_in_germany.png') }}" alt="Made In Germany"
+                             title="Made In Germany">
+                    </a>
+                </div>
+                <div class="column is-narrow">
+                    <a href="https://www.sherpa-certification.com/marcado-ce/productos-sanitarios-mdd">
+                        <img src="{{ asset('build/images/certificaciones/Tuev.png') }}" alt="" title="">
+                    </a>
+                </div>
+                <div class="column is-narrow">
+                    <a href="">
+                        <img src="{{ asset('build/images/certificaciones/IF.png') }}" alt="" title="">
+                    </a>
+                </div>
+                <div class="column is-narrow">
+                    <a href="">
+                        <img src="{{ asset('build/images/certificaciones/Next.png') }}" alt="" title="">
+                    </a>
+                </div>
+                <div class="column is-narrow">
+                    <a href="">
+                        <img src="{{ asset('build/images/certificaciones/Computable_awards18.png') }}" alt="" title="">
+                    </a>
+                </div>
+                <div class="column is-narrow">
+                    <a href="">
+                        <img src="{{ asset('build/images/certificaciones/ClassIIEN.png') }}" alt="" title="">
+                    </a>
+                </div>
+                <div class="column is-narrow">
+                    <a href="">
+                        <img src="{{ asset('build/images/certificaciones/ITTR.png') }}" alt="" title="">
+                    </a>
+                </div>
+                <div class="column is-narrow">
+                    <a href="">
+                        <img src="{{ asset('build/images/certificaciones/Industrie_Preis.png') }}" alt="" title="">
+                    </a>
+                </div>
+                <div class="column is-narrow">
+                    <a href="">
+                        <img src="{{ asset('build/images/certificaciones/Medica_app.png') }}" alt="" title="">
+                    </a>
+                </div>
+                <div class="column is-narrow">
+                    <a href="https://www.impo.com.uy/bases/decretos/3-2008">
+                        <img src="{{ asset('build/images/certificaciones/msp.png') }}"
+                             alt="Ministerio de Salud P&uacute;blica - Rep&uacute;blica Oriental Del Uruguay"
+                             title="Ministerio de Salud P&uacute;blica - Rep&uacute;blica Oriental Del Uruguay">
+                    </a>
+                </div>
+                <div class="column is-narrow">
+                    <a href="https://www.anii.org.uy/">
+                        <img src="{{ asset('build/images/certificaciones/PROYECTO-ANII.png') }}" alt="Proyecto ANII" title="Proyecto ANII">
+                    </a>
+                </div>
+            </div>
+        </section>
+        <!-- Fin Logo -->
+    </div>
+{% endblock %}
+
+{% block footer %}
+    {{ include('components/footer.html.twig') }}
+{% endblock %}

@@ -1,0 +1,453 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+{{ encore_entry_link_tags('cs-pro') }}
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+{{ encore_entry_script_tags('cs-pro') }}
+{{ include('sd/breadcrumbs.html.twig', { 'items': [{'name':'Productos',"url":path('order_index')},{'name':'CardioSecur Pro',"url":path('prod_cspro')}] }) }}
+{% endblock %}
+
+{% block title %}CardioSecur Pro | Monitor Cardiaco Profesional | BambusLife{% endblock %}
+
+{% block description %}
+Registre electrocardiogramas de nivel hospitalario con su teléfono iPhone o Android de 12 o 22 derivaciones.
+{% endblock %}
+
+{% block keywords %}CardioSecur Pro{% endblock %}
+
+{% block extrameta %}
+<meta property="og:title" content="CardioSecur Pro | Monitor Cardiaco Profesional | BambusLife" />
+<meta property="og:description" content="Registre electrocardiogramas de nivel hospitalario con su teléfono iPhone o Android de 12 o 22 derivaciones." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://bambus.life{{ app.request.requestUri }}" />
+<meta property="og:image" content="{{asset('build/images/og/cspro.png')}}" />
+{% endblock %}
+
+{% block header %}
+{{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block body %}
+<div class="container ">
+
+    {# <section class="section white-box" style="padding:10px 0px 30px 0px">
+      <div style="margin: 1% 0" class="columns is-multiline is-mobile">
+        <div class="column is-full has-text-centered">
+          <h1 class="subtitle is-2">ECG Móvil con 12 o 22 derivaciones</h1>
+        </div>
+        <div class="column is-full-desktop is-full-tablet is-full-mobile" style="text-align: center;">
+          <picture>
+            <source srcset="{{asset('build/images/products/cspro/iPad-header.webp')}}" type="image/webp">
+            <source srcset="{{asset('build/images/products/cspro/iPad-header.jpg')}}" type="image/jpeg">
+            <img src="{{asset('build/images/products/cspro/iPad-header.jpg')}}" alt="proDevice" class="is-full-width" style="max-width: 700px;width: 100%;">
+          </picture>
+        </div>
+        <div class="column is-full-desktop is-full-tablet is-full-mobile">
+          <div class="content">
+            <ul>
+              <li class="is-size-5"><b>Diagnóstico integral:</b> infartos anteriores y posteriores así como arritmias complejas.</li>
+              <li class="is-size-5"><b>Móvil y rápido:</b> ultraligero (50 g) con solo 4 electrodos, CardioSecur está listo en cualquier momento.</li>
+              <li class="is-size-5"><b>Certificado y validado:</b> dispositivo médico (clase IIa), utilizado por miles de médicos</li>
+              <li class="is-size-5"><b>Flexible:</b> las características que se pueden cambiar en cualquier momento garantizan el control total de costos</li>
+              <li class="is-size-5"><b>Gestione sus pacientes:</b> con el dispositivo para pacientes (<a href="{{ path('prod_csactive') }}">CardioSecur Active</a>) puede supervisar, de forma remota, a todos los pacientes que usted decida atender. Regístrese en nuestra red de especialistas.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="column is-full has-text-centered">
+          <br>
+            <a class="button is-medium is-primary" href="{{ path('contact_form') }}">Consultar</a>
+          <br>
+        </div>
+      </div>
+    </section> #}
+    
+    <section class="section" style="min-height: 330px;width: 100%;padding: 0px 0px 30px 0px;text-align: center;">
+        <div style="text-align: center;">
+            <picture>
+                <source media="(min-width: 426px)" srcset="{{asset('build/images/products/cspro/csproorg2.webp')}}" type="image/webp">
+                <source media="(min-width: 426px)" srcset="{{asset('build/images/products/cspro/csproorg2.png')}}" type="image/png">
+                <source media="(max-width: 425px)" srcset="{{asset('build/images/products/cspro/csproorg-m.webp')}}" type="image/webp">
+                <source media="(max-width: 425px)" srcset="{{asset('build/images/products/cspro/csproorg-m.png')}}" type="image/png">
+                <img src="{{asset('build/images/products/cspro/csproorg.png')}}" alt="proDevice" class="is-full-width" style="width: 100%;">
+                {# <source srcset="{{asset('build/images/products/cspro/iPad-header.webp')}}" type="image/webp">
+          <source srcset="{{asset('build/images/products/cspro/iPad-header.jpg')}}" type="image/jpeg">
+          <img src="{{asset('build/images/products/cspro/iPad-header.jpg')}}" alt="proDevice" class="is-full-width" style="max-width: 700px;width: 100%;"> #}
+            </picture>
+        </div>
+        <div class="has-text-centered">
+            <h1 class="subtitle is-2">Médicos</h1>
+        </div>
+        <p style="font-size: 16px;text-align: center;margin-bottom: 20px;display: inline-block;padding: 0px 20px;">
+            CardioSecur Pro es un equipo alemán de registro de ECG, certificado como producto sanitario clase IIa por la comunidad europea y registra hasta 22 derivadas con un cable ultraligero de sólo 4 electrodos.
+        </p>
+    </section>
+
+    {# ESTUDIOS CIENTIFICOS #}
+    <div class="columns">
+        <div class="column has-text-centered call-to-action-bottom">
+            <ul class="list-logos">
+                <li><img src="{{ asset('build/images/logo-cardio-secur.svg') }}" height="60" width="auto"></li>
+                <li><img src="{{ asset('build/images/logo-bambuslife.svg') }}" height="60" width="auto"></li>
+            </ul>
+            <a class="button is-primary is-rounded is-medium" href="{{ path('prod_scientific_studies') }}">Ver estudios científicos realizados</a>
+        </div>
+    </div>
+
+    <div class="columns">
+        <div class="column is-full has-text-centered">
+            <a class="button is-medium is-primary is-rounded" href="{{ path('contact_form') }}" style="margin-bottom: 2rem;">Consultar</a>
+        </div>
+    </div>
+
+    <div class="columns">
+        <div class="column is-full has-text-centered">
+            <a class="button is-text" href="/docs/brochure/Folleto_CS_Pro_-_uso_Medico.pdf" style="margin-bottom: 2rem;">
+              <span class="icon is-small">
+                <i class="far fa-file-pdf"></i>
+              </span>
+              <span>Descargar folleto</span>
+            </a>
+        </div>
+    </div>
+    
+    {# BOXES #}
+    <section class="section" style="padding:10px 0px 30px 0px">
+        <div class="columns infobox-cntr">
+            <div class="column is-4-desktop is-4-tablet is-12-mobile">
+                <div class="infobox">
+                    <h4>Médico clínico</h4>
+                    <p>El diseño ultraligero especialmente diseñado (solo 50 g) con sólo 4 electrodos es ideal para usar en consulta o para visitas domiciliarias. Cuenta con un reporte para el análisis y diagnóstico de un cardiólogo.</p>
+                </div>
+            </div>
+            <div class="column is-4-desktop is-4-tablet is-12-mobile">
+                <div class="infobox">
+                    <h4>Cardiólogo</h4>
+                    <p>CardioSecur Pro es el único sistema de ECG que ve el corazón desde todos los lados: anterior, lateral y posterior, con 22 derivaciones. Esto permite un diagnóstico más preciso tanto de isquemia como de arritmias que cualquier otro sistema de ECG.</p>
+                </div>
+            </div>
+            <div class="column is-4-desktop is-4-tablet is-12-mobile">
+                <div class="infobox">
+                    <h4>Médico de guardia</h4>
+                    <p>Con 22 derivaciones, se reconocen infartos de las paredes posterior, lateral y anterior. Esto deja claro de inmediato si es necesaria una cateterización. El informe de ECG se envía directamente al hospital en formato PDF. También es posible conectarse directamente al sistema de información del hospital (HIS) a través de una interfaz estándar.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {# LITTLE DESC #}
+    <section class="section" style="padding:10px 0px 30px 0px">
+        <div class="columns">
+            <div class="column is-8-desktop is-6-tablet is-12-mobile" style="display: flex;align-items: center;padding: 0px 20px">
+                <p>
+                    CardioSecur Pro es un ECG móvil de 22 derivaciones que requiere sólo cuatro electrodos para el personal médico y se conecta a su iPhone o iPad. Además de las arritmias complejas, CardioSecur es el único sistema que hace posible diagnosticar infartos de la pared anterior, lateral y posterior del corazón.
+                </p>
+            </div>
+            <div class="column is-4-desktop is-6-tablet is-12-mobile" style="display: flex;align-items: center;">
+                <picture>
+                    <source srcset="{{asset('build/images/products/cspro/small-cspro-mt.webp')}}" type="image/webp">
+                    <source srcset="{{asset('build/images/products/cspro/small-cspro-mt.jpg')}}" type="image/jpeg">
+                    <img src="{{asset('build/images/products/cspro/small-cspro-mt.jpg')}}" alt="Attach the electrodes to four prominent points of the body" class="is-full-width">
+                </picture>
+            </div>
+        </div>
+    </section>
+
+    {# VIDEO PRO #}
+    <section class="section" style="margin-top: 0px;width: 100%;padding: 10px 0px 10px 0px;text-align: center;">
+        {# <iframe width="600" height="378" src="https://www.youtube-nocookie.com/embed/p1pSQLQAdh0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> #}
+        <picture id="btnCspro360vid" class="zv-video-thumbnail">
+            <source srcset="{{asset('build/images/products/cspro/cspro360en.webp')}}" type="image/webp">
+            <source srcset="{{asset('build/images/products/cspro/cspro360en.png')}}" type="image/png">
+            <img src="{{asset('build/images/products/cspro/cspro360en.png')}}" alt="Attach the electrodes to four prominent points of the body" class="is-full-width">
+        </picture>
+    </section>
+
+    {# VIDEO 360 #}
+    <div id="cspro360vid" class="zv-modal">
+        <div class="zv-close-button">
+            <i class="fas fa-times"></i>
+        </div>
+        <div class="zv-modal-content">
+            <div class="zv-video-container">
+                <div class="zv-video-player">
+                    <video crossorigin="anonymous" preload="auto" x-webkit-airplay="" data-original-aria-hidden="" controls="" src="{{asset('build/images/products/cspro/cspro360en.mp4')}}" kind="captions" srclang="en" label="English"></video>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# FIRST 360 #}
+    <section class="section white-box" style="padding:10px 0px 30px 0px;">
+        <div style="margin: 1% 0" class="columns is-multiline is-mobile">
+            <div class="column is-full has-text-centered">
+                <h3 class="subtitle is-3">La primer vista de 360<sup>o</sup> del coraz&oacute;n</h3>
+            </div>
+        </div>
+        <div class="columns is-multiline is-mobile">
+            <div class="column is-6-desktop is-12-tablet is-12-mobile has-text-centered" style="padding: 0px 20px;">
+                CardioSecur utiliza electrocardiografía vectorial y 4 electrodos para crear un tetraedro del tórax,
+                lo que hace posible una vista de 360°. Las pautas recomiendan incluir el examen de la pared
+                posterior del corazón cuando se sospecha de isquemia. El agregado de las derivadas V7-V9 y VR3-VR9 hace de
+                CardioSecur el único sistema que cumple con este punto de las directrices.
+                A través de las 22 derivaciones, los NSTEMI clásicos pueden clasificarse como STEMI.
+                Con el dispositivo médico aprobado (clase IIa) CardioSecur Pro, un NSTEMI puede convertirse
+                en un STEMI.
+            </div>
+            <div class="column is-6-desktop is-12-tablet is-12-mobile has-text-centered">
+                <picture>
+                    <source srcset="{{asset('build/images/products/cspro/Schema_heartEN.webp')}}" type="image/webp">
+                    <source srcset="{{asset('build/images/products/cspro/Schema_heartEN.png')}}" type="image/jpeg">
+                    <img src="{{asset('build/images/products/cspro/Schema_heartEN.png')}}" alt="schemaHeart" class="is-full-width">
+                </picture>
+            </div>
+        </div>
+    </section>
+
+    {# EASY 1-2-3 #}
+    <section class="section" style="padding:10px 0px 30px 0px;margin-top:30px">
+        <div style="margin: 1% 0" class="columns is-multiline is-mobile">
+            <div class="column is-full has-text-centered">
+                <h2 class="subtitle is-3">Grabar un ECG nunca ha sido tan fácil</h2>
+            </div>
+            <div class="column is-one-quarter-desktop is-half-tablet is-full-mobile has-text-centered">
+                <picture>
+                    <source srcset="{{asset('build/images/products/cspro/step-1.webp')}}" type="image/webp">
+                    <source srcset="{{asset('build/images/products/cspro/step-1.png')}}" type="image/png">
+                    <img src="{{asset('build/images/products/cspro/step-1.png')}}" alt="Attach the electrodes to four prominent points of the body" class="is-full-width">
+                </picture>
+                <p>1. Descarga la aplicación de la <a href="https://itunes.apple.com/de/app/cardiosecur-pro/id588977517?l=en&mt=8">App Store</a></p>
+            </div>
+            <div class="column is-one-quarter-desktop is-half-tablet is-full-mobile has-text-centered">
+                <picture>
+                    <source srcset="{{asset('build/images/products/cspro/step-2.webp')}}" type="image/webp">
+                    <source srcset="{{asset('build/images/products/cspro/step-2.png')}}" type="image/png">
+                    <img src="{{asset('build/images/products/cspro/step-2.png')}}" alt="Attach the electrodes to four prominent points of the body" class="is-full-width">
+                </picture>
+                <p>2. Adjunte el cable</p>
+            </div>
+            <div class="column is-one-quarter-desktop is-half-tablet is-full-mobile has-text-centered">
+                <picture>
+                    <source srcset="{{asset('build/images/products/cspro/step-3.webp')}}" type="image/webp">
+                    <source srcset="{{asset('build/images/products/cspro/step-3.png')}}" type="image/png">
+                    <img src="{{asset('build/images/products/cspro/step-3.png')}}" alt="Attach the electrodes to four prominent points of the body" class="is-full-width">
+                </picture>
+                <p>3. Inicie una lectura de ECG</p>
+            </div>
+            <div class="column is-one-quarter-desktop is-half-tablet is-full-mobile has-text-centered">
+                <picture>
+                    <source srcset="{{asset('build/images/products/cspro/step-4.webp')}}" type="image/webp">
+                    <source srcset="{{asset('build/images/products/cspro/step-4.png')}}" type="image/png">
+                    <img src="{{asset('build/images/products/cspro/step-4.png')}}" alt="Attach the electrodes to four prominent points of the body" class="is-full-width">
+                </picture>
+                <p>4. Reciba un reporte ECG</p>
+            </div>
+        </div>
+    </section>
+
+    {# AREAS DE USO 
+    <section class="section white-box" style="padding:10px 0px 30px 0px;margin-top:30px">
+      <div style="margin: 1% 0" class="columns is-multiline is-mobile">
+        <div class="column is-full has-text-centered">
+          <h3 class="subtitle is-3">Áreas de uso de CardioSecur Pro</h3>
+        </div>
+        <div class="column is-one-third-desktop is-one-third-tablet is-full-mobile has-text-centered">
+          <picture>
+            <source srcset="{{asset('build/images/products/cspro/use-case-1.webp')}}" type="image/webp">
+            <source srcset="{{asset('build/images/products/cspro/use-case-1.jpg')}}" type="image/jpeg">
+            <img src="{{asset('build/images/products/cspro/use-case-1.jpg')}}" alt="recEcgPro" class="is-full-width">
+          </picture>
+          <p class="subtitle is-4">Médico clínico</p>
+          <p>El diseño ultraligero especialmente diseñado (solo 50 g) con solo 4 electrodos es ideal para usar en la oficina o para visitas domiciliarias. En lo que a movilidad y comunicación se refiere.</p>
+        </div>
+        <div class="column is-one-third-desktop is-one-third-tablet is-full-mobile has-text-centered">
+          <picture>
+            <source srcset="{{asset('build/images/products/cspro/use-case-2.webp')}}" type="image/webp">
+            <source srcset="{{asset('build/images/products/cspro/use-case-2.jpg')}}" type="image/jpeg">
+            <img src="{{asset('build/images/products/cspro/use-case-2.jpg')}}" alt="seeEcgPro" class="is-full-width">
+          </picture>
+          <p class="subtitle is-4">Cardiólogos</p>
+          <p>CardioSecur Pro es el único sistema de ECG que ve el corazón desde todos los lados: anterior, lateral y posterior. Esto permite un diagnóstico más preciso tanto de isquemia como de arritmias que cualquier otro sistema de ECG.</p>
+        </div>
+        <div class="column is-one-third-desktop is-one-third-tablet is-full-mobile has-text-centered">
+          <picture>
+            <source srcset="{{asset('build/images/products/cspro/use-case-3.webp')}}" type="image/webp">
+            <source srcset="{{asset('build/images/products/cspro/use-case-3.jpg')}}" type="image/jpeg">
+            <img src="{{asset('build/images/products/cspro/use-case-3.jpg')}}" alt="device" class="is-full-width">
+          </picture>
+          <p class="subtitle is-4">Médicos de guardia</p>
+          <p>Con 22 derivaciones, se reconocen infartos de las paredes posterior, lateral y anterior. Esto deja claro de inmediato si es necesaria una cateterización. El informe de ECG se envía directamente al hospital en formato PDF. También es posible conectarse directamente al sistema de información del hospital (HIS) a través de una interfaz estándar.</p>
+        </div>
+      </div>
+    </section>
+    #}
+
+    {#   
+    <section class="section " style="padding:10px 0px 30px 0px;margin-top:30px">
+      <div style="margin: 1% 0" class="columns is-multiline is-mobile">
+        <div class="column is-two-thirds-desktop is-two-thirds-tablet is-full-mobile">
+          <p>CardioSecur Pro es un ECG móvil de 22 derivaciones que requiere s&oacute;lo cuatro electrodos para el personal médico. Está conectado a su iPhone o iPad y logra mucho más que un ECG estándar de 12 derivaciones. Además de las arritmias complejas, CardioSecur es el único sistema que hace posible diagnosticar infartos de la pared anterior, lateral y posterior del corazón.</p>
+        </div>
+        <div class="column is-one-third-desktop is-one-third-tablet is-full-mobile has-text-centered">
+          <picture>
+            <source srcset="{{asset('build/images/products/cspro/badges.webp')}}" type="image/webp">
+            <source srcset="{{asset('build/images/products/cspro/badges.png')}}" type="image/png">
+            <img src="{{asset('build/images/products/cspro/badges.png')}}" alt="badges" class="is-full-width" style="margin: 20px">
+          </picture>
+        </div>
+      </div>
+    </section> #}
+
+    {# 4 CIRCLES 
+    <section class="section" style="padding: 10px 0px 30px 0px; margin-top: 30px">
+      <div style="margin: 1% 0" class="columns is-multiline is-mobile">
+        <div class="column is-one-quarter-desktop is-half-tablet is-full-mobile has-text-centered">
+          <picture>
+            <source srcset="{{asset('build/images/products/cspro/description-1.webp')}}" type="image/webp">
+            <source srcset="{{asset('build/images/products/cspro/description-1.png')}}" type="image/png">
+            <img src="{{asset('build/images/products/cspro/description-1.png')}}" alt="devIcon" class="is-full-width" style="margin: 20px">
+          </picture>
+          <h4 class="subtitle is-4">Móvil</h4>
+          <p>Registre un ECG móvil de calidad clínica con solo 4 electrodos, un cable ultraligero y una aplicación.</p>
+        </div>
+        <div class="column is-one-quarter-desktop is-half-tablet is-full-mobile has-text-centered">
+          <picture>
+            <source srcset="{{asset('build/images/products/cspro/description-2.webp')}}" type="image/webp">
+            <source srcset="{{asset('build/images/products/cspro/description-2.png')}}" type="image/png">
+            <img src="{{asset('build/images/products/cspro/description-2.png')}}" alt="muscleIcon" class="is-full-width" style="margin: 20px">
+          </picture>
+          <h4 class="subtitle is-4">Poderoso</h4>
+          <p>Hasta 22 derivaciones hacen posible el diagnóstico de infartos de la pared anterior, lateral y posterior.</p>
+        </div>
+        <div class="column is-one-quarter-desktop is-half-tablet is-full-mobile has-text-centered">
+          <picture>
+            <source srcset="{{asset('build/images/products/cspro/description-3.webp')}}" type="image/webp">
+            <source srcset="{{asset('build/images/products/cspro/description-3.png')}}" type="image/png">
+            <img src="{{asset('build/images/products/cspro/description-3.png')}}" alt="switchesIcon" class="is-full-width" style="margin: 20px">
+          </picture>
+          <h4 class="subtitle is-4">Modelo de precio flexible</h4>
+          <p>Evite los altos costos de inversión de un dispositivo de ECG estándar de 12 derivaciones con nuestra característica flexible y modelo de precio.</p>
+        </div>
+        <div class="column is-one-quarter-desktop is-half-tablet is-full-mobile has-text-centered">
+          <picture>
+            <source srcset="{{asset('build/images/products/cspro/description-4.webp')}}" type="image/webp">
+            <source srcset="{{asset('build/images/products/cspro/description-4.png')}}" type="image/png">
+            <img src="{{asset('build/images/products/cspro/description-4.png')}}" alt="lockIcon" class="is-full-width" style="margin: 20px">
+          </picture>
+          <h4 class="subtitle is-4">Transferencia segura de datos</h4>
+          <p>La transferencia y el almacenamiento de datos ocurren en estricto cumplimiento con la ley federal de protección de datos (BDSG) y el nuevo GDPR de la UE.</p>
+        </div>
+      </div>
+    </section>
+    #}
+
+    {# PURA MOVILIDAD #}
+    {# <section class="section white-box" style="padding:10px 0px 30px 0px;margin-top:30px">
+      <div style="margin: 1% 0" class="columns is-multiline is-mobile">
+        <div class="column is-full has-text-centered">
+          <h3 class="subtitle is-3">Movilidad pura</h3>
+        </div>
+        <div class="column is-half-desktop is-half-tablet is-full-mobile">
+          <p>CardioSecur fue diseñado específicamente para el personal médico. Es ultra ligero (50 g), utiliza solo 4 electrodos y se ejecuta a través de una aplicación, lo que lo hace único en todo el mundo. Al igual que el "hermano" del estetoscopio, CardioSecur se usa donde es necesario: directamente por el paciente.</p>
+        </div>
+        <div class="column is-half-desktop is-half-tablet is-full-mobile">
+          <picture>
+            <source srcset="{{asset('build/images/products/cspro/ECG-machine.webp')}}" type="image/webp">
+            <source srcset="{{asset('build/images/products/cspro/ECG-machine.jpg')}}" type="image/jpeg">
+            <img src="{{asset('build/images/products/cspro/ECG-machine.jpg')}}" alt="ECG-Machine" class="is-full-width">
+          </picture>
+        </div>
+      </div>
+    </section> #}
+
+    {# Modelo de característica flexible #}
+    {# <section class="section white-box" style="padding:10px 0px 30px 0px;margin-top:30px">
+      <div style="margin: 1% 0" class="columns is-multiline is-mobile">
+        <div class="column is-full has-text-centered">
+          <h3 class="subtitle is-3">Modelo de característica flexible</h3>
+        </div>
+        <div class="column is-half-desktop is-half-tablet is-full-mobile">
+          <p>Los dispositivos de ECG convencionales, de alta calidad y de 12 derivaciones a menudo requieren costos de inversión de € 5,000 o más. Las características reservadas no se modifican durante la vida útil del dispositivo. Por otro lado, CardioSecur ofrece una característica flexible y un modelo de precio. Usted evita altos costos iniciales y tiene ahorros significativos con el tiempo. Además, tiene la opción de cambiar de manera flexible sus funciones o cancelar nuestro servicio sin indicar una razón y mantener su dispositivo más allá.</p>
+        </div>
+        <div class="column is-half-desktop is-half-tablet is-full-mobile">
+          <img class="is-full-width" src="{{asset('build/images/products/cspro/flexibility-table.jpg')}}" alt="flexibilityTable" class="step-img">
+        </div>
+
+        <div class="column is-full has-text-centered">
+          <br>
+            <a class="button is-medium is-primary is-rounded" href="{{ path('contact_form') }}">Consultar</a>
+          <br>
+        </div>
+      </div>
+    </section> #}
+
+    {# SPECS #}
+    <section class="section" style="padding:10px 0px 30px 0px;margin-top:30px">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td>Caracter&iacute;sticas</td>
+                    <td style="color:#888">Características 12- / 22-Derivación ECG</td>
+                </tr>
+                <tr>
+                    <td>Aplicación</td>
+                    <td style="color:#888">CardioSecur Pro</td>
+                </tr>
+                <tr>
+                    <td>Vista</td>
+                    <td style="color:#888">ECG de 12/22 derivaciones (12 derivaciones + V7-9, VR3-VR9) con solo 4 electrodos</td>
+                </tr>
+                <tr>
+                    <td>Componentes</td>
+                    <td style="color:#888">Cable ECG ultra ligero de 50 g con solo 4 electrodos y la aplicación CardioSecur Pro</td>
+                </tr>
+                <tr>
+                    <td>Disponible para</td>
+                    <td style="color:#888">Dispositivos Apple (iPhone X, iPhone XS, iPhone XR, iPhone XS Max, iPhone 8, iPhone 8 Plus, iPhone 7, iPhone 7 Plus, iPhone SE, iPhone 6s, iPhone 6s Plus, iPhone 6, iPhone 6 Plus, iPhone 5, iPhone 5s, iPhone 5c, iPad (4ª, 5ª y 6ª generación), iPad Pro de 12,9 pulgadas (1ª y 2ª generación), iPad Pro de 10,5 pulgadas, iPad Pro de 9,7 pulgadas, iPad mini, iPad mini 2, iPad mini 3 , iPad mini 4, iPad Air, iPad Air 2)</td>
+                </tr>
+                <tr>
+                    <td>Especificaciones técnicas</td>
+                    <td class="content" style="color:#888">
+                        <ul>
+                            <li>Bipolar, 3 canales</li>
+                            <li>Calidad de grabación: 12/22 derivaciones</li>
+                            <li>10,000 minutos de grabación de ECG por 1 GB de almacenamiento</li>
+                            <li>Graba hasta 30 minutos por ECG.</li>
+                            <li>Frecuencia de pulsos: 18 a 256 latidos por minuto.</li>
+                            <li>Ancho de banda: 0.05 a 40 Hz, Frecuencia de muestreo: 250 Hz / 500 Hz</li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+    
+    <!-- Banner Portal Medico -->
+    <section class="hero is-primary container portal-medico">
+        <div class="hero-body columns">
+            <div class="column"><img src="{{ asset('build/images/logo-portal-medico.svg') }}" width="250" height="40"></div>
+            <div class="column is-half">
+                <p>Gestione fácilmente la información <br>de sus pacientes</p>
+            </div>
+            <div class="column">
+                <a href="{{ path('landing_portal_medico') }}" class="button is-white is-rounded is-medium">Más información</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="columns">
+        <div class="column is-full has-text-centered">
+            <a class="button is-medium is-primary is-rounded" href="{{ path('contact_form') }}" style="margin-bottom: 2rem;">Consultar</a>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block footer %}
+{{ include('components/footer.html.twig') }}
+{% endblock %}

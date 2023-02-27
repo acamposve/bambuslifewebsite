@@ -1,0 +1,207 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('products') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('products') }}
+    {{ include('sd/breadcrumbs.html.twig', { 'items': [{'name':'Productos',"url":path('order_index')},{'name':'CardioSecur Active',"url":path('prod_csactive')},{'name':'Detección temprana',"url":path('prod_early_detection_of_symptoms_of_heart_attack')}] }) }}
+{% endblock %}
+
+{% block title %}Detección temprana de síntomas de ataque cardíaco | BambusLife{% endblock %}
+
+{% block description %}En el caso de reinfarto, el tratamiento temprano es un factor clave para prevenir daños mayores y salvar vidas. | BambusLife{% endblock %}
+
+{% block keywords %}Detección temprana de síntomas de ataque cardíaco, ataque cardíaco{% endblock %}
+
+{% block header %}
+    {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block body %}
+  <div class="container">
+
+    <div class="columns is-multiline is-mobile" style="margin: 1% 0">
+      <div class="column is-full">
+        <h1 class="subtitle is-2">¿Qué hacer después de un ataque al corazón?</h1>
+        <p class="subtitle is-5">En el caso de reinfarto, el tratamiento temprano es un factor clave para prevenir daños mayores y salvar vidas.</p>
+      </div>
+    </div>
+
+    <section class="section white-box" style="margin-top:90px;padding:10px 0px 30px 0px">
+      <div class="column is-full has-text-centered">
+          <h2 class="subtitle is-3" style="margin-bottom:30px">Alcanzar la hora de oro</h2>
+      </div>
+      <div class="column is-full has-text-centered">
+        <p class="is-size-5">
+          Después de ser diagnosticado con un ataque cardíaco, el riesgo de reinfarto en los próximos 5 años es de 13% para los hombres y de hasta 40% para las mujeres. Cuando se sufre un ataque cardíaco, los primeros 60 minutos son decisivos y, por lo tanto, a esta hora se le conoce comúnmente como la "hora de oro". Es solo a través de un tratamiento rápido que se puede prevenir un daño cardíaco adicional, o incluso peor.
+          Los síntomas de un reinfarto también pueden ser considerablemente diferentes de los del evento inicial, lo que hace que los infartos repetidos se interpreten de manera falsa y reduce la probabilidad de un diagnóstico oportuno.
+        </p>
+      </div>
+    </section>
+      
+    <section class="section"  style="margin-top:90px">
+      <div class="column is-full has-text-centered">
+        <p class="subtitle is-3" style="margin-bottom:30px">El reconocimiento oportuno de los síntomas salva vidas</p>
+        <p class="is-size-5">
+          El mayor temor que tienen los pacientes con problemas cardíacos es la inseguridad de que los síntomas no se reconocerán con la suficiente rapidez y que, por lo tanto, no recibirán un tratamiento oportuno.
+        </p>
+      </div>
+      <div class="columns is-multiline is-mobile">
+        <div class="column is-half-desktop is-full-tablet is-full-mobile has-text-centered">
+          <picture>
+            <source srcset="{{asset('build/images/products/csactive/symptoms-heart.webp')}}" type="image/webp">
+            <source srcset="{{asset('build/images/products/csactive/symptoms-heart.png')}}" type="image/png">
+            <img src="{{asset('build/images/products/csactive/symptoms-heart.png')}}" alt="symptomsHeart">
+          </picture>
+        </div>
+        <div class="column is-half-desktop is-full-tablet is-full-mobile">
+          <div class="columns is-multiline is-mobile">
+            <div class="column is-full content">
+              <p class="is-size-5">Algunos síntomas típicos de un ataque al corazón incluyen:</p>
+              <ul>
+                <li>Palpitaciones fuertes o corazón acelerado</li>
+                <li>Estrechez o dolor punzante en el pecho que se irradia al brazo izquierdo</li>
+                <li>Sudoración intensa o ,sudores fríos“</li>
+                <li>Respiración dificultosa</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section"  style="margin-top:90px">
+      <div class="column is-full has-text-centered">
+        <p class="subtitle is-3" style="margin-bottom:30px">Ataques cardíacos entre mujeres: los síntomas a menudo se pasan por alto</p>
+      </div>
+      <div class="columns is-multiline is-mobile">
+        <div class="column is-half-desktop is-full-tablet is-full-mobile has-text-centered">
+          <picture>
+            <source srcset="{{asset('build/images/products/csactive/symptoms-heart-woman.webp')}}" type="image/webp">
+            <source srcset="{{asset('build/images/products/csactive/symptoms-heart-woman.png')}}" type="image/png">
+            <img src="{{asset('build/images/products/csactive/symptoms-heart-woman.png')}}" alt="symptomsHeart">
+          </picture>
+        </div>
+        <div class="column is-half-desktop is-full-tablet is-full-mobile">
+          <div class="columns is-multiline is-mobile">
+            <div class="column is-full content">
+              <p class="is-size-5">Los síntomas de un ataque cardíaco para una mujer pueden variar mucho de aquellos para un hombre y, por lo tanto, no siempre se reconocen de inmediato. Además de los "síntomas clásicos", como dificultad para respirar o dolor en el tórax, las mujeres a menudo experimentan:</p>
+              <ul>
+                <li>Dolor abdominal superior</li>
+                <li>Dolor en el hombro, la espalda o la columna vertebral</li>
+                <li>Dolor en la pierna o la mandíbula inferior</li>
+                <li>Náuseas y vómitos</li>
+                <li>Mareos, problemas de circulación y fatiga severa</li>
+              </ul>
+              <p class="is-size-5">Como los síntomas de un ataque cardíaco a menudo se presentan antes de que ocurra un evento importante, es particularmente importante que las mujeres presten atención a estos síntomas para reconocer un posible ataque cardíaco lo antes posible.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section white-box"  style="margin-top:90px">
+      <div class="column is-full has-text-centered">
+        <p class="subtitle is-3" style="margin-bottom:30px">Riesgo de mortalidad por reinfarto</p>
+      </div>
+      <div class="column is-full">
+        <div class="columns is-multiline is-mobile">
+          <div class="column is-half-desktop is-full-tablet is-full-mobile has-text-centered">
+            <p class="is-size-5">
+              El riesgo de muerte por un ataque cardíaco recurrente es casi el doble que en un evento inicial. Aproximadamente el cinco por ciento de todos los afectados sufren un segundo infarto dentro de los seis meses posteriores al primer evento.</p>
+            <p class="is-size-5">
+              Es por esta razón que los pacientes que ya han sufrido un ataque cardíaco temen que se repita un evento y tienen un fuerte deseo de mayor tranquilidad. En particular, muchas de estas personas sufren de angina de pecho (dolor en el pecho) varias veces por semana y, a menudo, se sienten inseguras sobre qué hacer.
+            </p>
+          </div>
+          <div class="column is-half-desktop is-full-tablet is-full-mobile has-text-centered">
+            <picture>
+              <source srcset="{{asset('build/images/products/csactive/user-16.webp')}}" type="image/webp">
+              <source srcset="{{asset('build/images/products/csactive/user-16.png')}}" type="image/png">
+              <img src="{{asset('build/images/products/csactive/user-16.png')}}" alt="user16">
+            </picture>
+            <p class="is-size-5">"¡Definitivamente debo prevenir otro ataque al corazón!"</p>
+            <p class="is-size-6">Bernhard, 55</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="margin-top:90px;padding:10px 0px 30px 0px">
+      <div class="column is-full has-text-centered">
+        <p class="subtitle is-3">Los chequeos regulares del corazón previenen daño adicional</p>
+        <h3 class="subtitle is-5">
+          Para prevenir daños al corazón después de un ataque cardíaco, el tratamiento dentro de los primeros 60 minutos después de que comienzan los síntomas es crítico.
+          Use CardioSecur inmediatamente cuando se presenten sus primeros síntomas y reciba una recomendación para actuar en cuestión de minutos para saber si debe buscar atención médica o no.
+          Por lo tanto, puede ahorrar tiempo anterior, lo cual es importante para ayudar a prevenir daños adicionales al corazón. Además, CardioSecur puede reconocer infartos de las paredes anterior y posterior del corazón.
+        </h3>
+      </div>
+      <div class="column is-full">
+        <div class="columns is-multiline is-mobile">
+          <div class="column is-one-quarter-desktop is-full-tablet is-full-mobile">
+            <div class="circle-blue line-blue">0</div>
+            <div class="mobile-image-container has-text-centered">
+              <picture>
+                <source srcset="{{asset('build/images/products/csactive/step-0.webp')}}" type="image/webp">
+                <source srcset="{{asset('build/images/products/csactive/step-0.png')}}" type="image/png">
+                <img src="{{asset('build/images/products/csactive/step-0.png')}}"  alt="Attach the electrodes to four prominent points of the body" class="step-img">
+              </picture>
+              <p class="is-size-5">Los síntomas ocurren</p>
+              <p>&nbsp;</p>
+            </div>
+          </div>
+          <div class="column is-one-quarter-desktop is-full-tablet is-full-mobile">
+            <div class="circle-blue line-blue">1</div>
+            <div class="mobile-image-container has-text-centered">
+              <picture>
+                <source srcset="{{asset('build/images/products/csactive/step-1.webp')}}" type="image/webp">
+                <source srcset="{{asset('build/images/products/csactive/step-1.png')}}" type="image/png">
+                <img src="{{asset('build/images/products/csactive/step-1.png')}}"  alt="Attach the electrodes to four prominent points of the body" class="step-img">
+              </picture>
+              <p class="is-size-5">Conecte el cable</p>
+              <p>&nbsp;</p>
+            </div>
+          </div>
+          <div class="column is-one-quarter-desktop is-full-tablet is-full-mobile">
+            <div class="circle-blue">2</div>
+            <div class="mobile-image-container has-text-centered">
+              <picture>
+                <source srcset="{{asset('build/images/products/csactive/step-2.webp')}}" type="image/webp">
+                <source srcset="{{asset('build/images/products/csactive/step-2.png')}}" type="image/png">
+                <img src="{{asset('build/images/products/csactive/step-2.png')}}"  alt="Attach the electrodes to four prominent points of the body" class="step-img">
+              </picture>
+              <p class="is-size-5">Comience una lectura</p>
+              <p>&nbsp;</p>
+            </div>
+          </div>
+          <div class="column is-one-quarter-desktop is-full-tablet is-full-mobile">
+            <div class="circle-blue">3</div>
+            <div class="mobile-image-container has-text-centered">
+              <picture>
+                <source srcset="{{asset('build/images/products/csactive/step-3.webp')}}" type="image/webp">
+                <source srcset="{{asset('build/images/products/csactive/step-3.png')}}" type="image/png">
+                <img src="{{asset('build/images/products/csactive/step-3.png')}}"  alt="Attach the electrodes to four prominent points of the body" class="step-img">
+              </picture>
+              <p class="is-size-5">Reciba feedback</p>
+              <p>&nbsp;</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="column is-full has-text-centered">
+        <br>
+          <a class="button is-medium is-primary" href="{{ path('order_csactive') }}">Ver oferta</a>
+        <br>
+      </div>
+    </section>
+
+  </div>
+
+{% endblock %}
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

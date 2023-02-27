@@ -1,0 +1,82 @@
+@media (max-width: 787px) {
+  .white-card {
+    margin: 5px;
+  }
+  .white-card-left {
+    margin-right: 5px;
+  }
+  .white-card-right {
+    border: 0px;
+  }
+
+  .column {
+    font-size: 15px;
+  }
+
+  .control {
+    font-size: 1.0rem;
+    margin: 0px 0px 15px 0px;
+  }
+
+  .checkbox input, .radio input{
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+  }
+
+  .input, .textarea, .select select, .file-cta, .file-name {
+    font-size: 1.0rem;
+  }
+
+  .button {
+    font-size: 1.1rem;
+  }
+
+  .button.is-fullwidth-mobile {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .button.is-fullwidth-mobile-left{
+    display: flex;
+    width: 100%;
+
+    .icon {
+      position: absolute;
+      right: 10px;
+      color: #AAA;
+    }
+  }
+
+  .label:not(:last-child) {
+    margin-bottom: 0em;
+  }
+
+  .subtitle.is-4 {
+    font-size: 1.5rem !important;
+  }
+
+  .retable {
+    .retableHeading {
+      display: none;
+    } 
+  }
+
+  .modal-content, .modal-card {
+    margin-top: 0px;
+  }
+
+  .modal-card-body{
+    padding: 10px;
+  }
+
+  .modal-close {
+    top: 30px;
+  }
+
+  .white-box-sh {
+    border-radius: 0px;
+  }
+
+}

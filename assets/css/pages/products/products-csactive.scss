@@ -1,0 +1,108 @@
+@import "/products.scss";
+
+.app-presentation {
+  position: relative;
+  width: auto;
+  display: flex;
+
+  video {
+    position: absolute;
+    top: 44px;
+    left: 13px;
+  }
+
+}
+
+.mobile-image-container {
+  p {
+    font-size: 18px;
+  }
+}
+
+
+// .app-presentation-background {
+//   position: absolute;
+//   background-repeat: no-repeat;
+//   background-image: url("assets/images/products/csactive/iphone_white_no_screen.png");
+//   background-size: contain;
+//   position: absolute
+// }
+
+// .app-presentation-video {
+//   position: absolute;
+// }
+
+.circle-blue {
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  border-radius: 16px;
+  text-align: center;
+  background: #38B09D;
+  color: #fff;
+  position: relative;
+}
+
+.step-img {
+  margin-bottom: 20px;
+  width: auto;
+  max-width: unset;
+}
+
+.textpic {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -20px;
+  margin-right: -20px;
+}
+
+.infobox {
+  background-color: #e2f3f0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  h4 {
+    font-size: 23px;
+    line-height: 28px;
+    font-weight: 100;
+    text-align: center;
+    margin: 10px auto;
+    min-height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  p {
+    padding: 10px 30px 20px 30px;
+    text-align: center;
+    font-size: 17px;
+    line-height: 19px;
+  }
+}
+
+.csact-whentouse {
+  padding: 0px 10px;
+  text-align: center;
+
+  .column {
+    display: flex;
+    flex-direction: column;
+  }
+  p {
+    margin-bottom: 20px;
+  }
+  h2 {
+    font-weight: 400;
+  }
+  a {
+    margin-bottom: 40px;
+    margin-top: auto;
+    justify-content: center;
+    align-self: center;
+  }
+}
+
+@import "/products-csactive-desktop.scss";
+@import "/products-csactive-mobile.scss";
+@import "/products-csactive-tablet.scss";

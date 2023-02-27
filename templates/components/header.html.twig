@@ -1,0 +1,108 @@
+<!-- Navegación secundaria -->
+<div id="nav-top">
+    <div class="container has-text-right">
+        <ul>
+            {% if locale is defined %}
+            <li>
+                <a href="{{ path('listLocal') }}" class="navbar-item">
+                    <span class="flag {{ locale }}"></span>Cambiar
+                </a>
+            </li>
+            {% endif %}
+
+            {% if not user is defined or not user %}
+            <li>
+				{#	
+					<a href="{{ path('login') }}" class="navbar-item">
+                    Iniciar sesión
+					</a>
+				#}
+			
+                <a href="{{ path('landing_opciones') }}" class="navbar-item">
+                    Ingresar
+                </a>
+            </li>
+            {% else %}
+            <li>
+                <div class="navbar-item has-dropdown is-hoverable profile">
+                    <a class="navbar-link is-hidden-touch is-hidden-mobile is-arrowless">
+                        {{user.firstname}} {{user.lastname}}
+                    </a>
+                    <div class="navbar-dropdown is-right profile">
+                        <div class="navbar-item is-hidden-mobile">
+                            {{user.email}}
+                        </div>
+                        <hr class="navbar-divider">
+                        <a class="navbar-item" href="{{ path('profile') }}">
+                            Cuenta
+                        </a>
+                        <a class="navbar-item" href="{{ path('logout') }}">
+                            Cerrar sesion
+                        </a>
+                    </div>
+                </div>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
+
+<!-- Navegación principal -->
+<nav class="navbar" role="navigation" aria-label="main navigation" id="navbar">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item logo" href="/">
+                <img src="{{ asset('build/images/logo-bambuslife.svg') }}" width="150" height="55">
+            </a>
+
+            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+
+        <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item" href="{{ path('acerca') }}">Acerca de</a>
+
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link">Productos y Servicios</a>
+
+                    <div class="navbar-dropdown">
+                        <a class="navbar-item" href="{{ path('prod_csactive') }}">Paciente</a>
+                        <a class="navbar-item" href="{{ path('prod_cspro') }}">Médico</a>
+                        <a class="navbar-item" href="{{ path('prod_cspro_orgs') }}">Entidades médicas</a>
+                       <!-- <a class="navbar-item" href="{{ path('prod_accessories') }}">Accesorios</a>  -->
+                    </div>
+                </div>
+		      {#  
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link">Registro</a>
+
+                    <div class="navbar-dropdown">
+                        <a class="navbar-item" href="{{ path('registerPatient') }}">Paciente</a>
+                        <a class="navbar-item" href="{{ path('practitioner_register') }}">Médico</a>
+                    </div>
+                </div> #}
+
+                <a class="navbar-item" href="{{ path('faq') }}">Preguntas frecuentes</a>
+
+                <a class="navbar-item" href="{{ path('contact_form') }}">Contacto</a>
+
+                <a class="navbar-item" href="{{ path('pressreleases') }}">Noticias</a>
+
+                {# <div class="navbar-item">
+                    <a class="button is-primary is-rounded" href="{{ path('order_index') }}">
+                        Suscripción
+                    </a>
+                </div> #}
+            </div>
+            <div class="navbar-end">
+                <div class="navbar-item">
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+<!-- Fin Navegación -->

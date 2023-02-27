@@ -1,0 +1,161 @@
+@import "../../variables.scss";
+
+.cover {
+  position:relative;
+
+  .coverimg {
+    img {
+      width: 100%;
+    }
+  }
+
+  .covertext-sh {
+    padding: 20px;
+    position: absolute;
+    top: 35px;
+    width: 500px;
+    color: #333;
+    left: 0px;
+    height: auto;
+    width: 100%;
+    display: flex;
+    text-align: center;
+    justify-self: inherit;
+  }
+
+  .covertext {
+    display: flex;
+    flex-direction: column;
+    /* align-self: flex-end; */
+    /* padding-bottom: 5%; */
+    /* padding-right: 80px; */
+    width: 100%;
+    align-items: center;
+
+    h1 {
+      font-size: 42px;
+      line-height: 37px;
+      font-weight: 100;
+    }
+
+    h2 {
+      font-size: 21px;
+      line-height: 23px;
+      margin-top: 13px;
+    }
+  }
+
+  .h4_to_h2 {
+    h4{
+      font-size: 29px;
+      color:black;
+    }
+  }
+
+  .covertext_2 {
+    position: absolute;
+    top: 3%;
+    color: #444;
+    padding: 12px;
+    width: 50%;
+    text-align: center;
+    left: 0.5%;
+
+    h4 {
+      font-size: 29px;
+      font-weight: 100;
+      line-height: 34px;
+    }
+
+    h3 {
+      font-size: 20px;
+    }
+
+    a {
+      margin-top: 12px;
+      color: #FFF;
+    }
+
+    p {
+      margin-top: 15px;
+      color: #222;
+      font-size: 17px;
+    }
+  }
+}
+
+.circle-blue {
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  border-radius: 16px;
+  text-align: center;
+  background: #38B09D;
+  color: #fff;
+  position: relative;
+  margin: 10% auto;
+}
+.line-blue:before {
+  content: '';
+  position: absolute;
+  left: -66px;
+  width: 780px;
+  top: 14px;
+  height: 2px;
+  background: #38B09D;
+  z-index: -1;
+}
+.mobile-image-container {
+  p {
+    font-size: 18px;
+  }
+}
+
+.section {
+  h2 {
+    text-align: center;
+    font-size: 31px;
+    font-weight: 100;
+    margin: 30px 0px;
+  }
+}
+
+.infobox {
+  background-color: #e2f3f0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  h4 {
+    font-size: 23px;
+    line-height: 28px;
+    font-weight: 100;
+    text-align: center;
+    margin: 10px auto;
+    min-height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  p {
+    padding: 10px 30px 20px 30px;
+    text-align: center;
+    font-size: 17px;
+    line-height: 19px;
+  }
+}
+
+.app-presentation {
+  position: relative;
+  width: auto;
+  display: flex;
+
+  video {
+    position: absolute;
+    top: 84px;
+    left: 53px;
+  }
+
+}
+
+@import "/home-mobile.scss";

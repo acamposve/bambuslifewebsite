@@ -1,0 +1,734 @@
+{% extends 'base.html.twig' %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('profile') }}
+{% endblock %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {{ encore_entry_link_tags('profile') }}
+{% endblock %}
+
+{% block title %}Perfil de Usuario | BambusLife{% endblock %}
+
+{% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block body %}
+
+  <div class="container" style="min-height: 600px;">
+
+    <div class="columns" >
+      <div class="column is-full">
+        <h3 style="margin-top: 20px;" class="subtitle is-3">Cuenta</h3>
+      </div>
+    </div>
+
+    {% if payment is defined and payment == 1 and subscription_status != "Cancelled" %}
+      <div class="columns is-8" style="margin-top: 20px;">
+        <div class="column">
+          <article class="message is-danger">
+            <div class="message-body" style="color: #333;">
+              <div style="position: relative;margin-bottom: 10px;">
+                <i class="fas fa-exclamation-triangle" style="left:0px;top:0px;position:absolute;font-size: 20px;color: #FFC107;"></i>
+                <h3 class="subtitle is-5" style="padding-left:30px;">Su cuenta se encuentra suspendida</h3>
+              </div>
+              <p>No hemos podido procesar su ultimo pago de su subscripci&oacute;n.</p>
+              <p>Intente nuevamente con la tarjeta actual o acutalice sus datos de pago para continuar usando el servicio</p>
+              <div style="margin-top:10px">
+                <a class="button is-primary" href="{{ path('invoice_details', {'invoiceToken': allInvoices[0].hashedName}) }}">Intentar nuevamente</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    {% endif %}
+
+    {# ERROR MSG #}
+    {% if error_msg is defined and error_msg != NULL %}
+      <div class="columns is-8" style="">
+        <div class="column">
+          <article class="message is-danger">
+            <div class="message-body">
+              {{ error_msg | raw }}
+            </div>
+          </article>
+        </div>
+      </div>
+    {% else %}
+      {% if nice_error_msg is defined and nice_error_msg != NULL %}
+        <div class="columns is-8" style="">
+          <div class="column">
+            <article class="message is-danger">
+              <div class="message-body">
+                {{ nice_error_msg | raw }}
+              </div>
+            </article>
+          </div>
+        </div>
+      {% endif %}
+      {% if info_msg is defined and info_msg != NULL and info_msg | length > 0 %}
+        <div class="columns is-8">
+          <div class="column">
+            <article class="message is-success">
+              <div class="message-body">
+                {{ info_msg | raw }}
+              </div>
+            </article>
+          </div>
+        </div>
+      {% endif %}
+      
+
+      {% if (lastObsServReq is defined and lastObsServReq != NULL) %}
+        <div class="last-obs-diag">
+          <div>
+            <i class="fas fa-info-circle" style="color: #999;"></i>
+            Tiene un {{lastObsServReq.type}} realizado el {{lastObsServReq.date}} sin diagnosticar, desea solicitar un diagnóstico para el mismo?
+          </div>
+          <div>
+            <a class="button is-text" href="{{ path('requestDiagRep', {obsId:lastObsServReq.id}) }}" style="font-size: 13px;">
+              <span>Solicitar informe</span>
+              <span class="icon">
+                <i class="fas fa-file-medical-alt"></i>
+              </span>
+            </a>
+          </div>
+        </div>
+      {% endif %}
+{# 
+      {% for ob in lastObservations %}
+      <tr>
+        <td>
+          <div>{{ob.type}}</div>
+          <div style="color: #777;">{{ob.hasDiagnostic?"( Diagnosticado )":""}} </div>
+        </td>
+        <td>
+          {{ob.date}}
+        </td>
+      </tr>
+      {% endfor %} #}
+
+      <div class="columns is-multiline is-mobile account-boxes" style="padding-top: 8px;">
+      
+        {# DATOS DE USUARIO #}
+        <div class="column is-6-desktop is-6-tablet is-12-mobile" >
+          <div class="account-box">
+            <h4 class="subtitle is-5">
+              Datos de usuario
+              <span>Sus datos de contacto y de acceso al servicio</span>
+              <i class="fas fa-user"></i>
+            </h4>
+            <div class="account-box-body">
+              <p>
+                {{user.firstname}} {{user.lastname}}
+              </p>
+              <p>
+                Email: {{user.email}}
+              </p>
+              {% if user.billingAddress is defined %}
+                {% if user.billingAddress.address_line1 is defined and user.billingAddress.address_line1 | length > 0 %}
+                  {{user.billingAddress.address_line1}}<br>
+                {% endif %}
+                {% if user.billingAddress.address_line2 is defined and user.billingAddress.address_line2 | length > 0 %}
+                  {{user.billingAddress.address_line2}}<br>
+                {% endif %}
+                {% if user.billingAddress.city is defined and user.billingAddress.city | length > 0 %}
+                  {{user.billingAddress.city}}, {{user.billingAddress.country}}<br>
+                {% endif %}
+                {% if user.billingAddress.phone is defined and user.billingAddress.phone | length > 0 %}
+                  Tel: {{user.billingAddress.phone}}
+                {% endif %}
+              {% endif %}
+              <br>
+              <br>
+            </div>
+            <a href="{{ path('change_password') }}" class="button is-text full-button" style="margin-top: auto;">
+              <span class="full-button-label">Cambiar contrase&ntilde;a</span>
+              <span class="icon is-small">
+                <i class="fas fa-chevron-right"></i>
+              </span>
+            </a>
+
+          </div>
+        </div>
+
+        {# PERFIL CLINICO #}
+        {% if profile.patient is defined %}
+          <div class="column is-6-desktop is-6-tablet is-12-mobile" >
+            <div class="account-box">
+              <h4 class="subtitle is-5">
+                Perfil cl&iacute;nico
+                <span>Registro de sus datos clínicos</span>
+                <i class="fas fa-file-medical"></i>
+              </h4>
+              <div class="account-box-body">
+                {% set missingPatientData = 0 %}
+                {% if profile.patient.document is defined and profile.patient.document | length > 0 %}
+                  <p>
+                    Documento: {{profile.patient.document}}
+                  </p>
+                {% else %}
+                  {% set missingPatientData = missingPatientData + 1 %}
+                {% endif %}
+                {% if profile.patient.genderDesc is defined and profile.patient.genderDesc | length > 0 %}
+                  <p>
+                    G&eacute;nero: {{profile.patient.genderDesc}}
+                  </p>
+                {% else %}
+                  {% set missingPatientData = missingPatientData + 1 %}
+                {% endif %}
+                {% if profile.patient.birthdate is defined and profile.patient.birthdate | length > 0 and profile.patient.birthdate != '0000-00-00' %}
+                  <p>
+                    Edad: {{profile.patient.birthdateAge}} años ({{profile.patient.birthdateDesc}})
+                  </p>
+                {% else %}
+                  {% set missingPatientData = missingPatientData + 1 %}
+                {% endif %}
+                {% if missingPatientData > 0 %}
+                  <div style="margin: 10px;padding: 5px;border-radius: 4px;background-color: #F4F4F4;">
+                    <i class="fas fa-exclamation-circle"></i>
+                    Por favor complete su datos clínicos. Cuánto más información pueda brindarnos, mejor será la atención recibida.
+                  </div>
+                {% endif %}
+              </div>
+              <a href="{{ path('clinicalProfile') }}" class="button is-text full-button" style="margin-top: auto;">
+                <span class="full-button-label">Cambiar datos</span>
+                <span class="icon is-small">
+                  <i class="fas fa-chevron-right"></i>
+                </span>
+              </a>
+            </div>
+          </div>
+        {% endif %}
+
+        {# MEDICO DE REFERENCIA 
+           !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+           !!!!!!!!! TEMPORARY DISABLED !!!!!!!!
+           !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        #}
+        {% if false and profile.patient is defined %}
+          <div class="column is-6-desktop is-6-tablet is-12-mobile" >
+            <div class="account-box">
+              <h4 class="subtitle is-5">
+                M&eacute;dico tratante
+                <span>Médico de preferencia para que realice los informes de sus electrocardiogramas</span>
+                <i class="fas fa-user-md"></i>
+              </h4>
+              <div class="account-box-body">
+                {% if profile.patientPermissions is not defined or profile.patientPermissions.practitionerName is not defined %}
+                  <div class="desc">
+                    El médico tratante es un servicio para entregarle informes médicos sobre sus análisis de forma remota. 
+                  </div>
+                {% endif %}
+                {% if profile.patientPermissions is defined and profile.patientPermissions.practitionerName is defined %}
+                  <form method="post" action="{{ path('removePatientPractitioner') }}" id="remPract" name="remPract"> 
+                    <div style="display: flex;flex-direction: row;justify-content: space-between;align-items: center;">
+                      <div style="padding: 7px;">
+                        <div style="font-weight: 500;">{{profile.patientPermissions.practitionerName}}</div>
+                        <div style="color: #777;">{{profile.patientPermissions.organizationName}}</div>
+                      </div>
+                      <button class="button is-text" type="submit" id="btnRemPract">
+                        Quitar
+                      </button>
+                    </div>
+                  </form>
+                {% else %}
+                  <div style="padding: 18px 10px;color: #999;">No existe ningun médico asignado aún</div>
+                {% endif %}
+              </div>
+              <a href="{{ path('patientPractitioner') }}" class="button is-text full-button"  style="margin-top: auto;">
+                {% if profile.patientPermissions is defined %}
+                  <span class="full-button-label">Cambiar</span>
+                {% else %}
+                  <span class="full-button-label">Agregar</span>
+                {% endif %}
+                <span class="icon is-small ">
+                  <i class="fas fa-chevron-right"></i>
+                </span>
+              </a>
+            </div>
+          </div>
+        {% endif %}
+        <div class="modal" id="confirmRemPract">
+          <div class="modal-background" id="confirmRemPractBack"></div>
+          <div class="modal-card">
+            <section class="modal-card-body">
+              <h3 class="subtitle is-4">Confirmación de desasignación</h3>
+              ¿Confirma que desea desasignar el médico?
+            </section>
+            <footer class="modal-card-foot" style="justify-content: flex-end;">
+              <button class="button is-link" id="confirmRemPractOK">Desasignar</button>
+              <button class="button" id="confirmRemPractCancel">Cancelar</button>
+            </footer>
+          </div>
+        </div>
+
+        {# OBSERVACIONES #}
+        {% if (lastObservations is defined and lastObservations | length > 0) %} 
+        <div class="column is-6-desktop is-6-tablet is-12-mobile" >
+          <div class="account-box">
+            <h4 class="subtitle is-5">
+              Observaciones
+              <span>Registro de sus analísis y estudios, entre ellos los electrocardiogramas</span>
+              <i class="fas fa-heartbeat"></i>
+            </h4>
+            <div class="account-box-body">
+              <table class="table" style="width: 100%;background-color:transparent">
+                {% for ob in lastObservations %}
+                <tr>
+                  <td>
+                    <div>{{ob.type}}</div>
+                    <div style="color: #777;">{{ob.hasDiagnostic?"( Diagnosticado )":""}} </div>
+                  </td>
+                  <td>
+                    {{ob.date}}
+                  </td>
+                </tr>
+                {% endfor %}
+              </table>
+            </div>
+            <a href="{{ path('observations') }}" class="button is-text full-button"  style="margin-top: auto;">
+              <span class="full-button-label">Ver todos</span>
+              <span class="icon is-small ">
+                <i class="fas fa-chevron-right"></i>
+              </span>
+            </a>
+          </div>
+        </div>
+        {% endif %}
+
+
+        {# DATOS DE MEMBRESIA #}
+        <div class="column is-6-desktop is-6-tablet is-12-mobile" >
+          <div class="account-box">
+            <h4 class="subtitle is-5">
+              Subscripci&oacute;n
+              <span>Estado y detalles de su suscripción actual</span>
+            </h4>
+            <div class="desc">
+              
+            </div>
+            {% if subscription_status is defined and subscription_status != NULL %}
+
+              {# SHOW SUBCRIPTIONS #}
+              <div class="account-box-body">
+                <div style=" padding: 10px 10px 30px 10px;">
+                  {% if subscription_status is defined and subscription_status != NULL %}
+                    <span>
+                      {{subscription_status | subscriptionStatusIcon | raw}}
+                      {{subscription_status | subscriptionStatus}}
+                    </span>
+                  {% endif %}
+                  {% if profile.unpaidInvoice is defined and profile.unpaidInvoice > 0 %}
+                    {% if profile.unpaidInvoice == 1 %}
+                      <span style="color: #EF6C00;">Tiene {{profile.unpaidInvoice}} factura sin pagar</span>
+                    {% else %}
+                      <span style="color: #EF6C00;">Tiene {{profile.unpaidInvoice}} facturas sin pagar</span>
+                    {% endif %}
+                  {% endif %}
+                </div>
+              </div>
+
+              <a href="{{ path('billing_details') }}" class="button is-text full-button" style="margin-top: auto;">
+                <span class="full-button-label">Detalles de subscripci&oacute;n</span>
+                <span class="icon is-small">
+                  <i class="fas fa-chevron-right"></i>
+                </span>
+              </a>
+
+              {% if subscription_status == 'Active' %}
+                <a href="{{ path('cancel_subscription') }}" class="button is-text full-button" style="color: #666;margin-top:0px">
+                  <span class="full-button-label">Cancelar subscripci&oacute;n</span>
+                  <span class="icon is-small">
+                    <i class="fas fa-chevron-right"></i>
+                  </span>
+                </a>
+              {% endif %}
+              
+
+            {% else %}
+
+              {# NO SUBSCRIPTION #}
+              <div class="columns is-desktop">
+                <div class="column">
+                  <div style="padding: 15px 10px 20px 15px;">No tiene ninguna subscripci&oacute;n activa a&uacute;n.</div>
+                </div>
+              </div>
+
+            {% endif %}
+            
+          </div>
+        </div>
+
+        {# DISPOSITIVOS #}
+        {% if (devices is defined and devices | length > 0)  or (userDevices is defined and userDevices | length > 0)%}
+          <div class="column is-6-desktop is-6-tablet is-12-mobile" >
+            <div class="account-box">
+              <h4 class="subtitle is-5">
+                Dispositivos
+                <span>Detalles y estados de sus dispositivos</span>
+                <i class="fas fa-stethoscope"></i>
+              </h4>
+              <div class="account-box-body">
+
+                <div style="width: 100%;display:flex;flex-direction: column;">
+                  {% for assignedDevice in devices %}
+                    <div style="display:flex;justify-content: space-between;padding: 10px 0px;">
+                      <div>
+                        <div style="font-weight: 500;font-size: 16px;">{{assignedDevice.name}}</div>
+                        <div style="color: #777;">( {{assignedDevice.simpleUDI}} | {{assignedDevice.id}} )</div>
+                      </div>
+                      <div>
+                        Asignado a t&iacute;
+                        {{assignedDevice.isOwner?"(Dueño)":""}}
+                      </div>
+                    </div>
+                    {% if assignedDevice.isOwner and assignedDevice.patients is defined and assignedDevice.patients | length > 1 %}
+                      <div style="margin-top:15px;">Compartido con:</div>
+                      {% for patient in assignedDevice.patients %}
+                        {% if patient.isOwner == 0 %}
+                          <div style="display:flex;justify-content: flex-start;align-items: center;margin-left: 12px;">
+                            <div>
+                              {{patient.given}} {{patient.family}}
+                            </div>
+                            <div>
+                              <a class="button is-text removeMemberBtns" data-pid="{{patient.id}}" data-pnam="{{patient.given}}" data-did="{{assignedDevice.id}}">
+                                <span class="icon is-small">
+                                  <i class="fas fa-times"></i>
+                                </span>
+                                <span class="button-label">Quitar</span>
+                              </a>
+                            </div>
+                          </div>
+                        {% endif %}
+                      {% endfor %}
+                    {% endif %}
+                  {% endfor %}
+                </div>
+                <table style="width: 100%;">
+                  {% for userDevice in userDevices %}
+                    <tr>
+                      <td>
+                        <div>{{userDevice.name}}</div>
+                        <div style="color: #777;">( {{userDevice.simpleUDI}} | {{userDevice.id}})</div>
+                      </td>
+                      <td>
+                        {% if userDevice.isPro == false %}
+                          {% if userDevice.status == 'SETUP' %}
+                            <p style="cursor:pointer;" class="assignedUserTitle">Sin asignar <i class="fas fa-info-circle" style="color: #999;"></i></p>
+                          {% elseif userDevice.status == 'BUSY' %}
+                          Asignado a: <br>
+                            {% for patient in userDevice.patients %}
+                              -{{patient.given}} {{patient.family}} <br>
+                            {% endfor %}
+                          {% else %}
+                            Libre
+                          {% endif %}
+                        {% endif %}
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </table>
+
+              {% if profile.pendingInvitations is defined and profile.pendingInvitations | length > 0 %}
+                <h4 class="subtitle is-5" style="font-size: 16px;">Invitaciones enviadas</h4>
+                <table class="table" style="width: 100%;background-color:transparent">
+                  {% for invit in profile.pendingInvitations %}
+                    <tr>
+                      <td>
+                        <div>{{invit.recipientName}}</div>
+                        <div style="color: #777;">( {{invit.recipientEmail}} )</div>
+                        <div style="color: #777;">{{invit.createdDateNice}}</div>
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </table>
+              {% endif %}
+
+              </div>
+              {% if profile.hasOwnDevices %}
+                <div style="margin-top: auto">
+                  <a class="button is-text full-button" id="inviteBtn">
+                    <span class="full-button-label">Invitar familiar/amigo</span>
+                    <span class="icon is-small">
+                      <i class="fas fa-chevron-right"></i>
+                    </span>
+                  </a>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
+
+        {# ORGANIZACION #}
+        {% if ( user.role.name == 'ADMIN_ORGANIZATION' or user.role.name == 'DOCTOR') and user.organization is defined %}
+          <div class="column is-6-desktop is-6-tablet is-12-mobile" >
+            <div class="account-box">
+              <h4 class="subtitle is-5">
+                Organizaci&oacute;n
+                <span>Datos de su organización en el portal de médicos</span>
+              </h4>
+              <div class="account-box-body">
+                <p style="font-weight: 500;">
+                  {{user.organization.name}}
+                </p>
+                {% if user.organization.address is defined and user.organization.address | length > 0 %}
+                  <p>
+                    Direcci&oacute;n: {{user.organization.address}}
+                  </p>
+                {% endif %}
+                {% if user.organization.primaryPhone is defined and user.organization.primaryPhone | length > 0 %}
+                  <p>
+                    Tel: {{user.organization.primaryPhone}}
+                  </p>
+                {% endif %}
+                {{user.organization.cityName}}, {{user.organization.countryName}}
+              </div>
+              <div style="margin-top: auto">
+                <a href="https://app.bambus.life" class="button is-text full-button">
+                  <span class="full-button-label">Gestionar organizaci&oacute;n</span>
+                  <span class="icon is-small">
+                    <i class="fas fa-chevron-right"></i>
+                  </span>
+                </a>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+
+        {# RESERVAS #}
+        <div class="column is-6-desktop is-6-tablet is-12-mobile" >
+          <div class="account-box">
+            <h4 class="subtitle is-5">
+              Reservas
+              <span>Realice reservas presenciales o virtuales con médicos</span>
+              <i class="fas fa-calendar-alt"></i>
+            </h4>
+            <div class="account-box-body">
+              {% if (profile.appointments is defined and profile.appointments | length > 0) %} 
+                <table class="table" style="width: 100%;background-color:transparent">
+                  {% for appointment in profile.appointments %}
+                  <tr>
+                    <td>
+                      <div>{{appointment.practitionerName}}</div>
+                      <div style="color:#888">{{appointment.statusNice}}</div>
+                    </td>
+                    <td>
+                      {{appointment.startDateNice}} {{appointment.startHourNice}}
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </table>
+              {% else %}
+                <div>Usted no tiene ninguna reserva.</div>
+              {% endif %}
+            </div>
+            {% if (profile.appointments is defined and profile.appointments | length > 0) %} 
+              <a href="{{ path('appointments') }}" class="button is-text full-button"  style="margin-top: auto;">
+                <span class="full-button-label">Ver todos</span>
+                <span class="icon is-small ">
+                  <i class="fas fa-chevron-right"></i>
+                </span>
+              </a>
+            {% endif %}
+            <a href="{{ path('searchResources') }}" class="button is-text full-button"  style="margin-top: auto;">
+              <span class="full-button-label">Agregar una cita</span>
+              <span class="icon is-small ">
+                <i class="fas fa-chevron-right"></i>
+              </span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      {# ORDENES #}
+      {% if profile.orders is defined and profile.orders | length > 0 %}
+        <div class="columns " style="padding-top: 8px;">
+          <div class="column" >
+            <div class="account-box">
+              <h4 class="subtitle is-5">
+                &Oacute;rdenes
+                <span>Listado de últimas órdenes</span>
+              </h4>
+              <div class="account-box-body">
+                {% for order in profile.orders %}
+                  <div class="columns is-mobile is-multiline" style="border-bottom: 1px solid #E7E7E7;">
+                    <div class="column is-3-desktop is-6-mobile">
+                      <a href="{{ path('order_view', {orderId: order.hashedName}) }}" >
+                        {{order.name}}
+                      </a>
+                    </div>
+                    <div class="column is-3-desktop  is-6-mobile">
+                      {{order.creationNice}}
+                    </div>
+                    <div class="column is-3-desktop  is-6-mobile">
+                      {# {{order.currency}} {{order.rounded_totalToShow | price}} #}
+                      USD {{order.base_grand_totalToShow | price}}
+                    </div>
+                    <div class="column is-3-desktop  is-6-mobile">
+                      {{order.status | orderStatus}}
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+
+      {# CONTACTO SOPORTE #}
+      <div class="columns " style="padding: 8px;">
+        <div class="column" >
+          <h4 class="subtitle is-5">Soporte</h4>
+          <div class="columns" style="    margin: 0px;">
+            <div class="column is-4-desktop is-12-mobile has-text-centered	">
+              <i class="far fa-envelope" style="font-size: 20px;color: #999;"></i>
+              <div class="has-text-weight-semibold is-size-6	">Correo electr&oacute;nico</div>
+              <div>
+                <div style="font-size:13px;min-height:20px;margin-bottom:15px">
+                  Cont&aacute;ctese usando su correo electr&oacute;nico
+                </div>
+                <a href="mailto:soporte@bambus.life" class="button is-outline">soporte@bambus.life</a>
+              </div>
+            </div>
+            <div class="column is-4-desktop is-12-mobile has-text-centered	">
+              <i class="fa fa-pen-nib" style="font-size: 20px;color: #999;"></i>
+              <h1 class="has-text-weight-semibold is-size-6">Formulario de contacto</h1>
+              <div>
+                <div style="font-size:13px;min-height:20px;margin-bottom:15px">
+                  Env&iacute;enos su consulta o inquietud usando el formulario
+                </div>
+                <a href="{{path('contact_form')}}" class="button is-outline">Ir al formulario</a>
+              </div>
+            </div>
+            <div class="column is-4-desktop is-12-mobile has-text-centered	">
+              <i class="far fa-question-circle" style="font-size: 20px;color: #999;"></i>
+              <h1 class="has-text-weight-semibold is-size-6">Preguntas frecuentes</h1>
+              <div>
+                <div style="font-size:13px;min-height:20px;margin-bottom:15px">
+                  Lea las respuestas a preguntas frecuentes
+                </div>
+                <a href="{{path('faq')}}" class="button is-outline">Ver preguntas</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {# DEVICE ASSIGNED USER MODAL #}
+      <div class="modal" id="assignedUser">
+        <div class="modal-background" id="assignedUserBack"></div>
+        <div class="modal-content" style="background-color: #FFF;text-align: center;padding: 40px;border-radius: 4px;position:relative">
+          <h3 class="subtitle is-4">No existe un usuario asignado a este dispositivo</h3>
+          <p>El dispositivo no tiene ningun usuario asignado. Uselo por primera vez para dejarlo asociado a la cuenta que lo use</p>
+          <button id="assignedUserCloseBtn" class="modal-close is-large" aria-label="close" style="position: absolute;"></button>
+        </div>
+      </div>
+
+      {# FAMILY INVITATION MODAL #}
+      <div class="modal" id="inviteFamilyMember">
+        <div class="modal-background" id="inviteFamilyMemberBack"></div>
+          <form action="{{ path('inviteMember') }}" method="post" id="inviteMemberForm" name="inviteMemberForm" style="margin-top: 15px;">
+            <div class="modal-content" style="background-color: #FFF;border-radius: 4px;position:relative">
+              <div style="padding: 20px;">
+                <div style="text-align:center">
+                  <h3 class="subtitle is-4">Invitar a un familiar o amigo a mi cuenta</h3>
+                  <p>Puede invitar a un amigo o familiar a su plan para compartir un dispositivo y los servicios de su suscripcion.</p>
+                </div>
+                <p style="margin: 10px 0px;background-color: #EEE;padding: 5px;border-radius: 5px;">
+                  <i class="fas fa-info-circle" style="color: #999;"></i> Al agregar un miembro a su plan, se agregara un costo de <strong id="familyMemberPlanPrice"></strong> más IVA a su mensualidad.
+                </p>
+                <p>
+                  Le enviaremos un correo electrónico con su invitación. La persona debe seguir los pasos indicados en el correo y aceptar la misma. 
+                  A partir de ahí tendrá su perfil creado y podrá acceder a sus análisis y diagnósticos de los mismos.
+                </p>
+                <p style="margin-top: 10px;border: 1px solid #DDD;padding: 5px;border-radius: 5px;font-size: 14px;">
+                  Recuerde que el invitado debe tener el mismo tipo de conector Android micro-USB, USB-C o iPhone Lightning que el dispositivo elegido para compartir.
+                </p>
+                <fieldset style="margin-top: 30px;">
+                  <div class="form-section">
+                    <div class="columns is-multiline">
+                        <div class="column is-12">
+                          <div class="field">
+                            <label class="label">Dispositivo:</label>
+                            <div class="control">
+                              <div class="select">
+                                <select name="deviceSerialNum" id="deviceSerialNum" >
+                                  {% for userDevice in profile.devices %}
+                                    {% if userDevice.isOwner == 1 %}
+                                      <option value="{{userDevice.simpleUDI}}" >{{userDevice.name}} ( SN: {{userDevice.simpleUDI}} )</option>
+                                    {% endif %}
+                                  {% endfor %}
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      <div class="column is-12">
+                        <div class="field">
+                          <label class="label">Nombre:</label>
+                          <div class="control">
+                            <input class="input" type="text" id="recipientName" name="recipientName" placeholder="Nombre del familiar o amigo">
+                          </div>
+                          <div class="messages"></div>
+                        </div>
+                      </div>
+                      <div class="column is-12">
+                        <div class="field">
+                          <label class="label">Correo electrónico:</label>
+                          <div class="control">
+                            <input class="input" type="email" id="recipientEmail" name="recipientEmail" placeholder="Correo electrónico">
+                          </div>
+                          <div class="messages"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+              <footer class="modal-card-foot" style="justify-content: flex-end;">
+                <button type="submit" class="button is-link is-rounded" id="inviteFamilyMemberOK" style="min-width: 100px;">Enviar invitación</button>
+                <button class="button is-text" id="inviteFamilyMemberCancel">Cancelar</button>
+              </footer>
+            </div>
+          </form>
+        </div>
+      </div>
+      
+      {# FAMILY MEMBER REMOVAL CONFIRM MODAL #}
+      <div class="modal" id="removeFamilyMember">
+        <div class="modal-background" id="removeFamilyMemberBack"></div>
+            <div class="modal-content" style="background-color: #FFF;border-radius: 4px;position:relative">
+              <div style="padding: 20px;">
+                <div style="text-align:center">
+                  <h3 class="subtitle is-4">Quitar miembro de mi cuenta</h3>
+                  <p style="font-size: 18px;padding: 20px 0px;">
+                    ¿Confirma que desea quitar a <span id="remPatName" style="font-weight:bold"></span>?
+                  </p>
+                </div>
+                <p style="margin: 10px 0px;background-color: #EEE;padding: 5px;border-radius: 5px;">
+                  <i class="fas fa-info-circle" style="color: #999;"></i> Al quitar un miembro a su plan, se le descontar&aacute; un costo de <strong id="familyMemberRemPlanPrice"></strong> a su mensualidad.
+                </p>
+              </div>
+              <footer class="modal-card-foot" style="justify-content: flex-end;">
+                <button class="button is-link" id="removeFamilyMemberOK" style="min-width: 100px;">Quitar miembro</button>
+                <button class="button" id="removeFamilyMemberCancel">Cancelar</button>
+              </footer>
+            </div>
+          </form>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+
+{% endblock %}
+
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}
+

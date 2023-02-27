@@ -1,0 +1,99 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Prensa | BambusLife{% endblock %}
+
+{% block description %}Prensa | BambusLife{% endblock %}
+
+{% block keywords %}Prensa noticias novedades bambuslife electrocardiograma ECG {% endblock %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {{ encore_entry_link_tags('pressrelease') }}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('pressrelease') }}
+{% endblock %}
+
+{% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block body %}
+
+<div class="container white-box" style="padding: 20px;">
+  <h1 class="subtitle is-3" style="margin-top: 10px;">Noticias</h1>
+  <div>
+    <h2 class="subtitle is-5">BambusLife en la prensa</h2>
+    
+    <div class="columns is-multiline is-mobile" style="margin-top:30px;margin-bottom:100px">
+      
+      <div class="column is-4-desktop is-4-tablet is-12-mobile">
+        <div class="card linkcard" style="height: 100%;">
+          <a href="https://www.ovaciondigital.com.uy/multideportivo/secretaria-nacional-deporte-recibio-aparatos-prevenir-problemas-cardiacos.html">
+            <div class="card-image">
+              {# <a href="{{ path('press_secnacdep') }}"> #}
+                <figure class="image is-4by3">
+                  <img src="{{ asset('build/images/pressreleases/secnacdep.png') }}" alt="La Secretaría Nacional del Deporte recibió aparatos para prevenir problemas cardíacos">
+                </figure>
+              {# </a> #}
+            </div>
+            <div class="card-content">
+              <time style="color: #999;font-size: 14px;">10 de Septiembre 2020 </time>
+              <p class="title is-4">
+                {# <a href="{{ path('press_secnacdep') }}" style="color:#333"> #}
+                {# <a href="https://www.ovaciondigital.com.uy/multideportivo/secretaria-nacional-deporte-recibio-aparatos-prevenir-problemas-cardiacos.html" style="color:#333"> #}
+                  La Secretaría Nacional del Deporte recibió aparatos para prevenir problemas cardíacos
+                {# </a> #}
+              </p>
+              <div class="content">
+                El jueves pasado el Directorio de BambusLife con mucha alegría entrego 20
+                equipos de registro de electrocardiogramas a la Secretaria Nacional del Deporte,
+                para el desarrollar un piloto de Telemedicina, en particular de Telemetría de
+                Electrocardiogramas, con el fin de realizar el control y prevención de los más de
+                200.000 deportistas del Uruguay.
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="column is-4-desktop is-4-tablet is-12-mobile">
+        <div class="card linkcard" style="height: 100%;">
+          <a href="{{ path('press_webinar') }}">
+            <div class="card-image">
+              {# <a href="{{ path('press_webinar') }}"> #}
+                <figure class="image is-4by3">
+                  <img src="{{ asset('build/images/pressreleases/webinar1.png') }}" alt="Webinar de Telemedicina Cardiológica">
+                </figure>
+              {# </a> #}
+            </div>
+            <div class="card-content">
+              <time style="color: #999;font-size: 14px;">24 de Septiembre 2020</time>
+              <p class="title is-4">
+                {# <a href="{{ path('press_webinar') }}"  style="color:#333"> #}
+                  Webinar de Telemedicina Cardiológica
+                {# </a> #}
+              </p>
+              <div class="content">
+                Con motivo de la semana del corazón se realizó la primer Webinar de Telemedicina
+                Cardiológica en la que contamos con participantes de todo el mundo para escuchar al Dr
+                Markus Riemenschneider de Alemania y el Dr. Lucio Padilla de Argentina.
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    
+    </div>
+
+  </div>
+  
+</div>
+
+{% endblock %}
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

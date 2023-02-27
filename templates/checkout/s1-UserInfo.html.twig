@@ -1,0 +1,270 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {{ encore_entry_link_tags('checkout-s1-user') }}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('checkout-s1-user') }}
+{% endblock %}
+
+{% block title %}Compra - Datos de comprador | BambusLife{% endblock %}
+
+{% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block body %}
+
+  <div class="container" style="background-color: #FEFEFE;padding: 10px;">
+
+    {# STEPS #}
+    <div class="bl-steps">
+      <ul class="steps is-narrow is-medium is-centered has-content-centered">
+        <li class="steps-segment is-active has-gaps">
+          <span class="steps-marker">
+            <span class="icon">
+              <i class="fas fa-user"></i>
+            </span>
+          </span>
+          <div class="steps-content">
+            <p class="heading" style="color: #38b09d;">Datos comprador</p>
+          </div>
+        </li>
+        {# <li class="steps-segment has-gaps">
+          <span class="steps-marker">
+            <span class="icon">
+              <i class="fas fa-user"></i>
+            </span>
+          </span>
+          <div class="steps-content">
+            <p class="heading">Datos cl&iacute;nicos</p>
+          </div>
+        </li> #}
+        <li class="steps-segment has-gaps">
+          <span class="steps-marker">
+            <span class="icon">
+              <i class="fas fa-truck"></i>
+            </span>
+          </span>
+          <div class="steps-content">
+            <p class="heading">Datos de envio</p>
+          </div>
+        </li>
+        <li class="steps-segment has-gaps">
+          <span class="steps-marker">
+              <span class="icon">
+              <i class="fas fa-credit-card"></i>
+              </span>
+          </span>
+          <div class="steps-content">
+              <p class="heading">Pago</p>
+          </div>
+        </li>
+        <li class="steps-segment has-gaps">
+          <span class="steps-marker">
+              <span class="icon">
+              <i class="fas fa-check"></i>
+              </span>
+          </span>
+          <div class="steps-content">
+              <p class="heading">Confirmacion</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    {# FORMS #}
+    
+
+    {# ERROR MSG #}
+    {% if error_msg is defined and error_msg != NULL %}
+      <div class="columns is-8" style="">
+        <div class="column">
+          <article class="message is-danger">
+            <div class="message-body">
+              {{ error_msg | raw }}
+            </div>
+          </article>
+        </div>
+      </div>
+    {% endif %}
+
+    {% if not user is defined or user == NULL %}
+
+      {# 
+      <div class="columns" style="margin-top: 20px;">
+        <div class="column is-8 is-offset-2">
+          <div Class="info-box-grey">
+            Si ya tiene un usuario registrado ingrese su correo electronico y su contrase&ntilde;a, de lo contrario por favor complete el formulario para registrarse.
+          </div>
+        </div>
+      </div>
+       #}
+      
+      {{ render(controller('App\\Controller\\Components\\LoginController::index' , {email:NULL})) }}
+
+      <div style="display:none" data-url="{{ path('checkout_shipping') }}" id="postlogin"></div>
+
+      <div class="columns" style="padding: 20px;">
+        {# LOGIN 
+        <div class="column is-half ">
+          <h5 class="title is-5">Inicie sesion</h5>
+          <p>Si ya tiene cuente ingrese su email y su clave</p>
+          <form name="userInfoLogin" id="userInfoLogin" method="post" action="{{ path('checkout_userinfo_post', {'mode': '1'}) }}">
+            <div style="max-width: 350px;">
+              <div class="field">
+                <label class="label">Correo electr&oacute;nico</label>
+                <div class="control">
+                  <input class="input" type="email" placeholder="Ingrese su correo electr&oacute;nico" 
+                    name="loginEmail" id="loginEmail" required novalidate="novalidate">
+                </div>
+                <div class="messages"></div>
+              </div>
+              <div class="field">
+                <label class="label">Clave</label>
+                <div class="control">
+                  <input class="input" type="password" placeholder="Ingrese su clave" 
+                    name="loginPassword" id="loginPassword" required novalidate="novalidate">
+                </div>
+                <div class="messages"></div>
+              </div>
+              <div class="control">
+                <button class="button is-primary" type="submit" id="btnLogin">Iniciar sesion y continuar</button>
+              </div>
+            </div>
+          </form>
+        </div>#}
+        
+
+        {# REGISTER 
+        <div class="column is-half">
+          <h5 class="title is-5">Registrese</h5>
+          <p>Si aun no esta registrado, solo complete el formulario para continuar.</p>
+          <form name="userInfoRegister" id="userInfoRegister" method="post" action="{{ path('checkout_userinfo_post', {'mode': '2'}) }}">
+            <div style="max-width: 350px;">
+              <div class="field">
+                <label class="label">Nombre</label>
+                <div class="control">
+                  <input class="input" type="text" placeholder="Ingrese su nombre" name="firstname" 
+                      id="firstname" required>
+                </div>
+                <div class="messages"></div>
+              </div>
+              <div class="field">
+                <label class="label">Apellido</label>
+                <div class="control">
+                  <input class="input" type="text" placeholder="Ingrese su apellido" name="lastname" id="lastname">
+                </div>
+                <div class="messages"></div>
+              </div>
+              <div class="field">
+                <label class="label">Correo electronico</label>
+                <div class="control">
+                  <input class="input" type="email" placeholder="Ingrese su corre electronico" name="email" id="email">
+                </div>
+                <div class="messages"></div>
+              </div>
+              <div class="field">
+                <label class="label">Pais</label>
+                <div class="control">
+                  <div class="select">
+                    <select name="regcountry" id="regcountry">
+                      {% for country in countries %}
+                        <option value="{{country.code}}"
+                        {% if navCountry == country.code %} selected {% endif %}>{{country.name}}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="field">
+                <label class="label">Ciudad</label>
+                <div class="control">
+                  <div >
+                    <select id="selCity" name="selCity">
+                    </select>
+                    <input type="hidden" id="cityId" name="cityId">
+                    <input type="hidden" id="cityName" name="cityName">
+                  </div>
+                </div>
+                <div class="messages"></div>
+              </div>
+              <div class="field">
+                <label class="label">Dirección</label>
+                <div class="control">
+                  <input class="input" type="text" placeholder="Dirección de residencia" name="address" id="address">
+                </div>
+                <div class="messages"></div>
+              </div>
+              <div class="field">
+                <label class="label">Teléfono</label>
+                <div class="control">
+                  <input class="input" type="text" placeholder="Teléfono de contacto" name="phonenumber" id="phonenumber">
+                </div>
+                <div class="messages"></div>
+              </div>
+              <div class="field">
+                <label class="label">Contrase&ntilde;a</label>
+                <div class="control">
+                  <input class="input" type="password" name="password" id="password">
+                </div>
+                <div class="messages"></div>
+              </div>
+              <div class="field">
+                <div class="control">
+                  <label class="checkbox">
+                    <input type="checkbox" name="terms" id="terms">
+                    Acepto los <a href="{{ path('terms_conditions') }}">Terminos y Condiciones</a> y la <a href="{{ path('privacy_policy') }}">Política de Privacidad</a>
+                  </label>
+                </div>
+                <div class="messages"></div>
+              </div>
+              <div class="control">
+                <button type="submit" class="button is-primary" id="btnRegister">Registrarme y continuar</button>
+              </div>
+            </div>
+          </form>
+        </div>#}
+
+      </div>
+
+    {% else %}
+      
+      <div style="max-width: 400px;background-color: #dcf7f3;padding: 8px;text-align: center;border-radius: 8px;border-top: 2px solid #38b09d;margin: 20px auto 380px auto;">
+        <div style="background-color: #38b09d;color: #FFF;padding: 20px 28px;width: auto;display: inline-block;border-radius: 40px;font-size: 25px;margin: 10px 0px;">
+          <span class="icon">
+            <i class="fas fa-user"></i>
+          </span>
+        </div>
+        <div style="margin-bottom: 20px;">
+          <div style="font-size: 23px;">{{user.firstname}} {{user.lastname}}</div>
+          <div style="color: #777;">{{user.email}}</div>
+        </div>
+        <div>
+          <div>
+            <form name="userInfoContinue" method="post" action="{{ path('checkout_userinfo_post', {'mode': '3'}) }}">
+              
+              <button type="submit" class="button is-primary">Continuar como &nbsp;<strong>{{user.firstname}} {{user.lastname}}</strong></button>
+            </form>
+          </div>
+          <div style="margin: 12px 0px;">
+            <form name="userInfoChangeUser" method="post" action="{{ path('checkout_userinfo_post', {'mode': '4'}) }}">
+              
+              <button type="submit" class="button is-text">Cambiar de usuario</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    
+    {% endif %}
+
+  </div>
+
+{% endblock %}
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Estudios Científicos | BambusLife{% endblock %}
+
+{% block description %}
+ Estudios realizados con la técnica de registro EASI-ECG con 4 electrodos
+{% endblock %}
+
+{% block keywords %}Estudios realizados técnica registro EASI-ECG 4 electrodos{% endblock %}
+
+{% block extrameta %}
+  <meta property="og:title" content="Estudios Científicos | BambusLife" />
+  <meta property="og:description" content="Estudios realizados técnica registro EASI-ECG 4 electrodos" />
+  <meta property="og:type"  content="website" />
+  <meta property="og:url"   content="https://bambus.life{{ app.request.requestUri }}" />
+  <meta property="og:image" content="{{asset('build/images/og/csactive.png')}}" />
+{% endblock %}
+
+{% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block body %}
+  <div class="container">
+    <section class="section" style="margin-bottom:140px">
+      <div class="has-text-centered" style="margin-bottom:40px">
+        <h1 class="subtitle is-2">Estudios Científicos</h1>
+      </div>
+
+      <div class="content">
+        <p>
+          Estudios realizados con la técnica de registro EASI-ECG con 4 electrodos
+        </p>
+        <ul>
+          <li>
+            <a href="/docs/scientific-studies/CardioSecur Scientific Background_EN_V5.0.pdf" 
+              alt="Antecedentes Científicos">
+              CardioSecur - Antecedentes Científicos (inglés)
+            </a>
+          </li>
+          <li>
+            <a href="/docs/scientific-studies/Press_Release_Posterior-and-Right-Ventricular-Myocardial-Infarction-Detection_EN--2.pdf" 
+              alt="Comunicado de Prensa - Detección de infarto de miocardio ventricular posterior y derecho">
+              Comunicado de Prensa - Detección de infarto de miocardio ventricular posterior y derecho (inglés)
+            </a>
+          </li>
+          <li>
+            <a href="/docs/scientific-studies/CardioSecur_Electrodes_permutations.pdf" 
+              alt="CardioSecur - Permutación de electrodos">
+              CardioSecur - Permutación de electrodos (inglés)
+            </a>
+          </li>
+          <li>
+            <a href="/docs/scientific-studies/Example CardioSecur Active PDF.pdf" 
+              alt="CardioSecur Active - PDF de ejemplo">
+              CardioSecur Active - PDF de ejemplo (inglés)
+            </a>
+          </li>
+          <li>
+            <a href="/docs/scientific-studies/Example CardioSecur Pro PDF.pdf" 
+              alt="CardioSecur Pro - PDF de ejemplo">
+              CardioSecur Pro - PDF de ejemplo (inglés)
+            </a>
+          </li>
+        </ul>
+      </div>
+  </div>
+{% endblock %}
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

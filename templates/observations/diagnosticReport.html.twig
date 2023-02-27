@@ -1,0 +1,112 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Informe de an&aacute;lisis | BambusLife{% endblock %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {{ encore_entry_link_tags('observation-list') }}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('observation-list') }}
+{% endblock %}
+
+{% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block body %}
+
+<div class="container white-box" style="min-height: 600px;padding:10px">
+  <div class="columns">
+    <div class="column is-full">
+      <h3 style="margin-top: 20px;" class="subtitle is-3">Informe de an&aacute;lisis</h3>
+
+      {# ERROR MSG #}
+      {% if error_msg is defined and error_msg != NULL %}
+        <div class="columns is-mobile" style="">
+          <div class="column is-8-desktop is-offset-2-desktop is-10-mobile is-offset-1-mobile">
+            <article class="message is-danger">
+              <div class="message-body">
+                {{ error_msg | raw }}
+              </div>
+            </article>
+          </div>
+        </div>
+      {% endif %}
+
+      {% if diagRep is defined and diagRep != NULL %}
+        <h1 class="is-5 subtitle">Observaci&oacute;n</h1>
+        <table>
+          <tr>
+            <td>Nivel de alerta: </td>
+            <td style="padding-left:10px">
+              {% if diagRep.autoeval == 'HIGH' %}
+                <div class="obs-status obs-status-red"></div><div style="display:inline-flex;margin-left:10px;">Rojo</div>
+              {% elseif diagRep.autoeval == 'LOW' %}
+                <div class="obs-status obs-status-yellow"></div>
+              {% else %}
+                <div class="obs-status obs-status-green"></div>
+              {% endif %}
+            </td>
+          </tr>
+          <tr>
+            <td>Fecha de realizado: </td>
+            <td style="color:#222">{{diagRep.observationDateToShow}}</td>
+          </tr>
+        </table>
+        <br><br>
+        <h1 class="is-5 subtitle">Informe</h1>
+        <table>
+          <tr>
+            <td>Diagnosticado por: </td>
+            <td style="color:#222;padding-left:10px">{{diagRep.practitionerName}}</td>
+          </tr>
+          <tr>
+            <td>Fecha de informe:</td>
+            <td style="color:#222;padding-left:10px">{{diagRep.diagnosticDateToShow}}</td>
+          </tr>
+          {% if diagRep.noteForPatient and diagRep.noteForPatient | length > 0 %}
+            <tr>
+              <td>Nota para el paciente:</td>
+            </tr>
+          {% endif %}
+        </table>
+        {% if diagRep.noteForPatient and diagRep.noteForPatient | length > 0 %}
+          <table>
+            <tr>
+              <td style="color: #222;padding-left: 10px;background-color: #FFF;min-width: 300px;padding: 10px;border: 1px solid #DDD;">
+                {{diagRep.noteForPatient | raw}}
+              </td>
+            </tr>
+          </table>
+        {% endif %}
+        <div style="margin-top: 40px;">
+          <a class="button is-primary is-rounded" href="{{ path('diagnosticReportPdf', {obsId: diagRep.observationId, dl: 1}) }}">
+            <span>Descargar PDF</span>
+            <span class="icon">
+              <i class="fas fa-cloud-download-alt"></i>
+            </span>
+          </a>
+          <a class="button is-primary is-rounded" href="{{ path('diagnosticReportPdf', {obsId: diagRep.observationId, dl: 0}) }}" style="margin-left:10px">
+            <span>Ver PDF</span>
+            <span class="icon">
+              <i class="far fa-eye"></i>
+            </span>
+          </a>
+        </div>
+        <div style="margin-top: 40px;">
+          <a class="button is-text" href="{{ path('observations') }}">Volver</a>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
+
+{% block footer %}
+{{ include('components/footer.html.twig') }}
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cancelaci&oacute;n de subscripci&oacute;n | BambusLife{% endblock %}
+
+{% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block body %}
+
+{% if info_msg is defined and info_msg != NULL and info_msg | length > 0 %}
+  <div class="container" style="min-height: 600px;">
+    <div class="content">
+      <div class="columns is-8">
+        <div class="column">
+          <article class="message is-success">
+            <div class="message-body">
+              {{ info_msg | raw }}
+            </div>
+          </article>
+        </div>
+      </div>
+      <div>
+        <a class="button" href="{{ path('profile') }}">Volver al perfil</a>
+      </div>
+    </div>
+  </div>
+
+{% else %}
+  
+  <div class="container" style="min-height: 600px;">
+
+    <div class="content">
+  
+  {% if error_msg is defined and error_msg != NULL and error_msg | length > 0 %}
+    <div class="columns is-8">
+      <div class="column">
+        <article class="message is-danger">
+          <div class="message-body">
+            {{ error_msg | raw }}
+          </div>
+        </article>
+      </div>
+    </div>
+  {% endif %}
+
+      <div class="white-box" style="margin-top:20px">
+        <div class="columns" >
+          <div class="column is-full" style="text-align: center;">
+            <h3 style="margin-top: 20px;" class="subtitle is-3">Cancelaci&oacute;n de subscripci&oacute;n</h3>
+          </div>
+        </div>
+
+        <div class="columns" >
+          <div class="column is-full" style="text-align: center;">
+            <div style="font-size: 25px;"><i class="fas fa-exclamation-circle"></i></div>
+            <p>Al cancelar su subscripci&oacute;n...</p>
+            <p>NOTA: Si bien ya no recibir&aacute;n los cargos mensuales de la suscripci&oacute;n, puede que al llegar el estado de cuenta de la tarjeta de cr&eacute;dito ya est&eacute; el cargo del mes actual el cual deber&aacute; abonar.</p>
+            <div style="margin-top: 30px;font-size: 25px;"><i class="fas fa-undo-alt"></i></div>
+            <p>Puede volver a suscribirse en cualquier momento que lo considere necesario</p>
+            <div style="margin-top:20px">Por favor confirme la cancelaci&oacute;n de la suscripci&oacute;n abajo.</div>
+            <div style="padding: 20px 0px;">
+              <form method="post" action="{{ path('cancel_subscription_post') }}">
+                <button class="button is-danger" type="submit">Cancelar subscripcion</button>
+                <!--<a href="{{ path('cancel_subscription_post') }}" class="button is-danger">Cancelar subscripci&oacute;n</a>-->
+              </form>
+            </div>
+            <div>
+              <a class="button" href="{{ path('profile') }}">Volver</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+{% endif %}
+
+{% endblock %}
+
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

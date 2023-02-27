@@ -1,0 +1,18 @@
+
+{% if showMessage %}
+  <div style="margin-top:10px;background-color: #FBE9E7;padding: 10px;border-radius: 4px;font-size: 15px;">
+    <i class="fas fa-exclamation-circle" style="color: #FF8A65;"></i> 
+    Estos productos no estan disponibles para entregar en {{countryName}}. Puede comprar con entregas en otros países.
+    <a class="link" href="#" id ="countriesTitle">Más información</a>
+  </div>
+{% endif %}
+
+{# COUNTRY LIST RESTRICTION #}
+<div class="modal" id="countriesModal">
+  <div class="modal-background" id="countriesModalBack"></div>
+  <div class="modal-content" style="background-color: #FFF;text-align: center;padding: 40px;border-radius: 4px;position:relative">
+    <h3 class="subtitle is-4">¿Porqué no se puede entregar en mi país?</h3>
+    <p>En su país, estamos trabajando para poder tener todas las autorizaciones regulatorias para poder brindar el mejor servicio preventivo de salud, esperamos poder darle una pronta buena noticia.</p>
+    <button id="countriesModalCloseBtn" class="modal-close is-large" aria-label="close" style="position: absolute;"></button>
+  </div>
+</div>

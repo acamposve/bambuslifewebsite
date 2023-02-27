@@ -1,0 +1,41 @@
+@import "../variables.scss";
+
+.ss-main .ss-content .ss-list .ss-option {
+  border-bottom: 1px solid #DDD;
+}
+
+.ss-main .ss-content .ss-list .ss-option:hover, .ss-main .ss-content .ss-list .ss-option.ss-highlighted {
+  background-color: #38b09d;
+}
+
+.ss-main .ss-single-selected {
+  height: 38px;
+}
+
+.ss-main .ss-multi-selected {
+  height: 38px;
+}
+
+.ss-main .ss-multi-selected .ss-add {
+  margin: 13px 12px 0 5px;
+}
+
+.ss-main .ss-item {
+  width: 100%;
+}
+.ss-main .ss-item-title {
+  font-weight: 500;
+  display: block !important;
+}
+  
+.ss-main .ss-item-subtitle{
+  font-weight: 100;
+  font-size: 90%;
+  margin-left: 4px;
+  margin-bottom: -3px;
+}
+
+.ss-main .ss-single-selected .ss-arrow span {
+  border: solid $primary;
+  border-width: 0 3px 3px 0;
+}

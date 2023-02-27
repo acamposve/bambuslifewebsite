@@ -1,0 +1,17 @@
+<a href="{{path('product', {'prdName':cUrlEncode(item.item_name),'prdCode':item.code})}}" title="{{item.item_name}}" class="prd-list-item">
+  <picture>
+    <source srcset="{{asset('build/images/products/accessories/'~item.code~'_sm.webp')}}" type="image/webp">
+    <source srcset="{{asset('build/images/products/accessories/'~item.code~'_sm.jpg')}}" type="image/jpeg">
+    <img src="{{asset('build/images/products/accessories/'~item.code~'_sm.jpg')}}" alt="{{item.description | truncate_words(10) | striptags}}">
+  </picture>
+  <div>
+    <h2 class="subtitle is-5">{{item.item_name}}</h2>
+    <div class="prd-list-item-desc">
+      {{item.description | raw | truncate_words(10, '...')}}
+    </div>
+    <div class="price-tag">
+      <span style="font-size: 80%;">{{item.currency}}</span> 
+      <span id="priceTag">{{item.price}}</span>
+    </div>
+  </div>
+</a>

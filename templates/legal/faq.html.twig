@@ -1,0 +1,534 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Preguntas frecuentes | BambusLife{% endblock %}
+
+{% block description %}Aquí encontrará algunas respuestas a preguntas frecuentes. Si aún necesita consultarnos algo puede enviarnos un correo a info@bambus.life.{% endblock %}
+
+{% block keywords %}Preguntas frecuentes, faq, faqs{% endblock %}
+
+{% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {{ encore_entry_link_tags('faq') }}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('faq') }}
+{% endblock %}
+
+{% block body %}
+
+<div class="container white-box" style="padding: 20px">
+
+  <h1 class="title is-4">Preguntas frecuentes</h1>
+  <p>
+    Aqu&iacute; encontrar&aacute; algunas respuestas a preguntas frecuentes. 
+    Si a&uacute;n necesita consultarnos algo puede hacerlo a trav&eacute;s de nuestro
+    <a href="{{path('contact_form')}}">formulario de contacto</a> o enviando un correo a <a href="mailto:info@bambus.life">
+    info@bambus.life</a> que con mucho gusto le contestaremos.
+  </p>
+
+  <div style="padding: 10px 20px;background-color: #e4eff7;border-radius: 4px;color: #333;">
+    Si usted está interesado en saber más de la tecnología EASI-ECG, los estudios científicos que lo avalan y las pruebas 
+    del dispositivo CardioSecur, <a href="{{path('prod_scientific_studies')}}">ingrese aquí <i class="fas fa-arrow-right"></i></a>
+  </div>
+
+  <div class="columns" style="margin-top:30px">
+    
+    <div class="column is-10-desktop is-offset-1-desktop is-12-mobile">
+      <h2 class="subtitle is-4">Uso y Aplicaci&oacute;n</h2>
+      <section class="accordions">
+        <article class="accordion">
+          <div class="accordion-header toggle">
+            <p>&iquest;Qu&eacute; es CardioSecur Active?</p>
+          </div>
+          <div class="accordion-body">
+            <div class="accordion-content">
+              CardioSecure Active es un sistema de electrocardiograma m&oacute;vil de calidad cl&iacute;nica para uso privado. 
+              No s&oacute;lo sirve para analizar la frecuencia y el ritmo card&iacute;aco, sino tambi&eacute;n para detectar 
+              transtornos de circulaci&oacute;n como infartos(Ataques al coraz&oacute;n). 
+              Un electrocardiograma de 15 derivaciones se registra utilizando solo 4 electrodos.
+              Bas&aacute;ndose en la comparaci&oacute;n de tus electrocardiogramas grabados anteriormente, 
+              recibiras un an&aacute;lisis personalizado y una recomendaci&oacute;n para actuar.
+              <br><br>
+              CardioSecur Active te proporciona informaci&oacute;n inmediata sobre que hacer cuando necesitas certeza de tu coraz&oacute;n.
+              <br><br>
+              Tambi&eacute;n tienes la opci&oacute;n de compartir tu informaci&oacute;n de tus electrocardiogramas con tu m&eacute;dico.
+              <br><br>
+              El sistema entero est&aacute; compuesto por un cable 50g-light CardioSecur, la aplicaci&oacute;n de CardioSecure Active y tu smartphone o tablet.
+            </div>
+          </div>
+        </article>
+        
+        <article class="accordion">
+          <div class="accordion-header toggle">
+            <p>&iquest;C&oacute;mo se utiliza CardioSecur Active?</p>
+          </div>
+          <div class="accordion-body">
+            <div class="accordion-content">
+              Usar CardioSecur es extremadamente f&aacute;cil. Recibe un an&aacute;lisis de electrocardiograma, 
+              con validez comparable a la de tu m&eacute;dico, en solo tres pasos.
+              <br><br>
+              Para empezar, graba una lectura de referencia(electrocardiograma de referencia) en un momento en el que 
+              est&eacute;s libre de s&iacute;ntomas. Esto personaliza tu dispositivo.
+              Cada lectura posterior se comparar&aacute; con este electrocardiograma.
+              Si hay diferencias entre los dos electrocardiogramas, recibiras una recomendaci&oacute;n para actuar.
+              Tambi&eacute;n recibiras un reporte de electrocardiograma por cada grabaci&oacute;n, la cual ser&aacute; guardada en tu aplicaci&oacute;n.
+            </div>
+          </div>
+        </article>
+
+        <article class="accordion">
+          <div class="accordion-header toggle">
+            <p>&iquest;D&oacute;nde se colocan los electrodos?</p>
+          </div>
+          <div class="accordion-body">
+            <div class="accordion-content">
+              <div class="content">
+                Conectar los electrodos de CardioSecur active como se muestran:
+                <ul>
+                  <li type="disc">Electrodo Blanco: Extremo superior del estern&oacute;n (en el hueso)</li>
+                  <li type="disc">Electrodo Amarillo: Extremo inferior del estern&oacute;n (en el hueso)</li>
+                  <li type="disc">Electrodo Rojo: Centro de las axilas derechas a la altura del extremo inferior del estern&oacute;n (la misma altura que el electrodo amarillo)</li>
+                  <li type="disc">Electrodo Verde: Centro de las axilas izquierdas a la altura del extremo inferior del estern&oacute;n (la misma altura que el electrodo amarillo)</li>
+                </ul>
+                <p>Tenga en cuenta: Una colocaci&oacute;n adecuada de los electrodos es clave para una grabaci&oacute;n significativa del electrocardiograma.</p>
+                <div style="width:100%;text-align:center"><img src="{{asset('build/images/faq/SchemaElectrodes_accordion.png')}}" alt="derivaciones"></div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="accordion">
+          <div class="accordion-header toggle">
+            <p>&iquest;Para qui&eacute;n es apropiado CardioSecur?</p>
+          </div>
+          <div class="accordion-body">
+            <div class="accordion-content">
+              CardioSecur es usado para aclarar de foma r&aacute;pida y f&aacute;cil s&iacute;ntomas poco claros y prevenir 
+              eventos agudos potencialmente mortales.
+            </div>
+          </div>
+        </article>
+
+        <article class="accordion">
+          <div class="accordion-header toggle">
+            <p>&iquest;C&oacute;mo puede mi m&eacute;dico ver mis grabaciones de electrocardiograma?</p>
+          </div>
+          <div class="accordion-body">
+            <div class="accordion-content">
+                Tienes dos opciones
+                <br><br>
+                a) Puede vincularse con su m&eacute;dico directamente en la aplicaci&oacute;n si ya ha creado una cuenta de m&eacute;dico CardioSecur gratuita.
+                b) Puede mostrar su electrocardiograma en la pantalla de su tel&eacute;fono inteligente cuando est&aacute; con su m&eacute;dico, o puede enviar o imprimir su electrocardiograma.
+            </div>
+          </div>
+        </article>
+
+        <article class="accordion">
+          <div class="accordion-header toggle">
+            <p>&iquest;C&oacute;mo deriva CardioSecur la recomendaci&oacute;n de actuar?</p>
+          </div>
+          <div class="accordion-body">
+            <div class="accordion-content">
+              <div class="content">
+                <p>
+                  Un electrocardiograma es tan individual como una huella digital y cambia solo cuando existen razones patol&oacute;gicas para esto.
+                  Por lo tanto, es posible utilizar la comparaci&oacute;n entre una lectura de referencia y una futura lectura de control para detectar cambios detallados del coraz&oacute;n en una etapa temprana.
+                  Es tambi&eacute;n por esta raz&oacute;n que las pautas de las sociedades card&iacute;acas recomiendan lecturas de electrocardiograma en serie (comparaci&oacute;n).
+                </p>
+                <p>
+                  Despu&eacute;s de cada lectura de CardioSecur, una de las tres recomendaciones posibles para actuar se deriva y se presenta en la aplicaci&oacute;n:
+                </p>
+                <ol type="a">
+                  <li>Sin cambios: Sin acci&oacute;n requerida(Neutral)</li>
+                  <li>Cambios menores: Se recomienda una evaluaci&oacute;n f&iacute;sica. (Amarillo)</li>
+                  <li>Cambios significativos: Visite un doctor inmediatamente. (Rojo)</li>
+                </ol>
+                <p>
+                  Si los s&iacute;ntomas duran m&aacute;s de veinte minutos, las pautas cardíacas recomiendan 
+                  buscar atenci&oacute;n m&eacute;dica, independientemente de su recomendaci&oacute;n de CardioSecur para actuar.
+                </p>
+                <div style="width:100%;text-align:center">
+                  <img src="{{asset('build/images/faq/Phones_resultsEN.png')}}" alt="derivaciones">
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </section>
+    </div>
+
+  </div>
+
+  <div class="columns">
+
+    <div class="column is-10-desktop is-offset-1-desktop is-12-mobile">
+      <p class="subtitle is-4">Detalles t&eacute;cnicos</p>
+      <section class="accordions">
+        <article class="accordion">
+          <div class="accordion-header toggle">
+            <p>&iquest;Una lectura de CardioSecur es comparable a un electrocardiograma de mi m&eacute;dico?</p>
+          </div>
+          <div class="accordion-body">
+            <div class="accordion-content">
+              CardioSecur Active es un producto m&eacute;dico aprobado de clase IIa con la marca CE v&aacute;lida en toda Europa.
+              Actualmente, CardioSecur es el &uacute;nico dispositivo a nivel mundial que puede registrar 15 derivaciones con solo 4 electrodos, lo que permite el an&aacute;lisis de la pared posterior del coraz&oacute;n (que recomiendan las directrices de las sociedades europeas).
+              La tecnolog&iacute;a de electrocardiograma de CardioSecur proporciona resultados de diagn&oacute;stico comparables a la tecnolog&iacute;a de electrocardiograma en hospitales, cl&iacute;nicas o consultas m&eacute;dicas.
+              Esto ha sido demostrado en numerosos estudios. Por lo tanto, adem&aacute;s de muchos usuarios privados y m&eacute;dicos, cl&iacute;nicas utilizan CardioSecur.
+            </div>
+          </div>
+        </article>
+
+        <article class="accordion">
+          <div class="accordion-header toggle">
+            <p>&iquest;Mi dispositivo es compatible con CardioSecur?</p>
+          </div>
+          <div class="accordion-body">
+            <div class="accordion-content">
+              <strong>Apple:</strong>
+                <br><br>
+                CardioSecur Active esta disponible para dispositivos con iOS 8.0 o superior.
+                <br>
+                Compatible con:
+                iPad 3, iPad 4, iPad Air, iPad Mini 2, iPad Mini 3, iPad Mini 4, iPad Pro 1, iPad Pro 2
+                <br>
+                iPhone X, iPhone 8, iPhone 8 Plus, iPhone 7, iPhone 7 Plus, iPhone 6S, iPhone 6S Plus, iPhone SE, iPhone 6, iPhone 6 Plus, iPhone 5, iPhone 5S, iPhone, 5C, iPhone 4S
+                <br><br>
+              <strong>Android:</strong>
+              <br><br>
+              CardioSecur Active esta disponible para dispositivos con Android 4.0 o superior. CardioSecur Active requiere soporte de OTG (USB On the Go).
+              CardioSecur no es compatible con tablets android.
+              <br>
+              Compatible con:
+              <ul>
+                <li>Samsung: Galaxy S8, Galaxy S8 Plus, Galaxy S7, Galaxy S7 Edge, Galaxy S6, Galaxy S6 Edge, Galaxy S5, Galaxy S5 NEO, A5 (2016, 2017), Galaxy S4, Galaxy S3 (NOT available for Samsung Galaxy Mini smartphones)</li>
+                <li>Huawei: P9, P9 Plus, Mate S</li>
+                <li>Vodafone: Smart platinum 7, Smart prime 7, Smart ultra 6</li>
+                <li>Sony: Xperia X, Xperia compact Z3, Xperia Z2</li>
+                <li>Google: Google Nexus 5, Pixel 1, Pixel 2</li>
+                <li>LG: LG G3</li>
+                <li>HTC: HTC One M8</li>
+              </ul>
+              La lista no es exhaustiva, ya que no podemos probar regularmente todos los dispositivos Android disponibles en el mercado.
+              Si su dispositivo no est&aacute; en la lista, verifique si se admite OTG. Con soporte OTG, su dispositivo debe ser compatible.
+
+            </div>
+          </div>
+        </article>
+
+        <article class="accordion">
+          <div class="accordion-header toggle">
+            <p>&iquest;Puedo usar CardioSecur sin internet?</p>
+          </div>
+          <div class="accordion-body">
+            <div class="accordion-content">
+              S&iacute;, CardioSecur tambi&eacute;n se puede utilizar sin conexi&oacute;n. No importa d&oacute;nde se encuentre, puede registrar un electrocardiograma en cualquier momento y recibir comentarios autom&aacute;ticos dentro de la aplicaci&oacute;n.
+              <br><br>
+              Se requiere una conexi&oacute;n de red para sincronizar su cuenta de usuario. Las lecturas que se registran cuando se desconecta se sincronizar&aacute;n tan pronto como tenga una conexi&oacute;n a Internet.
+            </div>
+          </div>
+        </article>
+
+        <article class="accordion">
+          <div class="accordion-header toggle">
+            <p>&iquest;D&oacute;nde se almacena mi informaci&oacute;n?</p>
+          </div>
+          <div class="accordion-body">
+            <div class="accordion-content">
+              <strong>En su dispositivo m&oacute;vil:</strong> sus datos se almacenan en su aplicaci&oacute;n CardioSecur Active. 
+              La cantidad de electrocardiogramas que puede guardar depende de la capacidad de almacenamiento del tel&eacute;fono 
+              y est&aacute; limitada a 10.000 lecturas.
+              <strong>En tu cuenta de usuario:</strong>
+              Cuando inicia sesi&oacute;n en la aplicaci&oacute;n, sus lecturas de electrocardiograma se sincronizan con su cuenta de usuario
+              Los datos se guardan en servidores seguros y propietarios, que se encuentran f&iacute;sicamente en Alemania.
+              Los servidores son auditados regularmente como parte de la aprobaci&oacute;n de CardioSecur como un sistema m&eacute;dico (seg&uacute;n DIN EN ISO 13485).
+              La gesti&oacute;n de los datos est&aacute; sujeta a las normativas de protecci&oacute;n de datos m&aacute;s 
+              estrictas (seg&uacute;n BDSG) y al nuevo GDPR (Reglamento general de protecci&oacute;n de datos) de la UE 
+              para datos con protecciones especiales (por ejemplo, datos m&eacute;dicos).
+              <br><br>
+              Para garantizar la seguridad adicional de los datos, sus datos personales y de salud se transmiten por separado 
+              entre s&iacute; durante la transferencia cifrada al servidor. 
+              Por lo tanto, no es posible hacer coincidir sus datos con su identidad.
+            </div>
+          </div>
+        </article>
+
+        <article class="accordion">
+          <div class="accordion-header toggle">
+            <p>&iquest;Qu&eacute; derivaciones de electrocardiograma se registran?</p>
+          </div>
+          <div class="accordion-body">
+            <div class="accordion-content content">
+              <p>
+                Mientras que un electrocardiograma est&aacute;ndar registra solo 12 derivaciones, 
+                con CardioSecur Active usted recibe un electrocardiograma personalizado con 15 derivaciones.
+                Es a trav&eacute;s de las derivaciones adicionales que tambi&eacute;n se incluyen &aacute;reas 
+                adicionales del coraz&oacute;n, como la pared posterior, cuando se eval&uacute;an infartos 
+                y arritmias complejas.
+              </p>
+              <p>
+                Las derivaciones I, II, III, aVR, aVL, aVF, V1-V6 Y la adicional V7-V9 son grabadas.
+              </p>
+              <div style="width:100%;text-align:center">
+                <img src="{{asset('build/images/faq/graphic_leads.jpg')}}" alt="derivaciones">
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="accordion">
+          <div class="accordion-header toggle">
+            <p>Ventajas de sincronizar tu cuenta de usuario</p>
+          </div>
+          <div class="accordion-body">
+            <div class="accordion-content">
+              Al sincronizar su cuenta, se realiza una copia de seguridad de sus datos de electrocardiograma dos veces, 
+              una vez en su tel&eacute;fono inteligente y una vez en su cuenta de usuario en el servidor. 
+              Si pierde su tel&eacute;fono inteligente, no perder&eacute; sus datos.
+              <br><br>
+              La sincronizaci&oacute;n tambi&eacute;n ofrece la posibilidad de conectarse con un m&eacuteldico registrado 
+              a trav&eacute;s de la aplicaci&oacute;n para que sus datos de electrocardiograma est&eacute;n disponibles para &eacute;l.
+              <br><br>
+              Tenga en cuenta: La sincronizaci&oacute;n de iOS a Android no es posible actualmente.
+            </div>
+          </div>
+        </article>
+      </section>
+    </div>
+
+  </div>
+
+  <div class="columns">
+
+    <div class="column is-10-desktop is-offset-1-desktop is-12-mobile">
+      <p class="subtitle is-4">Compra y Entrega</p>
+      <section class="accordions">
+        <article class="accordion">
+          <div class="accordion-header toggle">
+            <p>Prescripci&oacute;n</p>
+          </div>
+          <div class="accordion-body">
+            <div class="accordion-content content">
+              <p>
+                En algunos pa&iacute;ses es necesario contar con una prescripci&oacute;n por parte 
+                de un m&eacute;dico, por lo que le solicitamos adjunte una foto de la misma en el proceso
+                 de la compra para que podamos verificarla y adjuntarla a su pedido.
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <article class="accordion">
+          <div class="accordion-header toggle">
+            <p>&iquest;D&oacute;nde puedo comprar CardioSecur ?</p>
+          </div>
+          <div class="accordion-body">
+            <div class="accordion-content">
+              Puede ordenar CardioSecur f&aacute;cilmente desde nuestra <a href="{{ path('order_index') }}">tienda en l&iacute;nea</a> y se lo enviaremos a la direcci&oacute;n que desee.
+            </div>
+          </div>
+        </article>
+
+        <article class="accordion">
+          <div class="accordion-header toggle">
+            <p>&iquest;Qu&eacute; m&eacute;todos de pago son aceptados?</p>
+          </div>
+          <div class="accordion-body">
+            <div class="accordion-content">
+              Los pagos se procesan a trav&eacute;s de MercadoPago con las siguientes tarjetas: Visa, Mastercard , Diners Club International, OCA.
+            </div>
+          </div>
+        </article>
+
+        <article class="accordion">
+          <div class="accordion-header toggle">
+            <p>&iquest;CardioSecur esta disponible para mi idioma y pa&iacute;s?</p>
+          </div>
+          <div class="accordion-body">
+            <div class="accordion-content content">
+              CardioSecur est&aacute; aprobado como dispositivo m&eacute;dico en todos los pa&iacute;ses europeos. La aplicaci&oacute;n est&aacute; actualmente disponible en los siguientes idiomas:
+              <ul>
+                <li>Alem&aacute;n</li>
+                <li>Ingl&eacute;s</li>
+                <li>Franc&eacute;s</li>
+                <li>Espa&ntilde;ol</li>
+                <li>Italiano</li>
+                <li>Holand&eacute;s</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+      </section>
+    </div>
+
+  </div>
+
+  <div class="columns">
+    <div class="column is-10-desktop is-offset-1-desktop is-12-mobile">
+      <p class="subtitle is-4">Soluci&oacute;n de problemas. &iquest;Qu&eacute; pasa cuando...</p>
+      <section class="accordions">
+        <article class="accordion">
+            <div class="accordion-header toggle">
+              <p>...la calibraci&oacute;n no funciona?</p>
+            </div>
+            <div class="accordion-body">
+              <div class="accordion-content content">
+                <ul>
+                  <li>Utilice siempre electrodos nuevos y compatibles (electrodos adhesivos de gel h&uacute;medo). 
+                      Aseg&uacute;rese de verificar la fecha de caducidad.</li>
+                  <li>Cuando sea posible, realice las lecturas sin ropa</li>
+                  <li>No apliques crema en la piel</li>
+                  <li>Mant&eacute;n la distancia de disturbios el&eacute;ctricos (ej. monitores, reguladores de luz, cocinas, 
+                  dispositivos, etc)</li>
+                  <li>Si&eacute;ntate y respira regularmente y con calma</li>
+                  <li>No hables ni tozas</li>
+                </ul>
+              </div>
+            </div>
+          </article>
+
+        <article class="accordion">
+            <div class="accordion-header toggle">
+              <p>...la l&iacute;nea del electrocardiograma esta distorcionada?</p>
+            </div>
+            <div class="accordion-body">
+              <div class="accordion-content content">
+                <p>
+                  CardioSecur cumple con la norma de compatibilidad electromagnética (IEC60601-1-2.2001) 
+                  para dispositivos electr&oacute;nicos con respecto a la inmunidad y las emisiones.
+                  Sin embargo, a&uacute;n debe tomar precauciones especiales al utilizar CardioSecur.
+                </p>
+                <p>
+                  No utilice dispositivos cerca de CardioSecur que generen fuertes campos el&eacute;ctricos o electromagn&eacute;ticos.
+                  Se recomienda mantener una distancia m&iacute;nima de 2 metros. 
+                  Las distancias de menos de 2 metros pueden provocar un mal funcionamiento del dispositivo, 
+                  lo que puede provocar una distorsi&oacute;n de la l&iacute;nea de electrocardiograma.
+                </p>
+              </div>
+            </div>
+          </article>
+
+        <article class="accordion">
+            <div class="accordion-header toggle">
+              <p>...pierdo los electrodos de colores?</p>
+            </div>
+            <div class="accordion-body">
+              <div class="accordion-content content">
+                <p>CardioSecur Active diferencia entre la lectura de referencia y de control. 
+                La lectura de referencia, registrada al configurar el sistema, requiere la colocaci&oacute;n 
+                correcta de los electrodos de color como se muestra en la aplicaci&oacute;n.
+                </p>
+                <p>
+                Para lecturas de control posteriores es posible cambiar los electrodos de color.
+                La tecnolog&iacute;a CardioSecur reconoce la conmutaci&oacute;n de los electrodos y corrige este error en su an&aacute;lisis, 
+                sin la necesidad de reposicionar los electrodos. En una emergencia, se ahorra un tiempo valioso.
+                </p>
+                <div style="width:100%;text-align:center">
+                  <img src="{{asset('build/images/faq/SchemaElectrodes_accordion.png')}}" alt="derivaciones">
+                </div>
+              </div>
+            </div>
+          </article>
+
+        <article class="accordion">
+          <div class="accordion-header toggle">
+            <p>...la aplicaci&oacute;n no funciona?</p>
+          </div>
+          <div class="accordion-body">
+            <div class="accordion-content content">
+              <p>
+                Si tu aplicaci&oacute;n no funciona, por favor, sigue los pasos de abajo en el orden que se indican.
+              </p>
+              <p>
+                Si tu aplicaci&oacute;n no funciona luego del primer paso, sigue al segundo paso.
+              </p>
+              <ul>
+                <li>Cierra la aplicaci&oacute;n y reiniciala. Simplemente "ocultar" la aplicaci&oacute;n no es suficiente. </li>
+                <li>Reinicia tu dispositivo </li>
+                <li>Descarga la &uacute;ltima versi&oacute;n de la aplicaci&oacute;n de CardioSecur </li>
+                <li>Actualiza tu sistema operativo o tu m&oacute;vil.</li>
+              </ul>
+              <p>
+                Si su aplicaci&oacute;n funciona hasta el punto de poder ver el men&uacute; principal, 
+                aseg&uacute;rese de haber iniciado sesi&oacute;n con su cuenta de usuario y de que su sincronizaci&oacute;n 
+                est&eacute; activada (men&uacute; - configuraciones - cuenta de usuario).
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <article class="accordion">
+          <div class="accordion-header toggle">
+            <p>&iquest;Puedo usar CardioSecur si uso un marcapasos?</p>
+          </div>
+          <div class="accordion-body">
+            <div class="accordion-content content">
+              <p>
+                Normalmente, los marcapasos funcionan por debajo de un m&iacute;nimo o por encima de una frecuencia 
+                card&iacute;aca m&aacute;xima. Esto significa que el marcapasos comienza a controlar el ritmo card&iacute;aco 
+                cuando est&aacute; latiendo fuera del rango normal.
+              </p>
+              <p>
+                Las curvas de electrocardiograma con o sin marcapasos se ven completamente diferentes. 
+                Para CardioSecur, los electrocardiograma de referencia y los electrocardiograma de control se pueden registrar 
+                con un marcapasos. 
+              </p>
+              <p>
+                Al interpretar los resultados, se debe tener en cuenta si el electrocardiograma de referencia se est&aacute; 
+                controlando o no. Si ambos electrocardiograma no son iguales (ambos estimulados o no estimulados), 
+                pueden aparecer falsas alarmas.
+              </p>
+              <p>
+                El siguiente &aacute;rbol de decisi&oacute;n puede ayudar a entender esto:
+                <ol>
+                  <li>Referencia electrocardiograma = electrocardiograma Normalmente<br>
+                  Electrocardiograma de control = electrocardiograma normal: comparaci&oacute;n normal<br>
+                  Electrocardiograma de control = electrocardiograma de marcapasos: Alarma roja<br>
+                  </li>
+                  <li>
+                    Electrocardiograma de referencia = electrocardiograma de marcapasos<br>
+                    Electrocardiograma de control = electrocardiograma normal: Alarma roja<br>
+                    Electrocardiograma de control = electrocardiograma de marcapasos: comparaci&oacute;n normal
+                  </li>
+                </ol>
+              <p>
+            </div>
+          </div>
+        </article>
+      </section>
+    </div>
+  </div>
+
+  <div class="columns">
+    <div class="column is-10-desktop is-offset-1-desktop is-12-mobile">
+      <p class="subtitle is-4">Acerca del coraz&oacute;n</p>
+      <section class="accordions">
+        <article class="accordion">
+          <div class="accordion-header toggle">
+            <p>&iquest;C&oacute;mo puede un electrocardiograma m&oacute;vil salvar una vida en una situaci&oacute;n de infarto?</p>
+          </div>
+          <div class="accordion-body">
+            <div class="accordion-content">
+              Para prevenir da&ntilde;os al coraz&oacute;n por un ataque card&iacute;aco, el tratamiento inmediato en el 
+              momento en que surgen los s&iacute;ntomas es esencial (la "hora dorada").
+            </div>
+          </div>
+        </article>
+            
+      </section>
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}
+
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

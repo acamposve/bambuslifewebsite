@@ -1,0 +1,10 @@
+.retable {
+  .retableHeading .column.billTotal, .retableRow .column.billTotal{
+    font-weight: 400;
+  }
+  .retableHeading .column.billDate, .retableRow .column.billDate{
+    max-width: 120px;
+  }
+}
+
+@import "/billing-details-mobile.scss";

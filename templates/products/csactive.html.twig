@@ -1,0 +1,625 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {{ encore_entry_link_tags('cs-active') }}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('cs-active') }}
+  {{ include('sd/breadcrumbs.html.twig', { 'items': [{'name':'Productos',"url":path('order_index')},{'name':'CardioSecur Active',"url":path('prod_csactive')}] }) }}
+{% endblock %}
+
+{% block title %}CardioSecur Active | Monitor cardiaco | BambusLife{% endblock %}
+
+{% block description %}
+ Registre un electrocardiograma de nivel hospitalario en su teléfono iPhone o Android cuando los síntomas ocurren y reciba una respuesta en solo 30 segundos.
+{% endblock %}
+
+{% block keywords %}CardioSecur active{% endblock %}
+
+{% block extrameta %}
+  <meta property="og:title" content="CardioSecur Active | Monitor cardiaco | BambusLife" />
+  <meta property="og:description" content="Registre un electrocardiograma de nivel hospitalario en su teléfono iPhone o Android cuando los síntomas ocurren y reciba una respuesta en solo 30 segundos." />
+  <meta property="og:type"  content="website" />
+  <meta property="og:url"   content="https://bambus.life{{ app.request.requestUri }}" />
+  <meta property="og:image" content="{{asset('build/images/og/csactive.png')}}" />
+{% endblock %}
+
+{% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block body %}
+  <div class="container">
+
+    {# COVER #}
+    {# <div class="column is-full">
+      <h1 class="subtitle is-2">ECG Móvil cuando los Síntomas Atacan</h1>
+      <h2 class="subtitle is-3">Chequee su corazón. Sepa qué hacer.</h2>
+      </div>
+      <div class="column is-half-tablet is-full-mobile">
+        <div class="content">
+          <ul>
+            <li>De uso personal con supervisión remota de su cardiólogo</il>
+            <li>El registro es muy simple y lo realiza usted mismo</il>
+            <li>Lo lleva a dónde sea y se controla cuándo desea</il>
+            <li>Aclare síntomas recurrentes</il>
+            <li>Controle una afección existente</il>
+            <li>Único análisis completo que incluye ataque cardíaco y AFib</il>
+            <li>Le brinda una recomendación en solo 20 segundos</il>
+            <li>Sepa si necesita de atención médica</il>
+          </ul>
+        </div>
+        <br>
+          <a class="button is-medium is-primary" href="{{ path('contact_form') }}">Consultar</a>
+        <br>
+      </div>
+      <div class="column is-half-tablet is-full-mobile">
+        <div class="prod-box-two">
+          <picture>
+            <source srcset="{{asset('build/images/products/csactive/logos.webp')}}" type="image/webp">
+            <source srcset="{{asset('build/images/products/csactive/logos.png')}}" type="image/png">
+            <img alt="CardioSecur es un dispositivo médico aprobado con EN ISO 13485 y certificado por el más demandante organismo notificado en Alemania, TÜV SÜD"
+              src="{{asset('build/images/products/csactive/logos.png')}}" width:"219" height:"70" >
+          </picture>
+        </div>
+        <div class="prod-box-two">
+          <div class="app-presentation">
+            <div style="">
+              <picture>
+                <source srcset="{{asset('build/images/products/csactive/iphone_white_no_screen.webp')}}" type="image/webp">
+                <source srcset="{{asset('build/images/products/csactive/iphone_white_no_screen.png')}}" type="image/png">
+                <img src="{{asset('build/images/products/csactive/iphone_white_no_screen.png')}}" alt="iphoneWhiteNoScreen">
+              </picture>
+            </div>
+            <video style="position:absolute;" autoplay loop title="Chequee su corazón y sepa al instante que hacer luego" src="{{asset('build/images/products/csactive/en_app_presentation.mp4')}}">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+    </div> #}
+
+    {# COVER #}
+    <section class="section" style="min-height: 330px;width: 100%;padding: 0px 0px 30px 0px;text-align: center;">
+      <div style="text-align: center;">
+        <picture>
+          <source media="(min-width: 426px)" srcset="{{asset('build/images/products/csactive/coverManPark.webp')}}" type="image/webp">
+          <source media="(min-width: 426px)" srcset="{{asset('build/images/products/csactive/coverManPark.png')}}" type="image/png">
+          <source media="(max-width: 425px)" srcset="{{asset('build/images/home/cover3-s.webp')}}" type="image/webp">
+          <source media="(max-width: 425px)" srcset="{{asset('build/images/home/cover3-s.png')}}" type="image/png">
+          <img src="{{asset('build/images/products/csactive/coverManPark.png')}}" alt="CardioSecur Active - Uso Personal" class="is-full-width">
+        </picture>
+      </div>
+      <div class="has-text-centered">
+        <h1 class="subtitle is-2">Paciente y Familia</h1>
+      </div>
+      <p style="font-size: 16px;text-align: center;margin-bottom: 20px;display: inline-block;padding: 0px 10px;">
+        <h2 class="subtitle is-4">ECG Móvil cuando los Síntomas Atacan, Chequee su corazón y Sepa qué hacer</h2>
+        En 20 segundos cuente con una señal clara de su situación cardíaca, registre su electrocardiograma de 15 derivaciones y sea controlado en forma remota por su cardiólogo
+      </p>
+    </section>
+
+    {# CTA COMPRAR #}
+    <div style="margin: 1% 0;width: 100%;" class="columns">
+      <div class="column is-full has-text-centered">
+        <a class="button is-medium is-primary" href="{{ path('contact_form') }}">Consultar</a>
+      </div>
+    </div>
+
+    <div class="columns">
+        <div class="column is-full has-text-centered">
+            <a class="button is-text" href="/docs/brochure/Folleto_CS_Active_-_uso_Paciente.pdf" style="margin-bottom: 2rem;">
+              <span class="icon is-small">
+                <i class="far fa-file-pdf"></i>
+              </span>
+              <span>Descargar folleto</span>
+            </a>
+        </div>
+    </div>
+
+    {# CUIDESE 1-2-3 #}
+    <section class="section white-box" style="min-height: 330px;margin-top: 30px;width: 100%;padding: 10px 0px 30px 0px;text-align: center;">
+      <div class="has-text-centered">
+        <h2 class="subtitle is-3">CUÍDESE EN TAN SOLO</h2>
+        <h3 class="subtitle is-4">3 SENCILLOS PASOS</h3>
+      </div>
+      <div class="column is-full">
+        <div class="columns is-multiline is-mobile">
+          <div class="column is-4-desktop is-full-tablet is-full-mobile">
+            <div class="circle-blue line-blue">1</div>
+            <div class="mobile-image-container has-text-centered">
+              <picture>
+                <source srcset="{{asset('build/images/products/csactive/step-1.webp')}}" type="image/webp">
+                <source srcset="{{asset('build/images/products/csactive/step-1.png')}}" type="image/png">
+                <img src="{{asset('build/images/products/csactive/step-1.png')}}"  alt="Attach the electrodes to four prominent points of the body" class="step-img">
+              </picture>
+              <p>Conecte el cable</p>
+              <p>&nbsp;</p>
+            </div>
+          </div>
+          <div class="column is-4-desktop is-full-tablet is-full-mobile">
+            <div class="circle-blue">2</div>
+            <div class="mobile-image-container has-text-centered">
+              <picture>
+                <source srcset="{{asset('build/images/products/csactive/step-2.webp')}}" type="image/webp">
+                <source srcset="{{asset('build/images/products/csactive/step-2.png')}}" type="image/png">
+                <img src="{{asset('build/images/products/csactive/step-2.png')}}"  alt="Attach the electrodes to four prominent points of the body" class="step-img">
+              </picture>
+              <p>Comience una lectura</p>
+              <p>&nbsp;</p>
+            </div>
+          </div>
+          <div class="column is-4-desktop is-full-tablet is-full-mobile">
+            <div class="circle-blue">3</div>
+            <div class="mobile-image-container has-text-centered">
+              <picture>
+                <source srcset="{{asset('build/images/products/csactive/step-3b.webp')}}" type="image/webp">
+                <source srcset="{{asset('build/images/products/csactive/step-3b.png')}}" type="image/png">
+                <img src="{{asset('build/images/products/csactive/step-3b.png')}}" alt="Attach the electrodes to four prominent points of the body" class="step-img" style="width:100%;max-width:100%;height:auto">
+              </picture>
+              <p>Reciba feedback</p>
+              <p>&nbsp;</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="text-align: center;margin: 30px 0px;">
+        <picture>
+          <source srcset="{{asset('build/images/home/logo-cs-kyh-19.webp')}}" type="image/webp">
+          <source srcset="{{asset('build/images/home/logo-cs-kyh-19.png')}}" type="image/png">
+          <img src="{{asset('build/images/home/logo-cs-kyh-19.png')}}" alt="CardioSecur - Knows Your Heart">
+        </picture> 
+      </div>
+    </section>
+
+    {# 20 SEGUNDOS #}
+    <section class="section" style="min-height: 330px;margin-top: 30px;width: 100%;padding: 10px 0px 30px 0px;">
+      <div class="has-text-centered">
+        <h2 class="subtitle is-4">En 20 segundos cuenta con un reporte de su situación cardíaca</h2>
+      </div>
+      <div class="columns is-multiline is-mobile">
+        <div class="column is-8-desktop is-6-tablet is-12-mobile" style="display: flex;align-items: center;">
+          <div class="content">
+            <ul>
+              <li>Lo lleva a dónde sea y se controla cuándo quiera.</li>
+              <li>De muy fácil colocación los electrodos en su pecho.</li>
+              <li>El registro es muy simple y lo realiza usted mismo</li>
+              <li>Monitoreo de síntomas recurrentes</li>
+              <li>Controle una afección existente</li>
+              <li>Único análisis completo que incluye ataque cardíaco y AFib</li>
+              <li>Sepa si necesita de atención médica</li>
+              <li>De uso personal con supervisión remota de su cardiólogo</li>
+              <li>Sencilla lectura de su situación a través de alertas con colores.</li>
+              <li>Mire sus reportes ECG en su smartphone en todo momento</li>
+              <li>Exporte sus ECG reportes fácilmente como PDF</li>
+              <li><a href="/docs/scientific-studies/Example CardioSecur Active PDF.pdf">Ejemplo del informe ECG</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="column is-4-desktop is-6-tablet is-12-mobile" style="display: flex;align-items: center;justify-content: center;margin: 15px 0px;">
+          {# <picture>
+            <source srcset="{{asset('build/images/products/csactive/step-1.webp')}}" type="image/webp">
+            <source srcset="{{asset('build/images/products/csactive/step-1.png')}}" type="image/png">
+            <img src="{{asset('build/images/products/csactive/step-1.png')}}"  alt="Attach the electrodes to four prominent points of the body" >
+          </picture> #}
+          <picture>
+            <source srcset="{{asset('build/images/home/for-users2.webp')}}" type="image/webp">
+            <source srcset="{{asset('build/images/home/for-users2.png')}}" type="image/png">
+            <img src="{{asset('build/images/home/for-users2.png')}}" alt="forUsrsDevice">
+          </picture>
+          {# <div class="app-presentation">
+            <div >
+              <picture>
+                <source srcset="{{asset('build/images/products/csactive/iphone_white_no_screen.webp')}}" type="image/webp">
+                <source srcset="{{asset('build/images/products/csactive/iphone_white_no_screen.png')}}" type="image/png">
+                <img src="{{asset('build/images/products/csactive/iphone_white_no_screen.png')}}" alt="iphoneWhiteNoScreen">
+              </picture>
+            </div>
+            <video autoplay loop title="Chequee su corazón y sepa al instante que hacer luego" src="{{asset('build/images/products/csactive/en_app_presentation.mp4')}}">
+              Your browser does not support the video tag.
+            </video>
+          </div> #}
+        </div>
+      </div>
+      {# CTA COMPRAR #}
+      <div style="margin: 1% 0;width: 100%;" class="columns">
+        <div class="column is-full has-text-centered">
+          <a class="button is-medium is-primary" href="{{ path('contact_form') }}">Consultar</a>
+        </div>
+      </div>
+    </section>
+
+    {# VIDEO ACTIVE #}
+    <section class="section" style="width: 100%;padding: 0px 0px 10px 0px;text-align: center;">
+      <picture id="btnCsActtut" class="zv-video-thumbnail">
+        <source srcset="{{asset('build/images/products/csactive/csact-tut.webp')}}" type="image/webp">
+        <source srcset="{{asset('build/images/products/csactive/csact-tut.png')}}" type="image/png">
+        <img src="{{asset('build/images/products/csactive/csact-tut.png')}}" alt="Attach the electrodes to four prominent points of the body" class="is-full-width">
+      </picture>
+    </section>
+    <div id="csActvid" class="zv-modal">
+      <div class="zv-close-button">
+        <i class="fas fa-times"></i>
+      </div>
+      <div class="zv-modal-content">
+        <div class="zv-video-container">
+          <div class="zv-video-player">
+            <video crossorigin="anonymous" preload="auto" x-webkit-airplay=""
+              data-original-aria-hidden=""   controls=""
+              src="{{asset('build/images/products/csactive/csact-tut.mp4')}}" 
+              kind="captions" srclang="en" 
+              label="English"></video>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {# CUANDO USAR  #}
+    <section class="section" style="width: 100%;padding: 10px 0px 30px 0px;">
+      <div class="columns is-multiline is-mobile" style="position: relative;">
+        {# <picture class="is-hidden-touch">
+          <source srcset="{{asset('build/images/products/csactive/csactive-when2use.webp')}}" type="image/webp">
+          <source srcset="{{asset('build/images/products/csactive/csactive-when2use.jpg')}}" type="image/jpeg">
+          <img src="{{asset('build/images/products/csactive/csactive-when2use.jpg')}}" alt="CardioSecur Active - Cuando usarlo" 
+            style="position: absolute;z-index: -1;opacity: 0.7;overflow: hidden;width: 100%;">
+        </picture>
+        <div class="column is-6-desktop is-6-tablet is-12-mobile">
+        </div> #}
+        <div class="column is-12-desktop is-12-tablet is-12-mobile" style="background-color: rgba(255,255,255,0.7);">
+          <div class="has-text-centered">
+            <h2 class="subtitle is-4">Cuándo usar</h2>
+            <picture>
+              <source srcset="{{asset('build/images/home/logo-cs-kyh-19.webp')}}" type="image/webp">
+              <source srcset="{{asset('build/images/home/logo-cs-kyh-19.png')}}" type="image/png">
+              <img src="{{asset('build/images/home/logo-cs-kyh-19.png')}}" alt="CardioSecur - Knows Your Heart" style="margin-bottom: 20px;">
+            </picture> 
+          </div>
+          {# <div class="content csact-whentouse" >
+            <h2 class="subtitle is-5" style="color: #38b09d;">Síntomas poco claros</h2>
+            <p>Averigüe de inmediato si sus síntomas deben tratarse o no.</p>
+            <a href="{{ path('prod_receive_a_diagnosis_for_chest_pain') }}" style="margin-top: auto" class="button is-primary is-outlined">Entiende sus síntomas</a>
+            <h2 class="subtitle is-5" style="color: #38b09d;">Ataque al corazón</h2>
+            <p>Evite daños adicionales después de un ataque cardíaco realizando controles regulares.</p>
+            <a href="{{ path('prod_early_detection_of_symptoms_of_heart_attack') }}" style="margin-top: auto" class="button is-primary is-outlined">Evita daño cardíaco</a>
+            <h2 class="subtitle is-5" style="color: #38b09d;">Arritmias</h2>
+            <p>Reconocer los síntomas recurrentes después de ser tratado por una arritmia y prevenir un accidente cerebrovascular.</p>
+            <a href="{{ path('prod_detection_of_cardiac_arrhythmia') }}" style="margin-top: auto" class="button is-primary is-outlined">Reconoce arritmia</a>
+            <h2 class="subtitle is-5" style="color: #38b09d;">Prevención</h2>
+            <p>Mantenga bajo control su riesgo cardíaco, ya sea por el aumento de la edad o una predisposición familiar.</p>
+            <a href="{{ path('prod_prevention') }}" style="margin-top: auto" class="button is-primary is-outlined">Controla riesgo cardíaco</a>
+          </div> #}
+
+          <div class="columns is-8 is-multiline is-mobile csact-whentouse">
+            <div class="column is-3-desktop is-6-tablet is-12-mobile">
+              <h2 class="subtitle is-5" style="color: #38b09d;">Síntomas poco claros</h2>
+              <p>Averigüe de inmediato si sus síntomas deben tratarse o no.</p>
+              <a href="{{ path('prod_receive_a_diagnosis_for_chest_pain') }}" class="button is-primary is-outlined">Entiende sus síntomas</a>
+            </div>
+            <div class="column is-3-desktop is-6-tablet is-12-mobile">
+              <h2 class="subtitle is-5" style="color: #38b09d;">Ataque al corazón</h2>
+              <p>Evite daños adicionales después de un ataque cardíaco realizando controles regulares.</p>
+              <a href="{{ path('prod_early_detection_of_symptoms_of_heart_attack') }}"  class="button is-primary is-outlined">Evita daño cardíaco</a>
+            </div>
+            <div class="column is-3-desktop is-6-tablet is-12-mobile">
+              <h2 class="subtitle is-5" style="color: #38b09d;">Arritmias</h2>
+              <p>Reconocer los síntomas recurrentes después de ser tratado por una arritmia y prevenir un accidente cerebrovascular.</p>
+              <a href="{{ path('prod_detection_of_cardiac_arrhythmia') }}"  class="button is-primary is-outlined">Reconoce arritmia</a>
+            </div>
+            <div class="column is-3-desktop is-6-tablet is-12-mobile">
+              <h2 class="subtitle is-5" style="color: #38b09d;">Prevención</h2>
+              <p>Mantenga bajo control su riesgo cardíaco, ya sea por el aumento de la edad o una predisposición familiar.</p>
+              <a href="{{ path('prod_prevention') }}"  class="button is-primary is-outlined">Controla riesgo cardíaco</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {# SECTION 3 - FIRST LEVEL #}
+    <section class="section" >
+      <div class="has-text-centered" style="    padding: 30px 0px;">
+        <h2 class="subtitle is-4">TECNOLOGÍA DE PRIMER NIVEL</h2>
+      </div>
+      <div class="columns is-multiline is-mobile">
+        <div class="column is-3-desktop is-6-tablet is-12-mobile">
+          <div class="infobox">
+            <h4>Móvil</h4>
+            <p>En todo momento en todo lugar. Registre un ECG móvil de calidad clínica con solo 4 electrodos, un cable ultraligero y una aplicación</p>
+          </div>
+        </div>
+        <div class="column is-3-desktop is-6-tablet is-12-mobile">
+          <div class="infobox">
+            <h4>Poderoso</h4>
+            <p>Hasta 15 derivaciones hacen posible el diagnóstico de infartos de la pared anterior, lateral y posterior</p>
+          </div>
+        </div>
+        <div class="column is-3-desktop is-6-tablet is-12-mobile">
+          <div class="infobox">
+            <h4>Accesible</h4>
+            <p>Nuestros planes de servicios fueron desarrollados de forma flexible y modular en lo referido a contratación, cancelación y precios</p>
+          </div>
+        </div>
+        <div class="column is-3-desktop is-6-tablet is-12-mobile">
+          <div class="infobox">
+            <h4>Seguridad de la información</h4>
+            <p>La transferencia y el almacenamiento de datos ocurren en estricto cumplimiento con la ley federal de protección de datos (BDSG) y el nuevo GDPR de la UE</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {# FAMILY PLAN #}
+    <section class="section" style="min-height: 330px;margin-top: 30px;width: 100%;padding: 10px 0px 30px 0px;">
+      <div class="columns is-multiline is-mobile">
+        <div class="column is-4-desktop is-6-tablet is-12-mobile" style="display: flex;align-items: center;justify-content: center;margin: 15px 0px;">
+          <svg height="112pt" width="112pt" viewBox="0 -45 512 512"  xmlns="http://www.w3.org/2000/svg"><path d="m469.113281 82.570312c0-45.601562-38.105469-82.570312-85.113281-82.570312s-85.113281 36.96875-85.113281 82.570312c0 45.601563 38.105469 82.570313 85.113281 82.570313s85.113281-36.96875 85.113281-82.570313zm0 0" fill="#4ab8f7"/><path d="m213.113281 82.570312c0-45.601562-38.105469-82.570312-85.113281-82.570312s-85.113281 36.96875-85.113281 82.570312c0 45.601563 38.105469 82.570313 85.113281 82.570313s85.113281-36.96875 85.113281-82.570313zm0 0" fill="#80dbff"/><path d="m391.5 179.542969h-15c-66.550781 0-120.5 53.949219-120.5 120.5 0-66.550781-53.949219-120.5-120.5-120.5h-15c-66.550781 0-120.5 53.949219-120.5 120.5v111.628906c0 5.519531 4.476562 10 10 10h492c5.523438 0 10-4.480469 10-10v-111.628906c0-66.550781-53.949219-120.5-120.5-120.5zm0 0" fill="#4ab8f7"/><path d="m135.5 179.542969h-15c-66.550781 0-120.5 53.949219-120.5 120.5v111.628906c0 5.519531 4.476562 10 10 10h246v-121.628906c0-66.550781-53.949219-120.5-120.5-120.5zm0 0" fill="#80dbff"/><path d="m301.132812 192.742188c-15.570312 0-29.667968 6.832031-39.890624 17.875-1.886719 2.035156-3.636719 4.21875-5.242188 6.523437-1.640625-2.355469-3.433594-4.578125-5.367188-6.652344-10.210937-10.96875-24.253906-17.746093-39.761718-17.746093-31.222656 0-56.53125 27.453124-56.53125 61.316406 0 16.820312 6.265625 32.035156 16.375 43.113281l-.007813.007813 78.210938 76.175781c3.875 3.773437 10.050781 3.78125 13.9375.015625l74.953125-72.675782c10.8125-13.382812 19.851562-27.960937 19.851562-46.636718 0-33.863282-25.308594-61.316406-56.527344-61.316406zm0 0" fill="#ff73a5"/><path d="m250.632812 210.488281c-10.210937-10.96875-24.253906-17.746093-39.761718-17.746093-31.222656 0-56.53125 27.453124-56.53125 61.316406 0 16.816406 6.265625 32.035156 16.375 43.113281l-.007813.007813 78.210938 76.171874c1.96875 1.917969 4.527343 2.859376 7.082031 2.832032v-159.042969c-1.640625-2.355469-3.433594-4.578125-5.367188-6.652344zm0 0" fill="#ffa1c8"/></svg>
+        </div>
+        <div class="column is-8-desktop is-6-tablet is-12-mobile" style="display: flex;align-items: center;">
+          <div  style="padding: 30px 0px;">
+            <h2 class="subtitle is-4">PLAN FAMILIAR</h2>
+            <div class="content" style="text-align:left">
+              <p>Ahora su familia tambien puede tener acceso a un mejor ciudado</p>
+              <p>
+                Puede compartir el dispositivo CardioSecur Active con otros miembros de su familia. 
+                Cada uno tiene su cuenta individual, y así tener su perfil médico personal
+                y su historial de analisis que puede compartir o solicitar informes de cardiólogos.
+              </p>
+              <p>
+                Los planes familiares adicionales tiene un costo menor lo que permite aumentar sus 
+                beneficios a un mejor precio.
+              </p>
+              <p>
+                Los invitados deben tener el mismo tipo de conector para Android y/o iPhone.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {# <section class="section" style="min-height: 330px;margin-top: 30px;width: 100%;padding: 10px 0px 30px 0px;text-align: center;">
+      <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/RhDbNejK69I" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </section> #}
+
+
+
+    {# <section class="section white-box" style="margin-top:30px;padding:10px 0px 30px 0px">
+      <div class="column is-full has-text-centered">
+        <h3 class="subtitle is-3">CardioSecur es fácil de usar</h3>
+        <h3 class="subtitle is-4">Solamente tres simples pasos. Pongalo rápido y discretamente bajo su camisa</h3>
+      </div>
+      
+    </section> #}
+
+    {# TODO LO QUE NECESITA 
+    <section class="section" >
+      <div class="column is-full has-text-centered">
+        <h3 class="subtitle is-3" style="margin-bottom:30px">Todo lo que necesita para una lectura de ECG CardioSecur </h3>
+      </div>
+
+      <div class="columns is-multiline">
+        <div class="column is-one-third has-text-centered">
+          <picture>
+            <source srcset="{{asset('build/images/products/csactive/download-app-store.webp')}}" type="image/webp">
+            <source srcset="{{asset('build/images/products/csactive/download-app-store.png')}}" type="image/png">
+            <img src="{{asset('build/images/products/csactive/download-app-store.png')}}" alt="downloadAppStore">
+          </picture>
+          <picture>
+            <source srcset="{{asset('build/images/products/csactive/download-google-play.webp')}}" type="image/webp">
+            <source srcset="{{asset('build/images/products/csactive/download-google-play.png')}}" type="image/png">
+            <img src="{{asset('build/images/products/csactive/download-google-play.png')}}" alt="downloadGooglePlay">
+          </picture>
+        </div> 
+        <div class="column is-two-thirds content"> 
+          <ul> 
+            <li>
+              La aplicación gratuita desde <a href="https://itunes.apple.com/app/cardiosecur-active/id798767589">Apple App Store</a> o <a href="https://play.google.com/store/apps/details?id=com.cardiosecur.active">Google Play Store</a>
+            </li>
+            <li>Una subscripción a BmabusLife, incluye un cable ECG 50g liviano, de nuestra tienda</li>
+            <li>Tu smartphone o tablet <a href="#">compatible</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    #}
+
+    {# <section class="section white-box"  style="margin-top:90px;padding:10px 0px 30px 0px">
+      <div class="column is-full has-text-centered">
+        <h3 class="subtitle is-3" style="margin-bottom:30px">Conveniente y seguro, muestre y comparta sus reportes ECG en cualquier momento - también con su médico</h3>
+      </div>
+      <div class="columns is-multiline is-mobile">
+        <div class="column is-one-third-desktop is-full-tablet is-full-mobile has-text-centered">
+          <picture>
+            <source srcset="{{asset('build/images/products/csactive/logos.webp')}}" type="image/webp">
+            <source srcset="{{asset('build/images/products/csactive/logos.png')}}" type="image/png">
+            <img alt="CardioSecur es un dispositivo médico aprobado con EN ISO 13485 y certificado por el más demandante organismo notificado en Alemania, TÜV SÜD"
+              src="{{asset('build/images/products/csactive/logos.png')}}" width:"219" height:"70" >
+          </picture>
+        </div>
+      </div>
+    </section> #}
+
+
+
+    {# <section class="section white-box"  style="margin-top:90px;padding:10px 0px 30px 0px">
+      <div class="column is-full has-text-centered">
+        <h3 class="subtitle is-3">Cuando usar CardioSecur</h3>
+      </div>
+
+      <div class="column is-full">
+        <div class="columns is-multiline is-mobile">
+          <div class="column is-one-quarter-desktop is-half-tablet is-full-mobile has-text-centered">
+            <h4 class="subtitle is-4">Síntomas poco claros</h4>
+            <picture>
+              <source srcset="{{asset('build/images/products/csactive/download-app-store.webp')}}" type="image/webp">
+              <source srcset="{{asset('build/images/products/csactive/download-app-store.png')}}" type="image/png">
+              <img src="{{asset('build/images/products/csactive/download-app-store.png')}}">
+            </picture>
+            <picture>
+              <source srcset="{{asset('build/images/products/csactive/download-google-play.webp')}}" type="image/webp">
+              <source srcset="{{asset('build/images/products/csactive/download-google-play.png')}}" type="image/png">
+              <img src="{{asset('build/images/products/csactive/download-google-play.png')}}">
+            </picture>
+          </div> 
+          <div class="column is-two-thirds content"> 
+            <ul> <li>La aplicación gratuita desde <a href="https://itunes.apple.com/app/cardiosecur-active/id798767589">Apple App Store</a> o <a href="https://play.google.com/store/apps/details?id=com.cardiosecur.active">Google Play Store</a></li> <li>Una subscripción a CardioSecur, incluye un cable ECG 50g liviano, de nuestra tienda</li>
+              <li>Tu smartphone o tablet <a href="#">compatible</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section> #}
+
+    {# CONVENIENTE Y SEGURO 
+    <section class="section white-box"  style="padding:10px 0px 10px 0px">
+      <div class="column is-full has-text-centered">
+        <h2 class="subtitle is-3" style="margin-bottom:30px">Conveniente y seguro, muestre y comparta sus reportes ECG en cualquier momento - también con su médico</h2>
+      </div>
+      <div class="columns is-multiline is-mobile">
+        <div class="column is-one-third-desktop is-full-tablet is-full-mobile has-text-centered">
+          <picture>
+            <source srcset="{{asset('build/images/products/csactive/report-ecg.webp')}}" type="image/webp">
+            <source srcset="{{asset('build/images/products/csactive/report-ecg.png')}}" type="image/png">
+            <img src="{{asset('build/images/products/csactive/report-ecg.png')}}">
+          </picture>
+        </div>
+        <div class="column is-two-thirds-desktop is-full-tablet is-full-mobile">
+          <div class="columns is-multiline is-mobile">
+            <div class="column is-full content">
+              <ul>
+                <li>Mire sus reportes ECG en su smartphone en todo momento</li>
+                <li>Exporte sus ECG reportes fácilmente como PDF (e.g. AirPrint, iMessage, AirDrop)</li>
+                <li>Sincronice con toda seguridad sus reportes ECG con nuestro servidor</li>
+                <li>Opcional: comparta sus reportes ECG con su médico</li>
+              </ul>
+            </div>
+            <div class="column is-half-desktop is-half-tablet is-full-mobile has-text-centered">
+              <a href="https://www.cardiosecur.com/fileadmin/content/Downloads/EKG_reports/ECG_Report_DE.pdf" style="margin-top: 5%" class="button is-info">Ejemplo de informe de ECG</a>
+            </div>
+            <div class="column is-half-desktop is-half-tablet is-full-mobile has-text-centered">
+              <picture>
+                <source srcset="{{asset('build/images/products/csactive/BDSG-logo.webp')}}" type="image/webp">
+                <source srcset="{{asset('build/images/products/csactive/BDSG-logo.png')}}" type="image/png">
+                <img src="{{asset('build/images/products/csactive/BDSG-logo.png')}}">
+              </picture>
+              <picture>
+                <source srcset="{{asset('build/images/products/csactive/TUV-logo.webp')}}" type="image/webp">
+                <source srcset="{{asset('build/images/products/csactive/TUV-logo.png')}}" type="image/png">
+                <img src="{{asset('build/images/products/csactive/TUV-logo.png')}}">
+              </picture>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    #}
+
+    {# PODEROSO 
+    <section class="section"  style="margin-top:90px">
+      <div class="column is-full has-text-centered">
+        <h2 class="subtitle is-3" style="margin-bottom:30px">CardioSecur es m&aacute;s poderoso que un ECG est&aacute;ndar de su médico</h2>
+      </div>
+      <div class="columns is-multiline is-mobile">
+        <div class="column is-one-third-desktop is-full-tablet is-full-mobile has-text-centered">
+          <picture>
+            <source srcset="{{asset('build/images/products/csactive/chart.webp')}}" type="image/webp">
+            <source srcset="{{asset('build/images/products/csactive/chart.jpg')}}" type="image/jpeg">
+            <img src="{{asset('build/images/products/csactive/chart.jpg')}}">
+          </picture>
+        </div>
+        <div class="column is-two-thirds-desktop is-full-tablet is-full-mobile">
+          <div class="columns is-multiline is-mobile">
+            <div class="column is-full content">
+            <ul>
+                <li>CardioSecur mide 15 derivaciones del corazón. Un ECG est&aacute;ndar solo mide 12.</li>
+                <li>CardioSecur puede registrar arritmias complejas y potencialmente mortales trastornos de la circulación.</li>
+                <li>Análisis personalizado al comparar su lectura de ECG con su ECG de referencia.</li>
+                <li>Las pautas de la Sociedad Europea de Cardiología (ESC) recomiendan una comparación con una lectura previa e inclusión de derivaciones de ECG adicionales (V7-V9) para mejorar el diagnóstico de un ataque cardíaco.</li>
+              </ul>
+            </div>
+            <div class="column is-half has-text-centered">
+              <a style="margin-top: 5%" class="button is-primary" href="{{ path('contact_form') }}">Comprelo ahora</a>
+            </div>
+            <div class="column is-half has-text-centered">
+              <picture>
+                <source srcset="{{asset('build/images/products/csactive/class-IIEN.webp')}}" type="image/webp">
+                <source srcset="{{asset('build/images/products/csactive/class-IIEN.png')}}" type="image/png">
+                <img src="{{asset('build/images/products/csactive/class-IIEN.png')}}">
+              </picture>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    #}
+
+    {# CHEQUEO PERSONAL 
+    <section class="section white-box"  style="padding:10px 0px 10px 0px">
+      <div class="column is-full has-text-centered">
+        <h3 class="subtitle is-4">Su chequeo personal con CardioSecur</h3>
+        <a class="button is-medium is-primary" href="{{ path('contact_form') }}">Comience ahora</a>
+      </div>
+
+      <div class="column is-full">
+        <div class="columns is-multiline is-mobile">
+          <div class="column is-one-quarter-desktop is-half-tablet is-full-mobile has-text-centered" style="display: flex;flex-direction: column;align-items: center;">
+            <h4 class="subtitle is-4">Síntomas poco claros</h4>
+            <picture>
+              <source srcset="{{asset('build/images/products/csactive/when-to-use-1.webp')}}" type="image/webp">
+              <source srcset="{{asset('build/images/products/csactive/when-to-use-1.png')}}" type="image/png">
+              <img src="{{asset('build/images/products/csactive/when-to-use-1.png')}}"  alt="ECG recordings from the moment the symptoms occurred can help with your diagnosis" alt="Symbol for unclear symptoms" style="margin:30px 0px">
+            </picture>
+            <p class="when-to-use-text is-size-6">Descubra inmediatamente si sus síntomas necesitan ser tratados o no.</p>
+            <a href="{{ path('prod_receive_a_diagnosis_for_chest_pain') }}" style="margin-top: auto" class="button is-info">Entiende sus síntomas</a>
+          </div>
+          <div class="column is-one-quarter-desktop is-half-tablet is-full-mobile has-text-centered" style="display: flex;flex-direction: column;align-items: center;">
+            <h4 class="subtitle is-4">Ataque cardíaco</h4>
+            <picture>
+              <source srcset="{{asset('build/images/products/csactive/when-to-use-2.webp')}}" type="image/webp">
+              <source srcset="{{asset('build/images/products/csactive/when-to-use-2.png')}}" type="image/png">
+              <img src="{{asset('build/images/products/csactive/when-to-use-2.png')}}"  alt="ECG recordings from the moment the symptoms occurred can help with your diagnosis" alt="Symbol for unclear symptoms" style="margin:30px 0px">
+            </picture>
+            <p class="when-to-use-text is-size-6">Evite daño adicional luego de un ataque cardíaco mediante la realización de chequeos regulares.</p>
+            <a href="{{ path('prod_early_detection_of_symptoms_of_heart_attack') }}" style="margin-top: auto" class="button is-info">Evita daño cardíaco</a>
+          </div>
+          <div class="column is-one-quarter-desktop is-half-tablet is-full-mobile has-text-centered" style="display: flex;flex-direction: column;align-items: center;">
+            <h4 class="subtitle is-4">Arritmia</h4>
+            <picture>
+              <source srcset="{{asset('build/images/products/csactive/when-to-use-3.webp')}}" type="image/webp">
+              <source srcset="{{asset('build/images/products/csactive/when-to-use-3.png')}}" type="image/png">
+              <img src="{{asset('build/images/products/csactive/when-to-use-3.png')}}"  alt="ECG recordings from the moment the symptoms occurred can help with your diagnosis" alt="Symbol for unclear symptoms" style="margin:30px 0px">
+            </picture>
+            <p class="when-to-use-text is-size-6">Reconozca síntomas recurrentes luego de ser tratado por arritmia y prevenga un accidente cerebrovascular.</p>
+            <a href="{{ path('prod_detection_of_cardiac_arrhythmia') }}" style="margin-top: auto" class="button is-info">Reconoce arritmia</a>
+          </div>
+          <div class="column is-one-quarter-desktop is-half-tablet is-full-mobile has-text-centered" style="display: flex;flex-direction: column;align-items: center;">
+            <h4 class="subtitle is-4">Prevención</h4>
+            <picture>
+              <source srcset="{{asset('build/images/products/csactive/when-to-use-4.webp')}}" type="image/webp">
+              <source srcset="{{asset('build/images/products/csactive/when-to-use-4.png')}}" type="image/png">
+              <img src="{{asset('build/images/products/csactive/when-to-use-4.png')}}"  alt="ECG recordings from the moment the symptoms occurred can help with your diagnosis" alt="Symbol for unclear symptoms" style="margin:30px 0px">
+            </picture>
+            <p class="when-to-use-text is-size-6">Mantenga su riesgo cardíaco, ya sea por edad avanzada o predisposición familiar, en control.</p>
+            <a href="{{ path('prod_prevention') }}" style="margin-top: auto" class="button is-info">Controla riesgo cardíaco</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    #}
+
+    {# <section class="section"  style="width: 100%;">\
+      <div class="column is-full has-text-centered">
+        <h2 class="subtitle is-4">Su chequeo personal con CardioSecur</h2>
+        <h2 class="subtitle is-5">(Cancelable mensualmente)</h2>
+        <a class="button is-medium is-primary" href="{{ path('contact_form') }}">Comience ahora</a>
+      </div>
+    </section> #}
+
+  </div>
+{% endblock %}
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

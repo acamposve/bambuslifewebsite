@@ -1,0 +1,155 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reservar | BambusLife{% endblock %}
+
+{% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {{ encore_entry_link_tags('select-date') }}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('select-date') }}
+{% endblock %}
+
+{% block body %}
+
+{# class="container" #}
+<div style="min-height: 600px;padding:10px">
+
+  {# ERROR MSG #}
+  {% if error_msg is defined and error_msg != NULL %}
+    <div class="columns is-8" style="">
+      <div class="column">
+        <article class="message is-danger">
+          <div class="message-body">
+            {{ error_msg | raw }}
+          </div>
+        </article>
+      </div>
+    </div>
+  {% else %}
+    <div class="columns is-mobile is-multiline">
+      {# BOOKING CARD #}
+      <div class="column is-4-desktop is-12-tablet is-12-mobile" style="max-width:300px">
+        <div class="appn-sum-box">
+          <div class="appn-sum-section">
+            <label>Especialidad</label>
+            <div class="appn-sum-title">{{appointment.serviceName}}</div>
+          </div>
+          <div class="appn-sum-section">
+            <label>Profesional</label>
+            <div class="appn-sum-title">{{appointment.practName}}</div>
+          </div>
+          <div class="appn-sum-section">
+            <label>Lugar</label>
+            <div class="appn-sum-title">{{appointment.locName}}</div>
+            <div class="appn-sum-subtitle">{{appointment.locAddress}}</div>
+            <div class="appn-badge"><i class="fas fa-info-circle"></i> Consulta virtual disponible</div>
+          </div>
+        </div>
+      </div>
+      <div class="column is-8-desktop is-12-tablet is-12-mobile">
+        {# HOURS TABLE #}
+        <div class="appwzrd-cntr">
+          <div class="appwzrd-header">
+            <div class="appwzrd-title">
+              <span class="icon">
+                <i class="fas fa-calendar-alt"></i>
+              </span>
+              <span>
+                Fecha y hora
+              </span>
+            </div>
+            <div class="appwzrd-subtitle">
+              Seleccione un horario 
+            </div>
+          </div>
+          <div class="av-table">
+            <div class="av-table-rec">
+              {% if prevDate != NULL %}
+                <a class="av-table-navbtn" 
+                  href="{{ path('selectAppointmentDate', {
+                      practId: appointment.practitionerId, 
+                      practRoleId: appointment.practitionerRoleId, 
+                      serviceId: appointment.serviceId,
+                      locationId: appointment.locationId,
+                      sd: prevDate}) }}">
+                  <i class="fas fa-chevron-left"></i>
+                </a>
+              {% endif %}
+            </div>
+            {% for day in calendar.slots.days %}
+              <div class="av-table-rec">
+                <div class="av-table-day">
+                  <div class="av-table-day-name">{{day.dayText}}</div>
+                  <div class="av-table-day-date">{{day.date}}</div>
+                </div>
+                {% if day.slots is defined and day.slots | length > 0 %}
+                  {% for slot in day.slots %}
+                    <div class="av-table-slots">
+                      {% if slot.resources is defined and slot.resources | length > 0 %}
+                        {% if slot.resources[0].isFree == 1 %}
+                          <div class="av-table-slot av-table-slot-free">
+                            <a href="{{ path('selectReason', {
+                              date: day.dateAux, 
+                              slotStart: slot.startNumber, 
+                              slotEnd: slot.endNumber}) }}">
+                              {{slot.startHour}}
+                            </a>
+                          </div>
+                        {% else %}
+                          <div class="av-table-slot av-table-slot-busy">
+                            {{slot.startHour}}
+                          </div>
+                        {% endif %}
+                      {% endif %}
+                    </div>
+                  {% endfor %}
+                {% endif %}
+              </div>
+            {% endfor %}
+            <div class="av-table-rec">
+              <a class="av-table-navbtn" 
+                href="{{ path('selectAppointmentDate', {
+                    practId: appointment.practitionerId, 
+                    practRoleId: appointment.practitionerRoleId, 
+                    serviceId: appointment.serviceId,
+                    locationId: appointment.locationId,
+                    sd: nextDate}) }}">
+                <i class="fas fa-chevron-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {# BACK #}
+        <div class="columns is-8" style="padding: 20px 20px 100px 20px;">
+          <div class="column">
+            <div class="control">
+              <a class="button is-white" onclick="history.back()">
+                <span class="icon">
+                  <i class="fas fa-chevron-left"></i>
+                </span>
+                <span>Volver</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  {% endif %}
+
+</div>
+
+
+{% endblock %}
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

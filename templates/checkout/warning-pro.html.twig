@@ -1,0 +1,213 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+{{ encore_entry_link_tags('practitioner-register') }}
+{% endblock %}
+
+
+{% block javascripts %}
+{{ parent() }}
+{{ encore_entry_script_tags('organization-register') }}
+{% endblock %}
+
+{% block title %} Atenci&oacute;n! | BambusLife{% endblock %}
+
+{% block header %}
+{{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+  {# ERROR MSG #}
+  {% if error_msg is defined and error_msg != NULL %}
+    <div class="columns is-8" style="">
+      <div class="column">
+        <article class="message is-danger">
+          <div class="message-body">
+            {{ error_msg | raw }}
+          </div>
+        </article>
+      </div>
+    </div>
+  {% endif %}
+
+  <div class="columns white-box" style="margin: 10px 10% 50px 10%;">
+    <div class="column is-12" style="text-align:center; width:100%;">
+      <i class="fas fa-star-of-life" style="margin:30px 0px;font-size:35px"></i>
+      <h1 class="title is-4">Dispositivo de uso profesional</h1>
+      <p>
+        Ha seleccionado la compra de uno o m&aacute;s <strong>CardioSecur Pro</strong>, el cual es de uso
+        exclusivamente profesional.
+      </p>
+      <br>
+      <p>
+        Si busca un uso personal le recomendamos que adquiera la versi&oacute;n
+        <strong>Active</strong> de CardioSecur.
+      </p>
+      <br>
+      <p>
+        De lo contrario si usted es profesional, por favor <strong>complete el formulario</strong> con los datos de su 
+        instituci&oacute;n/cl&iacute;nica u organizaci&oacute;n para poder crearle su cuenta de organizaci&oacute;n en el <strong>HealthHub</strong>, 
+        donde podr&aacute;n visualizar y gestionar los an&aacute;lisis realizados, pacientes y dem&aacute;s datos.
+      </p>
+    </div>
+  </div>
+  {% if hasOrganization is not defined or hasOrganization == FALSE %}
+    <form name="userInfoRegister" id="userInfoRegister" method="post" action="{{path('organizationRegister')}}" style="padding: 10px;">
+      <div class="columns is-multiline is-mobile white-box">
+        <!--datos de organizacion-->
+        <div class="column is-6-desktop is-6-tablet is-12-mobile">
+          <h5 class="title is-5">Datos de la organizaci&oacute;n </h5>
+
+          <div class="field">
+            <label class="label">Nombre de la organizaci&oacute;n</label>
+            <div class="control">
+              <input type="text" class="input" id="organizationName" name="organizationName" required>
+            </div>
+            <div class="messages"></div>
+          </div>
+
+          <div class="field">
+            <label class="label">Tel&eacute;fono</label>
+            <div class="control">
+              <input type="text" class="input" id="orgphone" name="orgphone" required>
+            </div>
+            <div class="messages"></div>
+          </div>
+
+          <div class="field">
+            <label class="label">Direcci&oacute;n de organizaci&oacute;n</label>
+            <div class="control">
+              <input type="text" class="input" id="organizationAddress" name="organizationAddress" required>
+            </div>
+            <div class="messages"></div>
+          </div>
+
+          <div class="field">
+            <div class="label">
+              <div class="control">
+                <label for="isVirtual" class="checkbox">
+                  <input type="checkbox" class="checkbox" id="isVirtual" name="isVirtual">
+                  Atender online
+                </label>
+              </div>
+              <div class="messages"></div>
+            </div>
+          </div>
+        </div>
+
+        <!--datos de localidad-->
+        <div class="column is-6-desktop is-6-tablet is-12-mobile">
+          <h5 class="title is-5">Localidad donde atiende</h5>
+
+          <div class="field">
+            <label class="label">Nombre de localidad</label>
+            <div class="control">
+              <input type="text" class="input" id="locationName1" name="locationName1" required>
+            </div>
+            <div class="messages"></div>
+          </div>
+
+          <div class="field">
+            <label class="label">Pais</label>
+            <div class="control">
+              <div class="select">
+                <select name="country" id="country">
+                  {% for country in countries %}
+                  <option value="{{country.code}}" {% if navCountry == country.code %} selected {% endif %}>
+                    {{country.name}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+            <div class="messages"></div>
+          </div>
+
+          <div class="field">
+            <label class="label">Ciudad en la que atiende</label>
+            <div class="control">
+              <select id="selCity" name="selCity">
+              </select>
+              <input type="hidden" id="cityId" name="cityId">
+              <input type="hidden" id="cityName" name="cityName">
+            </div>
+            <div class="messages"></div>
+          </div>
+
+          <div class="field">
+            <label class="label">Direcci&oacute;n</label>
+            <div class="control">
+              <input type="text" class="input" id="locationAddress1" name="locationAddress1" required>
+            </div>
+            <div class="messages"></div>
+          </div>
+
+          <div class="field">
+            <div class="control">
+              <label class="checkbox">
+                <input type="checkbox" name="terms" id="terms">
+                Acepto los <a href="{{ path('doc_conditions') }}">terminos y condiciones</a>
+              </label>
+            </div>
+            <div class="messages"></div>
+          </div>
+
+        </div>
+        
+      </div>
+
+      <div class="columns is-mobile" style="padding: 20px;">
+        <div class="column is-6-mobile is-4-desktop is-offset-2-desktop">
+          <div class="control">
+            <a class="button is-white" href="{{ path('checkout_userinfo') }}" id="btnBack">
+              <span class="icon">
+                <i class="fas fa-chevron-left"></i>
+              </span>
+              <span>Atras</span>
+            </a>
+          </div>
+        </div>
+        <div class="column is-6-mobile is-4-desktop ">
+          <div class="control" style="text-align: right;">
+            <button type="submit" class="button is-primary" id="btnRegister">Continuar</button>
+          </div>
+        </div>
+      </div>
+    
+    </form>
+  {% endif %}
+
+  {% if hasOrganization is defined and hasOrganization == TRUE %}
+    <div class="columns is-mobile" style="padding: 20px;">
+      <div class="column is-6-mobile is-4-desktop is-offset-2-desktop">
+        <div class="control">
+          <a class="button is-white" href="{{ path('checkout_userinfo') }}" id="btnBack">
+            <span class="icon">
+              <i class="fas fa-chevron-left"></i>
+            </span>
+            <span>Atras</span>
+          </a>
+        </div>
+      </div>
+      <div class="column is-6-mobile is-4-desktop ">
+        <div class="control" style="text-align: right;">
+          <a href="{{ path('checkout_shipping') }}?wpa=1" class="button is-primary" id="btnContinue" name="btnContinue">
+            <span>Continuar</span>
+            <span class="icon">
+              <i class="fas fa-chevron-right"></i>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+</div>
+
+{% endblock %}
+
+{% block footer %}
+{{ include('components/footer.html.twig') }}
+{% endblock %}

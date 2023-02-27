@@ -1,0 +1,119 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {{ encore_entry_link_tags('products') }}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('products') }}
+  {{ include('sd/breadcrumbs.html.twig', { 'items': [{'name':'Productos',"url":path('order_index')},{'name':'CardioSecur Active',"url":path('prod_csactive')},{'name':'Prevención',"url":path('prod_prevention')}] }) }}
+{% endblock %}
+
+{% block title %}Prevención - CardioSecur Active | BambusLife{% endblock %}
+
+{% block description %}El ataque cardíaco es una de las causas más comunes de muerte, en particular con el aumento de la edad.{% endblock %}
+
+{% block keywords %}Ataque cardíaco, Prevención{% endblock %}
+
+{% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block body %}
+  <div class="container">
+
+    <div class="columns is-multiline is-mobile" style="margin: 1% 0">
+      <div class="column is-full">
+        <h1 class="subtitle is-2">Mantenga su riesgo cardíaco bajo control</h1>
+        <p class="subtitle is-5">El ataque cardíaco es una de las causas más comunes de muerte, en particular con el aumento de la edad. Sin embargo, una predisposición familiar también puede aumentar significativamente el riesgo de sufrir un ataque cardíaco</p>
+      </div>
+    </div>
+
+    <section class="section white-box"  style="margin-top:90px">
+      <div class="column is-full has-text-centered">
+        <h2 class="subtitle is-3" style="margin-bottom:30px">Reconocer con anticipación un ataque al corazón</h2>
+      </div>
+      <div class="column is-full">
+        <div class="columns is-multiline is-mobile">
+          <div class="column is-half-desktop is-full-tablet is-full-mobile has-text-centered">
+            <p class="is-size-5">
+                Cuando no hay síntomas, las personas generalmente no prestan mucha atención a la salud de su corazón. Cuando se presentan los síntomas, a menudo toma demasiado tiempo para finalmente recibir una cita necesaria con su médico. En el peor de los casos, esto ya puede ser demasiado tarde.
+            </p>
+            <p class="is-size-5">
+                Por lo tanto, es importante monitorear la salud de su corazón mediante controles cardíacos regulares.
+            </p>
+          </div>
+          <div class="column is-half-desktop is-full-tablet is-full-mobile has-text-centered">
+            <picture>
+              <source srcset="{{asset('build/images/products/csactive/user-6.webp')}}" type="image/webp">
+              <source srcset="{{asset('build/images/products/csactive/user-6.png')}}" type="image/png">
+              <img src="{{asset('build/images/products/csactive/user-6.png')}}" alt="user6">
+            </picture>
+            <p class="is-size-5">"Queríamos tener la posibilidad de revisar nuestros corazones cuando queramos".</p>
+            <p class="is-size-6">Pareja casada, 60</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="margin-top:90px;padding:10px 0px 30px 0px">
+      <div class="column is-full has-text-centered">
+        <p class="subtitle is-3">Los chequeos regulares del corazón son críticos</p>
+        <h3 class="subtitle is-5">Gracias a CardioSecur, estos se pueden realizar de forma rápida y sencilla. Use su teléfono inteligente para registrar un ECG clínico de 12 derivaciones en s&oacute;lo 30 segundos y reciba una respuesta inmediata para saber si debe buscar atención médica o no. Recibe una confirmación rápida si tu corazón está bien.</h3>
+      </div>
+      <div class="column is-full">
+        <div class="columns is-multiline is-mobile">
+          <div class="column is-one-third-desktop is-full-tablet is-full-mobile">
+            <div class="circle-blue line-blue">1</div>
+            <div class="mobile-image-container has-text-centered">
+              <picture>
+                <source srcset="{{asset('build/images/products/csactive/step-1.webp')}}" type="image/webp">
+                <source srcset="{{asset('build/images/products/csactive/step-1.png')}}" type="image/png">
+                <img src="{{asset('build/images/products/csactive/step-1.png')}}"  alt="Attach the electrodes to four prominent points of the body" class="step-img">
+              </picture>
+              <p class="is-size-5">Conecte el cable</p>
+              <p>&nbsp;</p>
+            </div>
+          </div>
+          <div class="column is-one-third-desktop is-full-tablet is-full-mobile">
+            <div class="circle-blue">2</div>
+            <div class="mobile-image-container has-text-centered">
+              <picture>
+                <source srcset="{{asset('build/images/products/csactive/step-2.webp')}}" type="image/webp">
+                <source srcset="{{asset('build/images/products/csactive/step-2.png')}}" type="image/png">
+                <img src="{{asset('build/images/products/csactive/step-2.png')}}"  alt="Attach the electrodes to four prominent points of the body" class="step-img">
+              </picture>
+              <p class="is-size-5">Comience una lectura</p>
+              <p>&nbsp;</p>
+            </div>
+          </div>
+          <div class="column is-one-third-desktop is-full-tablet is-full-mobile">
+            <div class="circle-blue">3</div>
+            <div class="mobile-image-container has-text-centered">
+              <picture>
+                <source srcset="{{asset('build/images/products/csactive/step-3b.webp')}}" type="image/webp">
+                <source srcset="{{asset('build/images/products/csactive/step-3b.png')}}" type="image/png">
+                <img src="{{asset('build/images/products/csactive/step-3b.png')}}"  alt="Attach the electrodes to four prominent points of the body" class="step-img">
+              </picture>
+              <p class="is-size-5">Reciba feedback</p>
+              <p>&nbsp;</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="column is-full has-text-centered">
+        <br>
+          <a class="button is-medium is-primary" href="{{ path('order_csactive') }}">Ver oferta</a>
+        <br>
+      </div>
+    </section>
+
+  </div>
+
+{% endblock %}
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

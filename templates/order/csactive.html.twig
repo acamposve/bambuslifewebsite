@@ -1,0 +1,399 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {{ encore_entry_link_tags('order-csactive') }}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('order-csactive') }}
+  {{ include('sd/breadcrumbs.html.twig', { 'items': [{'name':'Comprar',"url":path('order_index')},{'name':'CardioSecur Active',"url":path('order_csactive')}] }) }}
+{% endblock %}
+
+{% block title %}Comprar CardioSecur Active | Monitor cardiaco | BambusLife{% endblock %}
+
+{% block description %}
+Comprar CardioSecur Active | Monitor cardiaco para uso personal. Realice electrocardiagramas (ECG) desde su teléfono iPhone o Android.
+{% endblock %}
+
+{% block keywords %}CardioSecur Active{% endblock %}
+
+{% block extrameta %}
+  <meta property="og:title" content="CardioSecur Active | Monitor cardiaco | BambusLife" />
+  <meta property="og:description" content="Registre un electrocardiograma de nivel hospitalario en su teléfono iPhone o Android cuando los síntomas ocurren y reciba una respuesta en solo 30 segundos." />
+  <meta property="og:type"  content="website" />
+  <meta property="og:url"   content="https://bambus.life{{ app.request.requestUri }}" />
+  <meta property="og:image" content="{{asset('build/images/og/csactive.png')}}" />
+{% endblock %}
+
+{% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block body %}
+
+  <div class="container">
+
+    {# IMAGES AND CONFIGURATION #}
+    <div class="columns is-multiline is-mobile" style="padding: 20px 0px;background-color: #FEFEFE;">
+
+      <div class="column is-half-desktop is-half-tablet is-full-mobile">
+        <picture>
+          <source srcset="{{asset('build/images/products/csactive/csactive_pd_1b.webp')}}" type="image/webp">
+          <source srcset="{{asset('build/images/products/csactive/csactive_pd_1b.png')}}" type="image/png">
+          <img src="{{asset('build/images/products/csactive/csactive_pd_1b.png')}}" alt="csActive">
+        </picture>
+      </div>
+
+      <div class="column is-half-desktop is-half-tablet is-full-mobile" style="padding: 20px;">
+
+        {# <form action="{{ path('checkout_userinfo_post', {'mode': '0'}) }}" method="post" id="formBuy"> #}
+        <form action="{{ path('cart_add') }}" method="post" id="formBuy">
+
+          <div style="display: flex;align-items: baseline;">
+            <h1 class="subtitle is-3">CardioSecur Active</h1>
+            <a class="button is-small is-text" href="/docs/brochure/Folleto_CS_Active_-_uso_Paciente.pdf" style="color: #209cee;">
+              <span class="icon is-small">
+                <i class="far fa-file-pdf"></i>
+              </span>
+              <span>Descargar folleto</span>
+            </a>
+          </div>
+          
+
+          {# DEVICES VARIANTS #}
+          <h2 class="subtitle is-5" style="margin: 10px 0px;">Mi sistema operativo (tel&eacute;fono celular)</h2>
+          <div class="field" id="prods">
+            {% for product in priceData.product %}
+              <div class="control">
+                <label class="radio" {% if product.stock <= 0 %} disabled {% endif %}>
+                  <input type="radio" name="csactive_os" value="{{product.code}}" data-price="{{product.price}}"
+                  data-stock="{{product.stock}}" data-islocal="{{product.isLocal ? '1' : '0'}}"
+                  {% if product.stock <= 0 %} disabled {% endif %}>
+                  {{product.name}} 
+                  {# <span style="opacity:0.5">({{product.code}}, {{product.currency}} {{product.price}}, {{product.stock}}, {{product.isLocal ? 'L' : 'G'}})</span> #}
+                </label>
+              </div>
+            {% else %}
+              <div>No hay variantes disponibles en stock</div>
+            {% endfor %}
+            <div class="messages"></div>
+          </div>
+
+          {# DEVICE CONNECTOR HELPER #}
+          <div style="margin: 10px 0px 10px 0px;cursor:pointer" id="connHelperTitle">
+            <i class="fas fa-info-circle" style="color: #999;"></i> Como saber cu&aacute;l elegir?
+          </div>
+
+          {# ADDITIONALS #}
+          {# {% if priceData and priceData | length > 0 %}
+              <h5 class="subtitle is-5" style="margin: 50px 0px 10px 0px;cursor:pointer" >Adicionales</h5>
+              
+              {% if priceData.ecgInterpretation.price != NULL %}
+                <label class="checkbox">
+                  <input type="checkbox" id="csactive_ecginter" name="csactive_ecginter" value="{{priceData.ecgInterpretation.code}}" data-price="{{priceData.ecgInterpretation.price}}" class="fAdds">
+                  Interpretaci&oacute;n de primer electro <span id="ecgInterTitle" ><i class="fas fa-info-circle" style="color: #999;"></i> Que es?</span>
+                  <span style="opacity:0.5"> ({{priceData.ecgInterpretation.code}}, {{priceData.ecgInterpretation.currency}} {{priceData.ecgInterpretation.price}}, {{priceData.ecgInterpretation.isLocal ? 'L' : 'G'}})</span>
+                </label>
+              {% endif %}
+
+              {% for additional in priceData.additionals %}
+                <label class="checkbox">
+                  <input type="checkbox" id="{{'additional'~loop.index0}}" name="{{'additional'~loop.index0}}" value="{{additional.code}}" data-price="{{additional.price}}" class="fAdds">
+                  {{additional.name}}
+                  <span style="opacity:0.5"> ({{additional.code}}, {{additional.currency}} {{additional.price}}, {{additional.stock}}, {{additional.isLocal ? 'L' : 'G'}})</span>
+                </label>
+              {% endfor %}
+              <input type="hidden" id="additionals" name="additionals" value="{{priceData.additionals | length }}">
+          {% endif %} #}
+
+          {# PARTNER DEVICE  #}
+          <!--<h5 class="subtitle is-5" style="margin: 25px 0px 10px 0px;">Dispositivo extra para pareja <span style="color:red">(TODO: Modal)</span></h5>
+          <div class="control">
+            <label class="radio">
+              <input type="radio" name="partner_os">
+              Ninguno
+            </label>
+            <label class="radio">
+              <input type="radio" name="partner_os" value="CS-ACT-ANDR">
+              Apple iOS
+            </label>
+            <label class="radio">
+              <input type="radio" name="partner_os" value="CS-ACT-ANDR">
+              Android (con Micro-USB)
+            </label>
+            <label class="radio">
+              <input type="radio" name="partner_os" value="CS-ACT-ANDR">
+              Android (con USB-C)
+            </label>
+          </div>-->
+
+
+          {# PRICES #}
+          {% if priceData.totalStock >= 0 %}
+            <div class="price-tag">
+              <table>
+                <tr>
+                  <td class="price-tag-label" style="min-width: 129px;padding-top: 5px;">Registro inicial: <br><span style="font-size: 80%;">(pago único)</span> </td>
+                  <td style="padding-left:10px">
+                    <span style="font-size: 80%;">{{priceData.currency}}</span> 
+                    <span id="priceTag">{{priceData.price}}</span>
+                    {% if deliveryAvailable %}
+                      <span id="isRemoteLbl" style="color: #999;font-size: 14px;display:none"><a id="priceDisclaimerDetailsBtn" href="#">Más información</a></span>
+                    {% endif %}
+                    <span id="isLocalLbl" style="color: #999;font-size: 14px;display:none"></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span class="price-tag-label">Subscripci&oacute;n: </span>
+                  </td>
+                  <td style="padding-left:10px">
+                    <span style="font-size: 80%;">{{priceData.subscription.currency}}</span> {{priceData.subscription.price}} / mes
+                  </td>
+                </tr>
+              </table>
+            </div>
+
+            {# CHECK AVAILABILITY IN CURRENT COUNTRY #}
+            {% if not deliveryAvailable %}
+              {% include 'components/countriesRestriction.html.twig' with {'countryName': country.name, 'showMessage':true}%}
+            {% endif %}
+            <br>
+            
+            {# {% include 'components/electrodes-providers.html.twig' %} #}
+
+            {% if priceData.totalStock > 0 %}
+              <div class="columns is-multiline is-1">
+                <div class="column is-narrow">
+                  <button type="submit" class="button is-medium is-info" id="btnBuy">Comprar</button>
+                </div>
+                <div class="column ">
+                  {# CHECK COUPONS #}
+                  {% include 'components/couponsInfo.html.twig' %}
+                </div>
+              </div>
+            {% else %}
+              <div style="margin-top: 20px;color: #FF9800;">
+                <i class="fas fa-exclamation-triangle"></i>
+                Moment&aacute;neamente sin stock
+              </div>
+            {% endif %}
+
+            {% include 'components/price-tag-disclaimer.html.twig' %}
+          {% else %}
+            <div style="margin-top: 20px;color: #FF5722;">
+              <i class="fas fa-exclamation-triangle"></i>
+              Moment&aacute;neamente sin stock
+            </div>
+          {% endif %}
+        
+        </form>
+
+        
+
+      </div>
+
+    </div>
+
+    {# DESCRIPTION #}
+    <div class="columns white-box" style="margin: 20px 0px;">
+      <div class="column">
+        {# <h5 class="subtitle is-5" style="margin: 10px 0px;">El registro inicial de CardioSecur incluye:</h5>
+        <div class="content">
+          <ul>
+            <li>Su cable ECG de &uacute;ltima tecnolog&iacute;a, ultra ligero (50 grs)</li>
+            <li>48 o 50 electrodos descartables para realizar 12 registros</li>
+            <li>Un mes de tele-asistencia gratuita por médicos para que usted conozca el equipo y su corazón</li>
+            <li>Selección de su cardiólogo tratante para que continúe con los chequeos</li>
+            <li>Invitar a otros miembros de su familiar para usar el dispositivo <sup>*</sup></li>
+          </ul>
+        </div>
+        <h5 class="subtitle is-5" style="margin: 10px 0px;">La suscripci&oacute;n de CardioSecur incluye:</h5>
+        <div class="content">
+          <ul>
+            <li>La aplicaci&oacute;n m&oacute;vil de CardioSecur incluyendo todas las futuras actualizaciones</li>
+            <li>An&aacute;lisis personalizando de su registro de electrocardiograma incluyendo una acci&oacute;n recomendada</li>
+            <li>Almacenamiento ilimitado de sus electrocardiogramas en su cuenta personal</li>
+            <li>Intercambio de electrocardiogramas con su cardi&oacute;logo personal</li>
+            <li>Posibilidad de ver y exportar todas las lecturas de electrocardiogramas y sus resultados desde la aplicaci&oacute;n sin limitaciones</li>
+          </ul>
+        </div> #}
+        <h5 class="subtitle is-5" style="margin: 10px 0px;">El arrendamiento de CardioSecur Active incluye:</h5>
+        <div class="content">
+          <ul>
+            <li>Su cable ECG de última tecnología, ultra ligero (50 grs)</li>
+            <li>La aplicación móvil de CardioSecur incluyendo todas las futuras actualizaciones</li>
+            <li>50 electrodos descartables para realizar 12 registros</li>
+            <li>Invitar a otros miembros de su familiar para usar el dispositivo *</li>
+            <li>Análisis personalizando de su registro de electrocardiograma incluyendo una acción recomendada</li>
+            <li>Almacenamiento ilimitado de sus electrocardiogramas en su cuenta personal</li>
+            <li>Intercambio de electrocardiogramas con su cardiólogo personal</li>
+            <li>Posibilidad de ver y exportar todas las lecturas de electrocardiogramas y sus resultados desde la aplicación sin limitaciones</li>
+          </ul>
+        </div>
+        <div style="font-size:90%">
+        (*) Por cada miembro adicional la mensualidad tendrá un costo adicional (menor que el principal)
+        </div>
+      </div>
+    </div>
+
+    {# SPECS AND DETAILS #}
+    <div>
+
+      <div class="tabs is-boxed is-fullwidth" style="margin-bottom: 0px;">
+        <ul>
+          <li class="tab is-active" onclick="openTab(event,'tabShipping')"><a>Entrega</a></li>
+          <li class="tab" onclick="openTab(event,'tabCompat')"><a>Compatibilidad</a></li>
+          <li class="tab" onclick="openTab(event,'tabCancel')"><a>Cancelaci&oacute;n</a></li>
+          <li class="tab" onclick="openTab(event,'tabSpecs')"><a>Detalles t&eacute;cnicos</a></li>
+        </ul>
+      </div>
+      <div class="container section" style="margin: -1px 0px 30px 0px;border: 1px solid #DDD;padding: 10px;background-color: #FEFEFE;">
+        <div id="tabShipping" class="content-tab" >
+          <div class="content">
+            <ul>
+              <li>Tiempo de entrega: 48 hrs.</li>
+              <li>Entregas en Uruguay y Chile (los costos pueden variar)</li>
+              <li>M&eacute;todos de pago: tarjetas de cr&eacute;dito, d&eacute;bito (via MercadoPago)</li>
+              <li>El celular o tablet no est&aacute;n incluidos</li>
+            </ul>
+          </div>
+        </div>
+        <div id="tabCompat" class="content-tab" style="display:none">
+          <div class="content">
+            <h6 class="subtitle is-6">Apple iOS*</h6>
+            <p>Compatible con**:</p>
+            <ul>
+              <li>iPhone X, iPhone XS, iPhone XR, iPhone XS Max</li>
+              <li>iPhone 8, iPhone 8 Plus</li>
+              <li>iPhone 7, iPhone 7 Plus</li>
+              <li>​iPhone 6s, iPhone 6s Plus</li>
+              <li>iPhone 6, iPhone 6 Plus, iPhone SE</li>
+              <li>iPhone 5, iPhone 5s, iPhone 5c</li>
+            </ul>
+            <h6 class="subtitle is-6">Android</h6>
+            <p>CardioSecur Active est&aacute; disponible para los dispositivos con:</p>
+            <ul>
+              <li>Sistema Operativo Android 4.0 o mayor.</li>
+              <li>Soporte OTG (USB On-The-Go)</li> 
+            </ul>
+            <p>Compatible con:</p>
+            <ul>
+              <li><strong>Samsung:</strong> Galaxy S10e, Galaxy S10, Galaxy S10+, Galaxy S9, Galaxy S9+, Galaxy Note 8, Galaxy Note 9, Galaxy A9, Galaxy S8, Galaxy S8+, Galaxy A8, Galaxy S7, Galaxy S7 Edge, Galaxy S6, Galaxy S6 Edge, Galaxy S5, Galaxy S5 NEO, A5 (2016, 2017), Galaxy S4, Galaxy S3 (No disponible para Samsung Galaxy Mini)</li>
+              <li><strong>Huawei:</strong> Mate 20, Mate 20 lite, Mate 20 Pro, P20, P20 Pro, P20 lite, P9, P9 Plus, Mate S</li>
+              <li><strong>Sony:</strong> Xperia X, Xperia compact Z3, Xperia Z2</li>
+              <li><strong>Google:</strong> Pixel 1, Pixel 1 XL, Pixel 2, Pixel 2 XL, Pixel 3, Pixel 3 XL, Nexus 5</li>
+              <li><strong>LG:</strong> LG G3</li>
+              <li><strong>HTC:</strong> HTC One M8</li>
+              <li><strong>Xiaomi:</strong> Mi 8, Mi A1, Mi A2</li>
+            </ul>
+            <p>Modelos adicionales ser&aacute;n soportados en breve. Si su dispositivo no est&aacute; en lista 
+              por favor env&iacute;enos un correo a <a href="info@bambus.life">info@bambus.life</a>.</p>
+            <div style="font-size: 11px;color: #999;">
+              <p>* iPhone es una marca de Apple Inc., registrada en los EE. UU. y otros países. 
+                "Hecho para iPhone" significa que un accesorio electrónico ha sido diseñado para conectarse 
+                específicamente a un iPhone y que el desarrollador ha certificado que cumple con los estándares 
+                de rendimiento de Apple. Apple no es responsable del funcionamiento de este dispositivo ni de 
+                su cumplimiento de las normas de seguridad y reglamentarias. Tenga en cuenta que el uso de este 
+                accesorio con iPhone puede afectar el rendimiento inalámbrico.
+              </p>
+
+              <p>** También puede usar CardioSecur para Apple iOS en los siguientes dispositivos: iPad 4 (y superior), 
+              iPad Mini, iPad Air, iPad Pro de 12.9 pulgadas (1ra y 2da generación), iPad Pro de 10.5 pulgadas
+              y iPad Pro 9.7- pulgada. Tenga en cuenta que la aplicación está optimizada visualmente para dispositivos iPhone.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div id="tabCancel" class="content-tab" style="display:none">
+          <div class="content">
+            {# <ul>
+              <li>Usted puede cancelar instantáneamente su suscripci&oacute;n en cualquier mes, con sólo un pre-aviso de 30 días</li>
+              <li>En este caso, Bambus Life pausara sus funciones (uso del dispositivo, actualizaci&oacute;n 
+                de aplicaciones m&oacute;viles) hasta que eventualmente decida 
+                reactivar su suscripci&oacute;n. Si usted no cancela, su suscripci&oacute;n se renovar&aacute; 
+                autom&aacute;ticamente cada mes. El cable ECG de CardioSecur es de su propiedad. </li>
+            </ul> #}
+            El contrato de arrendamiento es de 1 año, luego del primer año usted puede cancelar su suscripción en 
+            cualquier mes, con solo un pre-aviso de 30 días y previa entrega del dispositivo.
+          </div>
+        </div>
+        <div id="tabSpecs" class="content-tab" style="display:none">
+          <div class="content">
+            <ul>
+              <li>Sistema ECG: bipolar, medidas desde 3 canales</li>
+              <li>Lecturas: ECG en reposo de 15 leads (I, II, III, aVR, aVL, aVF, V1-V6, V7-V9)</li>
+              <li>Tiempo de lectura: 10 segundos</li>
+              <li>Aproximadamente 2.000 lecturas de ECG por cada GB de memoria</li>
+              <li>Ritmo cardiaco: de 18 a 256 latidos por minutos</li>
+              <li>Ancho de banda: de 0,05 a 40 Hz, frecuencia de muestreo: 250 Hz</li>
+              <li>Optimizado para iPhone y tel&eacute;fonos inteligentes Android seleccionados</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+    {# ECG INTERPRETATION MODAL #}
+    <div class="modal" id="ecgInterModal">
+      <div class="modal-background" id="ecgInterModalBack"></div>
+      <div class="modal-content" style="background-color: #FFF;
+        text-align: center;
+        padding: 40px;
+        border-radius: 4px;
+        position:relative">
+        <h3 class="subtitle is-4">Interpretaci&oacute;n de Electro de Referencia</h3>
+        <p>Preparar y usar CardioSecur Active es f&aacute;cil, intuitivo, y puede hacerlo usted mismo</p><br>
+        <p>Si lo desea, sin embargo, le recomendamos realizar una evaluaci&oacute;n inicial de su 
+          electrocardiograma de referencia 
+          por solo {{priceData.ecgInterpretation.currency}} {{priceData.ecgInterpretation.price}}.</p><br>
+        <p>Nuestros cardi&oacute;logos evalúan e interpretan la lectura de electro de referencia, y recibirá una 
+        interpretación médica del mismo por correo electrónico dentro de las 24 horas (días hábiles).</p>
+        <button id="ecgInterModalCloseBtn" class="modal-close is-large" aria-label="close" style="position: absolute;"></button>
+      </div>
+    </div>
+
+    {# CONNECTOR HELPER MODAL #}
+    <div class="modal" id="connHelperModal">
+      <div class="modal-background" id="connHelperModalBack"></div>
+      <div class="modal-content" style="background-color: #FFF;
+        text-align: center;
+        padding: 40px;
+        border-radius: 4px;
+        position:relative">
+        <h3 class="subtitle is-4">Tipos de conectores</h3>
+        <p>Verifique el conector que tiene su t&eacute;lefono m&oacute;vil</p><br>
+        
+        <div>
+          <img src="{{asset('build/images/order/connhelper/conn-helper-light.png')}}" alt="Conector iPhone/iPad Lightning">
+          <p class="subtitle is-5">iPhone / iPad</p>
+          <p >(conector Lightning)</p>
+        </div>
+        <div>
+          <img src="{{asset('build/images/order/connhelper/conn-helper-mUSB.png')}}" alt="Conector Android micro-USB">
+          <p class="subtitle is-5">Android</p>
+          <p >(conector micro-USB)</p>
+        </div>
+        <div>
+          <img src="{{asset('build/images/order/connhelper/conn-helper-USBC.png')}}" alt="Conector Android USBC">
+          <p class="subtitle is-5">Android</p>
+          <p >(conector USB-C)</p>
+        </div>
+
+        <button id="connHelperModalCloseBtn" class="modal-close is-large" aria-label="close" style="position: absolute;"></button>
+      </div>
+    </div>
+
+
+
+  </div>
+
+{% endblock %}
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

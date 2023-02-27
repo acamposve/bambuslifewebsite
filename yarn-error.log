@@ -1,0 +1,60 @@
+Arguments: 
+  /usr/local/bin/node /usr/bin/yarn install
+
+PATH: 
+  /home/vagrant/.composer/vendor/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+
+Yarn version: 
+  1.21.0
+
+Node version: 
+  10.16.0
+
+Platform: 
+  linux x64
+
+Trace: 
+  Error: EPROTO: protocol error, symlink '../../../../browserslist/cli.js' -> '/home/vagrant/code/bambus-life-web-site/node_modules/@babel/compat-data/node_modules/.bin/browserslist'
+
+npm manifest: 
+  {
+      "author": "Tingelmar",
+      "version": "0.6.0",
+      "devDependencies": {
+          "bulma": "0.7.4",
+          "copy-webpack-plugin": "5.0.0",
+          "node-sass": "4.11.0",
+          "sass-loader": "7.0.1",
+          "webpack-notifier": "1.6.0"
+      },
+      "license": "UNLICENSED",
+      "private": true,
+      "scripts": {
+          "dev-server": "encore dev-server",
+          "dev": "encore dev",
+          "watch": "encore dev --watch",
+          "build": "encore production --progress",
+          "serverrun": "php bin/console server:run 0.0.0.0:8000",
+          "serve": "npm run watch & npm run serverrun"
+      },
+      "dependencies": {
+          "@symfony/webpack-encore": "0.22.4",
+          "bulma-accordion": "^2.0.1",
+          "bulma-calendar": "^6.0.7",
+          "bulma-o-steps": "^1.0.9",
+          "card": "^2.4.0",
+          "cleave.js": "^1.4.10",
+          "composer": "^4.1.0",
+          "gulp": "^4.0.0",
+          "gulp-cli": "^2.0.1",
+          "hashids": "^1.2.2",
+          "slim-select": "^1.23.0",
+          "validate.js": "^0.12.0"
+      }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

@@ -1,0 +1,144 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reservar | BambusLife{% endblock %}
+
+{% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {{ encore_entry_link_tags('resources-search') }}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('resources-search') }}
+{% endblock %}
+
+{% block body %}
+
+<div class="container" style="min-height: 600px;padding:10px">
+
+
+  {# ERROR MSG #}
+  {% if error_msg is defined and error_msg != NULL %}
+    <div class="columns is-8" style="">
+      <div class="column">
+        <article class="message is-danger">
+          <div class="message-body">
+            {{ error_msg | raw }}
+          </div>
+        </article>
+      </div>
+    </div>
+  {% else %}
+
+    <div class="columns is-mobile is-multiline">
+      {# BOOKING CARD #}    
+      <div class="column is-4-desktop is-12-tablet is-12-mobile">
+        <div class="appn-sum-box">
+          <div class="appn-sum-section">
+            <label>Especialidad</label>
+            <div class="appn-sum-title">{{appointment.serviceName}}</div>
+          </div>
+          <div class="appn-sum-section">
+            <label>Profesional</label>
+            <div class="appn-sum-title">{{appointment.practName}}</div>
+          </div>
+          <div class="appn-sum-section">
+            <label>Lugar</label>
+            <div class="appn-sum-title">{{appointment.locName}}</div>
+            <div class="appn-sum-subtitle">{{appointment.locAddress}}</div>
+            <div class="appn-badge"><i class="fas fa-info-circle"></i> Consulta virtual disponible</div>
+          </div>
+          <div class="appn-sum-section">
+            <label>Fecha</label>
+            <div class="appn-sum-title">
+              <div>{{appointment.dateNice}}</div>
+              <div>{{appointment.slotStartNice}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {# REASON AND TYPE #}
+      <div class="column is-8-desktop is-12-tablet is-12-mobile">
+
+        <div class="appwzrd-cntr">
+          <div class="appwzrd-header">
+            <div class="appwzrd-title">
+              <span class="icon">
+                <i class="fas fa-laptop-medical"></i>
+              </span>
+              <span>
+                Datos de la consulta
+              </span>
+            </div>
+            <div class="appwzrd-subtitle">
+              Seleccione el tipo de consulta y la razón de la misma
+            </div>
+          </div>
+
+          <form name="searchForm" id="searchForm" method="post" action="{{ path('preConfirmAppointment') }}" style="padding: 40px 20px;">
+
+            <div class="field ">
+              <label class="label">Tipo de consulta</label>
+              <div class="control">
+                <div class="select">
+                  <select name="appointmentType" id="appointmentType">
+                    <option value="video">Video llamada</option>
+                    <option value="presencial">Presencial</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label">Razón de la consulta</label>
+              <div class="control">
+                <textarea class="textarea" placeholder="Describa la causa por la que quiere consultar. Síntomas, dolores, control, etc." id="reason" name="reason" ></textarea>
+              </div>
+            </div>
+
+            <button class="button is-primary" type="submit" name="btnSend">
+              Continuar
+            </button>
+          </form>
+
+        </div>
+
+        {# Back #}
+        <div class="columns is-8" style="padding: 20px 20px 100px 20px;">
+          <div class="column">
+            <div class="control">
+              <a class="button is-white" 
+                 href="{{ path('selectAppointmentDate', {
+                    practId     : appointment.practitionerId, 
+                    practRoleId : appointment.practitionerRoleId, 
+                    serviceId   : appointment.serviceId,
+                    locationId  : appointment.locationId}) }}">
+                <span class="icon">
+                  <i class="fas fa-chevron-left"></i>
+                </span>
+                <span>Volver</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+    
+  {% endif %}
+
+
+</div>
+
+
+{% endblock %}
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

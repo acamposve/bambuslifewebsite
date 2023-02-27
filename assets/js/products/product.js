@@ -1,0 +1,1 @@
+import "../../css/pages/products/product.scss";

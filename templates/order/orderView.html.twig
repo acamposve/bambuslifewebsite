@@ -1,0 +1,265 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {{ encore_entry_link_tags('cart') }}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('order-view') }}
+{% endblock %}
+
+{% block title %}Orden | BambusLife{% endblock %}
+
+{% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+
+  {# ERROR MSG #}
+  {% if error_msg is defined and error_msg != NULL %}
+
+    <div class="columns is-8">
+      <div class="column">
+        <article class="message is-danger">
+          <div class="message-body">
+            {{ error_msg | raw }}
+          </div>
+        </article>
+      </div>
+    </div>
+
+  {% else %}
+
+    <div class="order-cntr">
+      {# ORDER HEADER #}
+      {% if first_confirmation %}
+        <div class="columns is-1">
+          <div class="column is-full" style="text-align: center; margin-bottom: 20px;">
+            <i class="far fa-check-circle" style="font-size: 45px;padding: 30px;color: #4CAF50;"></i>
+            <h4 class="title is-4">Su orden ha sido confirmada y recibida</h4>
+            <p>La estaremos procesando en los pr&oacute;ximos minutos y recibir&aacute; actualizaciones en su correo electr&oacute;nico.</p>
+          </div>
+        </div>
+      {% else %}
+        <div class="columns is-1" style="border-bottom: 1px solid #DDD;">
+          <div class="column is-full" style="position: relative;">
+            <i class="far fa-check-circle" style="font-size: 25px;color: #4CAF50;"></i>
+            <div style="position: absolute;top: 4px;padding-left: 35px;">
+              <h4 class="subtitle is-5" style="margin-bottom: 0px;">Orden #{{orderData.order_id}}</h4>
+              <p>{{orderData.status | orderStatus}}</p>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+
+      <div style="margin: 10px 0px 40px 0px;">
+        <ul class="steps is-narrow is-medium is-centered has-content-centered">
+          <li class="steps-segment {{ orderStatus == 'order_received' ? 'is-active' : '' }}">
+            <span class="steps-marker">
+              <span class="icon">
+                <i class="fas fa-file-invoice"></i>
+              </span>
+            </span>
+            <div class="steps-content">
+              <p class="heading" style="{{ orderStatus == 'order_received' ? 'color: #38b09d;' : '' }}">Orden recibida</p>
+            </div>
+          </li>
+          <li class="steps-segment {{ orderStatus == 'payment_approved' ? 'is-active' : '' }}">
+            <span class="steps-marker">
+              <span class="icon">
+                <i class="fas fa-credit-card"></i>
+              </span>
+            </span>
+            <div class="steps-content">
+              <p class="heading" style="{{ orderStatus == 'payment_approved' ? 'color: #38b09d;' : '' }}">Pago procesado.</p>
+            </div>
+          </li>
+          <li class="steps-segment {{ orderStatus == 'shipped' ? 'is-active' : '' }}">
+            <span class="steps-marker">
+              <span class="icon">
+                <i class="fas fa-shipping-fast"></i>
+              </span>
+            </span>
+            <div class="steps-content">
+              <p class="heading" style="{{ orderStatus == 'shipped' ? 'color: #38b09d;' : '' }}">En tr&aacute;nsito
+                {% if orderStatus == 'shipped' %}
+                <br><a href="https://www.logistics.dhl/uy-es/home/rastreo.html?tracking-id={{shippingData.AWBNumber}}">{{ shippingData.last_shipping_event.ServiceEvent.Description }}</a>
+                {% endif %}</p>
+            </div>
+          </li>
+          <li class="steps-segment {{ orderStatus == 'delivered' ? 'is-active' : '' }}">
+            <span class="steps-marker">
+              <span class="icon">
+                <i class="fas fa-check"></i>
+              </span>
+            </span>
+            <div class="steps-content">
+              <p class="heading" style="{{ orderStatus == 'delivered' ? 'color: #38b09d;' : '' }}">Orden completada</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      {# BILLING & SHIPPING & PAYMENT INFO #}
+      <div class="columns is-1" >
+        <div class="column is-half">
+          <div class="content">
+            <h4 class="subtitle is-5">Detalles de la orden</h4>
+            <table class="table table-borderless is-narrow table-thinpad" style="width: auto;font-size: 14px;color: #555;">
+              <tr>
+                <td>Nro. de orden</td>
+                <td>{{orderData.order_id}}</td>
+              </tr>
+              <tr>
+                <td>Fecha</td>
+                <td>{{orderData.transaction_date}}</td> 
+              </tr>
+              <tr>
+                <td>A nombre de</td>
+                <td>{{orderData.customer}}</td>
+              </tr>
+              <tr>
+                <td>Pago</td>
+                <td>
+                  {% if paymentData.docstatus == 0 %}
+                    <a id="payMoreInfo" href="">En progreso</a><br>
+                  {% else %}
+                    Completado<br>
+                  {% endif %}
+                  #{{paymentData.transaction_id}}<br>
+                  {# {{ paymentData.currency }} {{ paymentData.payment_to_show }} #}
+                  USD {{ paymentData.base_payment_to_show }}
+                  {% if paymentData.card_last_four %}
+                    <br>
+                    {{ paymentData.issuer_name }} (terminada en {{paymentData.card_last_four}})
+                  {% endif %}
+                </td>
+              </tr>
+            </table>
+            {% if statement_descriptor is defined %}
+              <span class="is-size-7">El pago se ver&aacute; como '{{paymentData.statement_descriptor}}' en su resumen de cuenta.</span>
+            {% endif %}
+          </div>
+        </div>
+        <div class="column is-half">
+          <div class="content">
+            <h4 class="subtitle is-5">Detalles de env&iacute;o</h4>
+            <p>{{shippingData.method}}</p>
+            <p>
+              {% if shippingData.address_type == 'Pickup' %}
+                A retirar de <span style="font-weight:600">{{shippingData.name}}</span><br>
+              {% else %}
+                A nombre de <span style="font-weight:600">{{shippingData.name}}</span><br>
+              {% endif %}
+              {{shippingData.address}} <br>
+              {{shippingData.city}}, {{shippingData.countryName}}<br>
+              CP {{shippingData.postalcode}}<br>
+              Entrega estimada: <span style="font-weight:600">{{orderData.delivery_date_to_show}}</span><br>
+              {% if shippingData.AWBNumber %}
+              Numero de tracking: <a href="https://www.logistics.dhl/uy-es/home/rastreo.html?tracking-id={{shippingData.AWBNumber}}">{{shippingData.AWBNumber}}</a>
+              {% endif %}
+            </p>
+          </div>
+        </div>
+      </div>
+      
+      {# ITEMS #}
+      <div class="columns is-1">
+        <div class="column is-full">
+          <div class="content">
+            <h4 class="subtitle is-5">Items de la orden</h4>
+            {{ render(controller('App\\Controller\\Components\\InvoiceLinesController::index', {'data': orderData, 'show_remove': FALSE})) }} 
+          </div>
+        </div>
+      </div>
+
+      {# INFO DE SUBSCRIPCION #}
+      {% if subscriptionData != NULL %}
+        <div class="columns is-1" style="border-top: 1px solid #DDD;">
+          <div class="column">
+            <div class="content">
+              <h4 class="subtitle is-5">Detalles de subscripci&oacute;n</h4>
+              <p style="margin: 0px;">Con la compra de los dispositivos y para que estos funcionen se debe abonar una suscripci&oacute;n mensual.</p>
+              <p>Las siguientes subscripciones ser&aacute;n cargadas a la misma tarjeta que utiliz&oacute; en esta compra.  </p>
+              {{ render(controller('App\\Controller\\Components\\SubscriptionLinesController::index', {'data': subscriptionData})) }} 
+            </div>
+          </div>
+        </div>
+      {% endif %}
+
+      {# SIGUIENTES PASOS #}
+      <div class="columns is-1" style="border-top: 1px solid #DDD;">
+        <div class="column">
+          {# <div class="content">
+            <h4 class="subtitle is-5">Siguientes pasos</h4>
+            <p>Mientras preparamos el env&iacute;o de su orden, conozca los siguientes pasos a seguir:</p>
+            <ul>
+              <li>
+                Una vez recibidos los dispositivos, descargue la aplicaci&oacute;n CardioSecur Active o 
+                CardioSecur Pro segun corresponda.
+              </li>
+              <li>
+                Complete el registro para cada dispositivo
+              </li>
+              <li>
+                Acceda a su cuenta de Bambus Life para activar y asignar los dispositivos.
+              </li>
+            </ul>
+          </div> #}
+          {% include 'components/next-steps.html.twig' %}
+        </div>
+      </div>
+
+      {# INFO DE CONTACTO #}
+      <div class="columns is-1" style="margin-top: 40px;">
+        <div class="column" style="text-align: center;background-color: #d0e7f1;">
+          <div style="font-size: 16px;font-weight: 600;">Env&iacute;e un mail a sales@bambus.life</div>
+          <div>por cualquier consulta o inquietud</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="columns is-8">
+      <div class="column" style="text-align: center;margin-bottom: 20px;">
+         <a class="button is-white" href="{{ path('profile') }}">
+            <span class="icon">
+              <i class="fas fa-chevron-left"></i>
+            </span>
+            <span>Volver</span>
+          </a>
+      </div>
+    </div>
+
+
+    {# MODAL FOR IN PROGRESS PAYMENT #}
+    <div class="modal" id="paymentModal">
+      <div class="modal-background" id="paymentModalBack"></div>
+      <div class="modal-content" style="background-color: #FFF;
+        text-align: center;
+        padding: 40px;
+        border-radius: 4px;
+        position:relative">
+        <i class="fas fa-file-invoice-dollar" style="font-size: 40px;color: #999;margin-bottom: 20px;"></i>
+        <h3 class="subtitle is-4">Pago en revisi&oacute;n</h3>
+        <p>Por cuestiones de seguridad, estamos revisando su transacci&oacute;n de pago.</p>
+        <p>Si el mismo es aprobado le enviaremos una confirmaci&oacute;n a su correo electr&oacute;nico.</p>
+        <p>Este proceso puede tomar varios minutos o algunas horas</p>
+        <button id="paymentModalCloseBtn" class="modal-close is-large" aria-label="close" style="position: absolute;"></button>
+      </div>
+    </div>
+
+  {% endif %}
+
+</div>
+
+{% endblock %}
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

@@ -1,0 +1,129 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Datos de Contacto | BambusLife{% endblock %}
+
+{% block description %}Aquí encontrará un formulario de contacto, con mucho gusto le contestaremos lo antes posible. También puede enviarnos un correo a info@bambus.life.{% endblock %}
+
+{% block keywords %}Datos de Contacto, Contacto{% endblock %}
+
+{% block header %}
+  {{ include('components/header.html.twig') }}
+  {{ include('components/captcha.html.twig') }}
+{% endblock %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {{ encore_entry_link_tags('contact-form') }}
+{% endblock %}
+
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('contact-form') }}
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+
+  <div class="columns white-box is-desktop" style="min-height: 600px;">
+    <div class="column is-5-desktop is-12-mobile">
+      <div>
+        <picture>
+          <source srcset="{{asset('build/images/login.webp')}}" type="image/webp">
+          <source srcset="{{asset('build/images/login.png')}}" type="image/png">
+          <img src="{{asset('build/images/login.png')}}" alt="loginImg">
+        </picture>
+      </div>
+    </div>
+    {% if flagForm == 0 %}
+    <div class="column is-7-desktop is-12-mobile">
+      <form name="contactForm" id="contactForm" method="post" action="{{ path('contact_form_post') }}" style="padding: 40px 20px;">
+        <h1 class="subtitle is-3">Formulario de Consulta</h1>
+        
+        {% if error %}
+          <article class="message is-danger">
+            <div class="message-body">
+              {{ error }}
+            </div>
+          </article>
+        {% endif %}
+          
+        <div class="field">
+          <label class="label">Nombre completo</label>
+          <div class="control">
+            <input class="input " type="text"  value=""
+                    name="name" id="name" required
+                    placeholder="Ingrese su nombre completo" >
+          </div>
+          <div class="messages"></div>
+        </div>
+
+        <div class="field">
+          <label class="label">Email</label>
+          <div class="control">
+            <input class="input" type="email" 
+                    name="email" id="email" required
+                    placeholder="Ingrese su email" >
+          </div>
+          <div class="messages"></div>
+        </div>
+
+        <div class="field">
+          <label class="label">Tel&eacute;fono</label>
+          <div class="control">
+            <input class="input " type="text"  value=""
+                    name="phone" id="phone" required
+                    placeholder="Ingrese su numero de telefono" >
+          </div>
+          <div class="messages"></div>
+        </div>
+
+        <div class="field">
+          <label class="label">Mensaje</label>
+          <div class="control">
+            <textarea class="textarea"  value="" rows="5"
+                    name="message" id="message" required
+                    placeholder="Ingrese un mensaje" ></textarea>
+          </div>
+          <div class="messages"></div>
+        </div>
+
+        <div class="field">
+          <p class="control">
+            <button class="button is-primary" type="submit" id="btnSend" name="btnSend">
+              Enviar
+            </button>
+          </p>
+        </div>
+
+        <input type="hidden" name="recaptcha_response" id="recaptchaResponse">
+
+        <div style="font-size: 11px;color: #AAA;">
+          Este sitio est&aacute; protegido por reCAPTCHA y se aplica la
+          <a href="https://policies.google.com/privacy" style="color: #AAA;text-decoration: underline;">Pol&iacute;tica de Privacidad</a> y
+          <a href="https://policies.google.com/terms"  style="color: #AAA;text-decoration: underline;">T&eacute;rminos y Condiciones</a> de Google.
+        </div>
+
+      </form>
+    </div>
+    {% endif %}
+    {% if flagForm == 1 %}
+      <h3 class="subtitle is-3" style="padding: 40px 20px; color: green;">Enviado correctamente. Gracias por contactarnos.</h3>
+    {% endif %}
+    {% if flagForm == 2 %}
+      <h3 class="subtitle is-3" style="padding: 40px 20px; color: red;">Ocurri&oacute; un error. Intente contactarnos m&aacute;s tarde.</h3>
+    {% endif %}
+    {% if flagForm == 3 %}
+      <h3 class="subtitle is-3" style="padding: 40px 20px; color: red;">Invalid captcha.</h3>
+    {% endif %}
+  </div>
+
+</div>
+
+{% endblock %}
+
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

@@ -1,0 +1,45 @@
+<div style="border: 1px solid #DDD;padding: 10px 10px 25px 10px;text-align: center;border-radius: 5px;">
+    <div style="margin: 20px 0px;">
+      El pago se efectuar&aacute; en <strong>{{currencyName}}: {{currency}} {{amountToPayToShow}}</strong> 
+    </div>
+    <form action="{{callbackUrl}}" method="POST" id="formPayment">
+      <script
+        src="{{scriptSrc}}"
+        data-public-key="{{apiKey}}"
+        data-transaction-amount="{{amountToPay}}"
+        {# data-summary-product-label="4x productos" #}
+        data-summary-product="{{amountToPay}}"
+        {# data-summary-discount-label="Descuento 10%"
+        data-summary-discount="65.4"
+        data-summary-shipping="10"
+        data-summary-taxes="10" #}
+        {% if mp_customer_id %}
+        data-customer-id="{{mp_customer_id}}"
+        {% endif %}
+        {% if mp_customer_cards %}
+        data-card-ids="{{mp_customer_cards}}"
+        {% endif %}
+      >
+      </script>
+    </form>
+    <div style="padding: 20px 0px;">
+      <!-- Unordered List -->
+      <ul>
+        {% for paymentMethod in paymentMethods %}
+        <li class="paymentmethod-{{paymentMethod['css_class']}} paymentmethod-large">{{paymentMethod['name']}}</li>
+        {% endfor %}
+      </ul>
+    </div>
+</div>
+
+<div>
+  <div>Usar estas tarjetas</div>
+  <div><strong>Uruguay</strong></div>
+  <div>Master: 5161 4413 1585 2061</div>
+  <div>Visa: 4157 2362 1173 6486</div>
+  <div><strong>Chile</strong></div>
+  <div>Master: 5416 7526 0258 2580</div>
+  <div>Visa: 4168 8188 4444 7115</div>
+</div>
+
+<link rel="stylesheet" type="text/css" href="{{asset('build/css/payment-methods.' ~ country ~ '.css')}}">

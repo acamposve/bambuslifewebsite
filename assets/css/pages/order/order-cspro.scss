@@ -1,0 +1,11 @@
+@import "/order.scss";
+
+.cspro-option{
+  margin-bottom: 20px;
+  font-size: 16px;
+  color: #444;
+  
+  > label > div {
+    padding-left: 18px;
+  }
+}

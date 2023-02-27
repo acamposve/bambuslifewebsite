@@ -1,0 +1,233 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {{ encore_entry_link_tags('practitioner-register') }}
+{% endblock %}
+
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('practitioner-register') }}
+{% endblock %}
+
+{% block title %}Registro de Médicos | BambusLife{% endblock %}
+{% block description %}
+Ingrese al Portal de Gestión Médica
+{% endblock %}
+
+{% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+  {{ include('components/captcha.html.twig') }}
+{% endblock %}
+
+{% block body %}
+
+
+<div class="container" style="background-color: #FEFEFE;padding: 10px;">
+
+  {# REGISTER #}
+  
+    <h5 class="title is-5">Regístrese</h5>
+    <p>Usted como médico puede registrarse en forma gratuita y le asignaremos un usuario para que utilice el 
+    EHR Express en forma libre. Pretendemos que con su experiencia y las necesidades especiales de su
+    profesión, nos ayude a seguir evolucionando el mismo. Por otro lado, si selecciona "Atender Online",
+    será elegible por pacientes para realizar encuentros agendados, todo esto en un acuerdo de ingreso
+    adicional para usted, que se acordará con el paciente por esos servicios de tele-asistencia.</p>
+
+
+    {% if error %}
+      <article class="message is-danger">
+        <div class="message-body">
+          {{ error }}
+        </div>
+      </article>
+    {% endif %}
+
+    <form name="userInfoRegister" id="userInfoRegister" method="post" action="{{path('insertPractitioner')}}">
+      
+      <br><br>
+
+      <div class="columns is-8 is-variable is-multiline is-mobile">
+        
+        <!--datos personales-->
+        <div class="column is-6-desktop is-6-tablet is-12-mobile">
+          <h5 class="title is-5">Datos personales</h5>
+
+          <div class="field">
+            <label class="label">Nombre</label>
+            <div class="control">
+              <input class="input" type="text" placeholder="Ingrese su nombre" name="firstname" 
+                  id="firstname" required>
+            </div>
+            <div class="messages"></div>
+          </div>
+          <div class="field">
+            <label class="label">Apellido</label>
+            <div class="control">
+              <input class="input" type="text" placeholder="Ingrese su apellido" name="lastname" id="lastname" required>
+            </div>
+            <div class="messages"></div>
+          </div>
+          <div class="field">
+            <div class="label">
+              <label class="control">Tel&eacute;fono</label>
+              <div class="control">
+                <input type="text" class="input" id="phone" name="phone" required>
+              </div>
+              <div class="messages"></div>
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Correo electronico</label>
+            <div class="control">
+              <input class="input" type="email" placeholder="Ingrese su corre electronico" name="email" id="email" required>
+            </div>
+            <div class="messages"></div>
+          </div>
+          <div class="field">
+            <label class="label">Contrase&ntilde;a</label>
+            <div class="control">
+              <input class="input" type="password" name="password" id="password" required>
+            </div>
+            <div class="messages"></div>
+          </div>
+          <div class="field">
+            <label class="label">Especialidad</label>
+            <div class="control">
+              <select name="specialities[]" id="specialities" multiple>
+                {% for speciality in specialities %}
+                  <option value="{{speciality.id}}" >{{speciality.name}}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="messages"></div>
+          </div>
+          <div class="field">
+            <label class="label">Pais</label>
+            <div class="control">
+              <div class="select">
+                <select name="country" id="country">
+                  {% for country in countries %}
+                    <option value="{{country.code}}"
+                    {% if navCountry == country.code %} selected {% endif %}>{{country.name}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+            <div class="messages"></div>
+          </div>
+        </div>
+
+        <!--datos de organizacion-->
+        <div class="column is-6-desktop is-6-tablet is-12-mobile">
+          <h5 class="title is-5">Organizaci&oacute;n</h5>
+
+          <div class="field">
+            <label class="label">Nombre de la organizaci&oacute;n</label>
+            <div class="control">
+              <input type="text" class="input" id="organizationName" name="organizationName" required>
+            </div>
+            <div class="messages"></div>
+          </div>
+
+          <div class="field">
+            <label class="label">Tel&eacute;fono</label>
+            <div class="control">
+              <input type="text" class="input" id="orgphone" name="orgphone" required>
+            </div>
+            <div class="messages"></div>
+          </div>
+
+          <div class="field">
+            <label class="label">Direcci&oacute;n de organizaci&oacute;n</label>
+            <div class="control">
+              <input type="text" class="input" id="organizationAddress" name="organizationAddress" required>
+            </div>
+            <div class="messages"></div>
+          </div>
+
+          <div class="field">
+            <div class="label">
+              <div class="control">
+                <label for="isVirtual" class="checkbox">
+                  <input type="checkbox" class="checkbox" id="isVirtual" name="isVirtual">
+                    Atender online
+                </label>
+              </div>
+              <div class="messages"></div>
+            </div>
+            
+          </div>
+
+            <!--datos de localidad-->
+            <br><br>
+            <h5 class="title is-5">Localidad donde atiende</h5>
+
+          <div class="field">
+            <label class="label">Nombre de localidad</label>
+            <div class="control">
+              <input type="text" class="input" id="locationName1" name="locationName1" required>
+            </div>
+            <div class="messages"></div>
+          </div>
+
+          <div class="field">
+            <label class="label">Ciudad en la que atiende</label>
+            <div class="control">
+              <select id="selCity" name="selCity">
+              </select>
+              <input type="hidden" id="cityId" name="cityId">
+              <input type="hidden" id="cityName" name="cityName">
+            </div>
+            <div class="messages"></div>
+          </div>
+
+          <div class="field">
+            <label class="label">Direcci&oacute;n</label>
+            <div class="control">
+              <input type="text" class="input" id="locationAddress1" name="locationAddress1" required>
+            </div>
+            <div class="messages"></div>
+          </div>
+
+      
+        </div>
+
+      </div>
+      <br><br>
+      <div class="columns">
+        <div class="column is-12">
+          <div class="field">
+            <div class="control">
+              <label class="checkbox">
+                <input type="checkbox" name="terms" id="terms">
+                Acepto los <a href="{{ path('doc_conditions') }}">términos y condiciones</a>
+              </label>
+            </div>
+            <div class="messages"></div>
+          </div>
+          <div class="control">
+            <button type="submit" class="button is-primary" id="btnRegister">Registrarme y continuar</button>
+          </div>
+        </div>
+      </div>
+
+      <input type="hidden" name="recaptcha_response" id="recaptchaResponse">
+
+      <div style="font-size: 11px;color: #AAA;">
+        Este sitio est&aacute; protegido por reCAPTCHA y se aplica la
+        <a href="https://policies.google.com/privacy" style="color: #AAA;text-decoration: underline;">Pol&iacute;tica de Privacidad</a> y
+        <a href="https://policies.google.com/terms"  style="color: #AAA;text-decoration: underline;">T&eacute;rminos y Condiciones</a> de Google.
+      </div>
+
+    </form>
+  
+
+</div>
+
+{% endblock %}
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

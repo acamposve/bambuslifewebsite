@@ -1,0 +1,358 @@
+// Google Font
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,700');
+
+// Variables
+$blue: #7db4d8;
+$blue-light: #7db4d8;
+$green: #9fad62;
+$grey-dark: #1d1d1d;
+$grey: #4d4d4d;
+$grey-light: #706f6f;
+$grey-lighter: #e5e5e5;
+$family-sans-serif: "Roboto",
+"Arial",
+sans-serif;
+$primary: $blue;
+$mobile: 768px;
+
+
+// Layout ------------------------------------------------
+.covid {
+    margin-bottom: 0.25rem !important;
+    background-color: $blue !important;
+
+    .column {
+        display: flex;
+        align-items: center;
+
+        @media screen and (max-width: $mobile) {
+            padding: 0.5rem 1rem 0;
+        }
+    }
+
+    .hero-body {
+        padding: 1rem 3rem;
+
+        @media screen and (max-width: $mobile) {
+            text-align: center !important;
+            padding: 1rem;
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .circle-logo{
+          background-color: #FFF;
+          border-radius: 50%;
+          width: 120px;
+          height: 120px;
+          padding-top: 14px;
+          text-align: center;
+        }
+
+        a{
+          color: #7db4d8 !important;
+        }
+    }
+
+    .column {
+        @media screen and (max-width: $mobile) {
+            text-align: center !important;
+        }
+
+        img {
+            @media screen and (max-width: $mobile) {
+                margin: 0 auto;
+            }
+        }
+
+        .button {
+            @media screen and (max-width: $mobile) {
+                margin: 0 auto 1rem;
+            }
+
+            &.is-white {
+                color: $blue;
+
+                &:active {
+                    color: $blue;
+                }
+            }
+        }
+
+        p {
+            font-weight: 500;
+
+            @media screen and (max-width: $mobile) {
+                width: 100%;
+                margin-bottom: 0;
+            }
+
+            strong {
+                font-size: 1.25rem;
+                color: white;
+                // border-left: 1px solid white;
+                padding-left: 3rem;
+                line-height: 60px;
+
+                @media screen and (max-width: $mobile) {
+                    border-left: none;
+                    padding-left: 0;
+                    line-height: 35px;
+                }
+            }
+        }
+    }
+}
+
+.webinar {
+    line-height: 0;
+    background-color: #b5c085;
+    text-align: center;
+}
+
+// --------------------------------------------------------
+.hero-bg {
+    padding: 1rem 3rem;
+    background: url("../../../images/hero-bg.jpg") no-repeat center center;
+    background-size: cover;
+
+    @media screen and (max-width: $mobile) {
+        padding: 1rem;
+    }
+
+    .hero-body {
+        padding: 5rem 1.5rem !important;
+
+        @media screen and (max-width: $mobile) {
+            padding: 1rem !important;
+        }
+
+        .title {
+            font-weight: normal;
+            font-size: 3rem;
+            line-height: 1.2;
+            margin-bottom: 3rem;
+
+            @media screen and (max-width: $mobile) {
+                font-size: 2.5rem;
+            }
+
+            .highlight {
+                background-color: $blue;
+                padding: 0 0.5rem;
+            }
+        }
+
+        .subtitle {
+            font-weight: 400;
+            font-size: 2rem;
+            color: $grey !important;
+
+            .txt-blue {
+                font-weight: 600;
+                color: #5e86a1;
+            }
+        }
+    }
+}
+
+// ------------------------------------------------
+.description {
+    padding-bottom: 0 !important;
+
+    .column {
+        .columns {
+            &:first-child {
+                padding-bottom: 3rem;
+
+                @media screen and (max-width: $mobile) {
+                    padding-bottom: 0;
+                }
+            }
+        }
+
+        &.is-three-quarters {
+            padding-right: 0;
+            background: url("../../../images/dispositivo01.png") no-repeat top 12px right;
+
+            @media screen and (min-width: $mobile) and (max-width: 1025px) {
+                background: url("../../../images/dispositivo01.png") no-repeat top -31px right;
+                background-size: contain;
+            }
+
+            @media screen and (max-width: $mobile) {
+                background: none;
+                padding-right: 0.75rem;
+            }
+
+            img {
+                @media screen and (max-width: $mobile) {
+                    max-width: 70%;
+                }
+            }
+        }
+
+        &:nth-child(2) {
+            padding-left: 0;
+
+            @media screen and (max-width: $mobile) {
+                padding-left: 0.75rem;
+            }
+        }
+    }
+
+    video {
+        position: absolute;
+        top: 69px;
+        left: 14px;
+
+        @media screen and (min-width: $mobile) and (max-width: 1025px) {
+            top: 58px;
+            left: 11px;
+            width: 68%;
+        }
+    }
+
+    .text {
+        padding: 1rem 4rem 0;
+
+        @media screen and (max-width: $mobile) {
+            padding: 0;
+        }
+    }
+
+    p {
+        margin-bottom: 1rem;
+    }
+
+    .logos {
+        border-top: 1px solid $grey-lighter;
+        padding-top: 2rem;
+
+        img {
+            max-height: 50px !important;
+        }
+
+        @media screen and (max-width: $mobile) {
+            border-top: none;
+
+            img {
+                max-width: 90% !important;
+            }
+
+            .column {
+                display: inline-block;
+                padding: 0 1%;
+                text-align: center;
+                width: 23%;
+
+                &:first-child {
+                    padding-left: .75rem;
+                    width: 27%;
+                }
+            }
+        }
+    }
+}
+
+// ------------------------------------------------
+.steps {
+    background-image: url("../../../images/step-bg.png");
+    background-size: contain;
+
+    @media screen and (max-width: $mobile) {
+        background: none;
+    }
+
+    .column {
+        min-height: 400px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        position: relative;
+        padding: 0;
+        margin: 0;
+
+        &.step1 {
+            background-image: url("../../../images/step1.png");
+            background-position: center left;
+        }
+
+        &.step2 {
+            background-image: url("../../../images/step2.png");
+            background-position: center center;
+        }
+
+        &.step3 {
+            background-image: url("../../../images/step3.png");
+            background-position: center right;
+        }
+
+        @media screen and (max-width: $mobile) {
+            background-position: center center !important;
+        }
+    }
+}
+
+// ------------------------------------------------
+.services {
+    .column {
+        padding: 0 !important;
+
+        @media screen and (max-width: $mobile) {
+            padding: 0.75rem !important;
+        }
+
+        h5 {
+            background: no-repeat left top transparent;
+            background-size: 28px;
+            line-height: 40px;
+            font-size: 1.5rem;
+            font-weight: 300;
+            border-bottom: 1px solid $blue;
+            margin: 2rem;
+
+            @media screen and (max-width: $mobile) {
+                margin: 2rem 0;
+            }
+
+            &.doctor {
+                background-image: url("../../../images/doctor.svg");
+            }
+
+            &.family {
+                background-image: url("../../../images/family.svg");
+            }
+        }
+
+        img {
+            max-height: 300px;
+        }
+
+        ul {
+            text-align: left;
+            padding: 2rem 3rem;
+            min-height: 350px;
+
+            @media screen and (max-width: $mobile) {
+                padding: 1rem 0;
+                min-height: auto;
+            }
+
+            li {
+                background: url("../../../images/bullet.svg") no-repeat left 8px transparent;
+                background-size: 8px;
+                padding-left: 18px;
+                margin-bottom: 0.5rem;
+            }
+        }
+    }
+}
+
+
+// Logos ------------------------------------------------
+.logos {
+    img {
+        max-height: 32px;
+    }
+}

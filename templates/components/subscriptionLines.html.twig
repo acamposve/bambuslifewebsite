@@ -1,0 +1,63 @@
+<table class="table table-borderless  table-thinpad cart">
+  {# Subscription items #}
+  {% for subs in data.subscriptions %}
+    <tr>
+      <td>
+        <div>{{subs.name}}</div>
+        {% if subs.fees is defined and subs.fees > 0 %}
+          <div>{{subs.fees}} cuotas</div>
+        {% endif %}
+      </td>
+      <td>x{{subs.qty}}</td>
+      <td style="text-align:right;">
+        {% if subs.price == 0 %}
+          Incluído
+        {% else %}
+          <span style="font-size: 80%;color: #888;">{{subs.currency}}</span> 
+          {{subs.totalToShow}}
+        {% endif %}
+      </td>
+    </tr>
+  {% endfor %}
+
+  {# DISCOUNTS #}
+  {% if data.discount is defined and data.discount != NULL and data.discount.service_discount is defined and data.discount.service_discount != NULL and data.discount.service_discount.discountAmount > 0 %}
+    <tr>
+      <td style="text-align:right;border: 0px;" colspan="2">
+        Descuento<br>
+        <i style="color: #777;">{{data.discount.name}}</i>
+      </td>
+      <td style="border-top: 1px solid #DDD;text-align:right;">
+        <span style="font-size: 80%;color: #888;">USD</span> 
+        -{{data.discount.service_discount.discountAmountToShow}}
+      </td>
+    </tr>
+  {% endif %}
+
+  {# Subscription taxes #}
+  {% if data.taxesSubscriptions is defined and data.taxesSubscriptions != NULL and data.taxesSubscriptions.taxes_amount > 0 %}
+    <tr>
+      <td style="text-align:right;border: 0px;" colspan="2">Subtotal:</td>
+      <td style="border-top: 1px solid #DDD;text-align:right;">
+        <span style="font-size: 80%;color: #888;">{{data.totalSubscriptions.currency}}</span>
+        {{data.totalSubscriptions.priceToShow}}
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align:right;border: 0px;" colspan="2">Impuestos:</td>
+      <td style="text-align:right;">
+        <span style="font-size: 80%;color: #888;">{{data.taxesSubscriptions.currency}}</span> 
+        {{data.taxesSubscriptions.taxes_amountToShow}}
+      </td>
+    </tr> 
+  {% endif %}
+
+  <tr>
+    <td class="cart-total-lbl" colspan="2">Total por mes:</td>
+    <td class="cart-total-val">
+      <span>{{data.grand_totalSubscriptions.currency}}</span> 
+      {{data.grand_totalSubscriptions.priceToShow}}
+      </td>
+  </tr>
+
+</table>

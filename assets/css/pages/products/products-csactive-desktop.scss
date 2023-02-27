@@ -1,0 +1,39 @@
+@media (min-width: 1024px) {
+  .app-presentation {
+    width: 200px;
+    height: 404px;
+  }
+
+  .app-presentation-background {
+    width: 200px;
+    height: 404px;
+  }
+
+  .app-presentation-video {
+    top: 46px;
+    left: 13px;
+  }
+
+  .line-blue:before {
+    content: '';
+    position: absolute;
+    left: -66px;
+    width: 780px;
+    top: 14px;
+    height: 2px;
+    background: #38B09D;
+    z-index: -1;
+  }
+
+  .step-img {
+    height: 250px;
+  }
+
+  .circle-blue {
+    margin: 10% auto;
+  }
+
+  .when-to-use-text {
+    height: 100px;
+  }
+}

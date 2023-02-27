@@ -1,0 +1,196 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('products') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('products') }}
+    {{ include('sd/breadcrumbs.html.twig', { 'items': [{'name':'Productos',"url":path('order_index')},{'name':'CardioSecur Active',"url":path('prod_csactive')},{'name':'Respuesta a síntomas',"url":path('prod_receive_a_diagnosis_for_chest_pain')}] }) }}
+{% endblock %}
+
+{% block title %}Recibir un diagnóstico por dolor en el pecho | BambusLife{% endblock %}
+
+{% block description %}La frecuencia e intensidad de los síntomas no siempre provee una indicación de la gravedad. Cuando uno ve a un médico, los síntomas tienden a desaparecen{% endblock %}
+
+{% block keywords %}Diagnostico por dolor en el pecho, dolor en el pecho, dolor, pecho{% endblock %}
+
+{% block header %}
+    {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block body %}
+  <div class="container">
+
+    <div class="columns is-multiline is-mobile" style="margin: 1% 0">
+      <div class="column is-full">
+        <h1 class="subtitle is-2">La respuesta a los síntomas poco claros</h1>
+        <p class="subtitle is-5">La frecuencia e intensidad de los síntomas no siempre proporcionan una indicación de la gravedad de un evento cardíaco. Cuando uno ve a un médico, los síntomas generalmente desaparecen</p>
+      </div>
+    </div>
+
+    <section class="section white-box" style="margin-top:90px;padding:10px 0px 30px 0px">
+      <div class="column is-full has-text-centered">
+          <h2 class="subtitle is-3" style="margin-bottom:30px">Captura síntomas en un ECG</h2>
+      </div>
+      <div class="column is-full has-text-centered">
+        <p class="is-size-5">
+          Sólo un ECG clínico de 12 derivaciones registró el momento en que aparecen los síntomas puede proporcionar claridad. El ECG de 15 derivaciones de CardioSecur se puede usar en cualquier parte de su teléfono inteligente y va más allá para brindarle una respuesta inmediata para saber si es necesaria la atención médica.
+          Los datos de ECG registrados se pueden enviar de forma automática o manual a su médico, quien luego puede alcanzar un diagnóstico concluyente y una terapia apropiada para la iniciativa.
+        </p>
+      </div>
+    </section>
+      
+    <section class="section"  style="margin-top:90px">
+      <div class="column is-full has-text-centered">
+        <p class="subtitle is-3" style="margin-bottom:30px">Signos comunes de problemas del corazón</p>
+      </div>
+      <div class="columns is-multiline is-mobile">
+        <div class="column is-half-desktop is-full-tablet is-full-mobile has-text-centered">
+          <picture>
+            <source srcset="{{asset('build/images/products/csactive/symptoms-heart.webp')}}" type="image/webp">
+            <source srcset="{{asset('build/images/products/csactive/symptoms-heart.png')}}" type="image/png">
+            <img src="{{asset('build/images/products/csactive/symptoms-heart.png')}}" alt="symptomsHeart">
+          </picture>
+        </div>
+        <div class="column is-half-desktop is-full-tablet is-full-mobile">
+          <div class="columns is-multiline is-mobile">
+            <div class="column is-full content">
+              <p class="is-size-5">Algunos síntomas típicos de un evento cardíaco incluyen:</p>
+              <ul>
+                <li>Palpitaciones fuertes o corazón acelerado</li>
+                <li>Estrechez o dolor punzante en el pecho que se irradia al brazo izquierdo</li>
+                <li>Sudoración intensa o ,sudores fríos“</li>
+                <li>Respiración dificultosa</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="column is-half-desktop is-full-tablet is-full-mobile has-text-centered">
+          <picture>
+            <source srcset="{{asset('build/images/products/csactive/symptoms-heart-woman.webp')}}" type="image/webp">
+            <source srcset="{{asset('build/images/products/csactive/symptoms-heart-woman.png')}}" type="image/png">
+            <img src="{{asset('build/images/products/csactive/symptoms-heart-woman.png')}}" alt="symptomsHeart">
+          </picture>
+        </div>
+        <div class="column is-half-desktop is-full-tablet is-full-mobile">
+          <div class="columns is-multiline is-mobile">
+            <div class="column is-full content">
+              <p class="is-size-5">Los síntomas de un ataque cardíaco para una mujer pueden variar mucho de aquellos para un hombre y, por lo tanto, no siempre se reconocen de inmediato. Además de los "síntomas clásicos", como dificultad para respirar o dolor en el tórax, las mujeres a menudo experimentan:</p>
+              <ul>
+                <li>Dolor abdominal superior</li>
+                <li>Dolor en el hombro, la espalda o la columna vertebral</li>
+                <li>Dolor en la pierna o la mandíbula inferior</li>
+                <li>Náuseas y vómitos</li>
+                <li>Mareos, problemas de circulación y fatiga severa</li>
+              </ul>
+            </div>
+          </div>
+        </div
+      </div>
+    </section>
+
+    <section class="section white-box"  style="margin-top:90px">
+      <div class="column is-full has-text-centered">
+        <p class="subtitle is-3" style="margin-bottom:30px">Momento óptimo de diagnóstico y sin tiempos de espera</p>
+      </div>
+      <div class="column is-full">
+        <div class="columns is-multiline is-mobile">
+          <div class="column is-half-desktop is-full-tablet is-full-mobile has-text-centered">
+            <p class="is-size-5">
+              Una cita con un cardiólogo a menudo se combina con un tiempo de espera largo. Al ver finalmente al cardiólogo, los síntomas del paciente a menudo se han resuelto, lo que hace imposible establecer un diagnóstico.
+            </p>
+            <p class="is-size-5">
+              Los sistemas de ECG a largo plazo y los registradores de eventos, que a menudo son las únicas opciones disponibles para un médico, tienen sus limitaciones de diagnóstico (ECG de 1 derivaciones) y se registran solo durante el período de unos pocos días. Esto a menudo no es suficiente para llegar a un diagnóstico. Si los síntomas aparecen más tarde, la historia comienza de nuevo para el paciente. Este círculo frustrante puede ocurrir muchas veces e incluso puede durar varios años. Al mismo tiempo, el peligro de que crezca un nuevo evento no reconocido que podría tener graves efectos en la salud.
+            </p>
+          </div>
+          <div class="column is-half-desktop is-full-tablet is-full-mobile has-text-centered">
+            <picture>
+              <source srcset="{{asset('build/images/products/csactive/user-1.webp')}}" type="image/webp">
+              <source srcset="{{asset('build/images/products/csactive/user-1.png')}}" type="image/png">
+              <img src="{{asset('build/images/products/csactive/user-1.png')}}" alt="user1">
+            </picture>
+            <p class="is-size-5">"Sin CardioSecur Active todavía estaría sin diagnosticar".</p>
+            <p class="is-size-6">Carina, 61</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="margin-top:90px;padding:10px 0px 30px 0px">
+      <div class="column is-full has-text-centered">
+        <p class="subtitle is-3">ECG con recomendación directa para actuar<p>
+        <h3 class="subtitle is-5">
+          Con CardioSecur Active, los pacientes pueden registrar un ECG clínico de 12 derivaciones cuando se presentan los síntomas. No hay necesidad de largas listas de espera o salas de espera llenas.
+          Reciba una recomendación inmediata de actuar después de cada lectura para saber si necesita buscar atención médica o no.
+          También puede compartir los profundos datos de ECG de 12 derivaciones desde el momento en que los síntomas ocurrieron con su médico para que él pueda determinar la causa real de sus síntomas e iniciar una terapia efectiva. 
+        </h3>
+      </div>
+      <div class="column is-full">
+        <div class="columns is-multiline is-mobile">
+          <div class="column is-one-quarter-desktop is-full-tablet is-full-mobile">
+            <div class="circle-blue line-blue">0</div>
+            <div class="mobile-image-container has-text-centered">
+              <picture>
+                <source srcset="{{asset('build/images/products/csactive/step-0.webp')}}" type="image/webp">
+                <source srcset="{{asset('build/images/products/csactive/step-0.png')}}" type="image/png">
+                <img src="{{asset('build/images/products/csactive/step-0.png')}}"  alt="Attach the electrodes to four prominent points of the body" class="step-img">
+              </picture>
+              <p class="is-size-5">Los síntomas ocurren</p>
+              <p>&nbsp;</p>
+            </div>
+          </div>
+          <div class="column is-one-quarter-desktop is-full-tablet is-full-mobile">
+            <div class="circle-blue line-blue">1</div>
+            <div class="mobile-image-container has-text-centered">
+              <picture>
+                <source srcset="{{asset('build/images/products/csactive/step-1.webp')}}" type="image/webp">
+                <source srcset="{{asset('build/images/products/csactive/step-1.png')}}" type="image/png">
+                <img src="{{asset('build/images/products/csactive/step-1.png')}}"  alt="Attach the electrodes to four prominent points of the body" class="step-img">
+              </picture>
+              <p class="is-size-5">Conecte el cable</p>
+              <p>&nbsp;</p>
+            </div>
+          </div>
+          <div class="column is-one-quarter-desktop is-full-tablet is-full-mobile">
+            <div class="circle-blue">2</div>
+            <div class="mobile-image-container has-text-centered">
+              <picture>
+                <source srcset="{{asset('build/images/products/csactive/step-2.webp')}}" type="image/webp">
+                <source srcset="{{asset('build/images/products/csactive/step-2.png')}}" type="image/png">
+                <img src="{{asset('build/images/products/csactive/step-2.png')}}"  alt="Attach the electrodes to four prominent points of the body" class="step-img">
+              </picture>
+              <p class="is-size-5">Comience una lectura</p>
+              <p>&nbsp;</p>
+            </div>
+          </div>
+          <div class="column is-one-quarter-desktop is-full-tablet is-full-mobile">
+            <div class="circle-blue">3</div>
+            <div class="mobile-image-container has-text-centered">
+              <picture>
+                <source srcset="{{asset('build/images/products/csactive/step-3.webp')}}" type="image/webp">
+                <source srcset="{{asset('build/images/products/csactive/step-3.png')}}" type="image/png">
+                <img src="{{asset('build/images/products/csactive/step-3.png')}}"  alt="Attach the electrodes to four prominent points of the body" class="step-img">
+              </picture>
+              <p class="is-size-5">Reciba feedback</p>
+              <p>&nbsp;</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="column is-full has-text-centered">
+        <br>
+          <a class="button is-medium is-primary" href="{{ path('order_csactive') }}">Ver oferta</a>
+        <br>
+      </div>
+    </section>
+
+  </div>
+
+{% endblock %}
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

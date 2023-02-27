@@ -1,0 +1,35 @@
+@media (max-width: 787px) {
+  .footer{
+    font-size: 18px;
+
+    .flogo {
+      justify-content: center;
+    }
+
+    .column {
+      padding: 20px;
+      text-align: center;
+    }
+
+    ul {
+      text-align: center;
+
+      li {
+        margin-top: 12px;
+
+        a {
+          font-size: 14px;
+        }
+      }
+    }
+
+    .copyright {
+      padding: 10px;
+      font-size: 16px;
+    }
+
+    h4 {
+      text-align: center;
+    }
+  }
+}

@@ -1,0 +1,318 @@
+<div id="loginCntr" style="padding: 20px;min-height: 500px;" data-acm="{{allowChangeEmail}}"> 
+
+  <div style="text-align: center;margin-top: 20px;">
+    <h2 class="title is-5">{{title}}</h2>
+  </div>
+
+  <div id="loginErrMsg" style="display:none;background-color: #FFEBEE;padding: 5px 15px;margin: 10px auto;border: 1px solid #EF9A9A;border-radius: 3px;color: #FF5722;max-width:400px;">
+  </div>
+
+  <form name="userInfoLogin" id="userInfoLogin" method="post" action=""  >
+    <div id="loginStep1" style="max-width:400px;margin: 30px auto 30px auto;{% if email %}display:none{% endif %}">
+      <div class="columns">
+        <div class="column is-12">
+          <div class="field">
+            <label class="label">Ingrese su correo electr&oacute;nico</label>
+            <div class="control">
+              <input class="input" type="email" placeholder="Correo electr&oacute;nico" 
+                name="loginEmail" id="loginEmail" novalidate="novalidate" 
+                {% if not allowChangeEmail %}
+                  autocomplete=off
+                {% endif %}
+                {% if email %}
+                  value="{{email}}"
+                {% endif %}
+                >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="columns is-multiline is-mobile">
+        <div class="column is-6">
+        </div>
+        <div class="column is-6" style="justify-content: flex-end;display: flex;">
+          <div class="control">
+            <button class="button is-primary" type="button" id="step1next">Siguiente</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="loginStep2" style="max-width:400px;margin: 30px auto 30px auto;{% if email != NULL and mailExists %}display:block{%else%}display:none{% endif %}">
+      <div class="columns is-multiline is-mobile">
+        <div class="column is-12" style="text-align:center">
+          <div id="selectedEmail" style="background-color: #FAFAFA;display: inline-block;padding: 2px 15px;border: 1px solid #DDD;border-radius: 50px;color: #777;font-size: 14px;cursor: pointer;">
+            {% if email %}{{email}}{% endif %}
+          </div>
+        </div>
+      </div>
+      <div class="columns is-multiline is-mobile">
+        <div class="column is-12">
+          <div class="field">
+            <label class="label">Ingrese su contraseña</label>
+            <div class="control">
+              <input class="input" type="password" placeholder="Ingrese su contraseña" 
+                name="loginPassword" id="loginPassword" novalidate="novalidate">
+            </div>
+          </div>
+        </div>
+        {% if showRememberMe %}
+          <div class="column is-12" style="padding: 15px 12px;">
+            <div class="field">
+              <div class="control">
+                <label class="checkbox">
+                  <input type="checkbox" name="_remember_me" id="_remember_me">
+                  Recu&eacute;rdame
+                </label>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+        <div class="column is-12" style="padding: 0px 12px;">
+          <div class="field">
+            <div class="control">
+              <a href="{{path('forgot_password')}}">
+                Olvid&eacute; mi contrase&ntilde;a
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="columns is-multiline is-mobile">
+        <div class="column is-6" >
+          <div class="control">
+            {% if allowChangeEmail %}
+              <button class="button is-text" type="button" id="step2back">Volver</button>
+            {% endif %}
+          </div>
+        </div>
+        <div class="column is-6" style="justify-content: flex-end;display: flex;">
+          <div class="control">
+            <button class="button is-primary" type="button" id="step2next">{{loginBtnText}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div id="loginStep0" style="margin: 30px auto 30px auto;{% if email != NULL and not mailExists %}display:block{%else%}display:none{%endif%}">
+    <div style="text-align: center;margin: 20px;">
+      <h2 class="title is-5">Complete sus datos</h2>
+    </div>
+    <form name="userInfoRegister" id="userInfoRegister" method="post" action="{{ path('checkout_userinfo_post', {'mode': '2'}) }}"  >
+      <div class="columns is-multiline is-mobile">
+        <div class="column is-6-desktop is-6-tablet is-12-mobile">
+          <div class="field">
+            <label class="label">Nombre</label>
+            <div class="control">
+              <input class="input" type="text" placeholder="Ingrese su nombre" name="firstname" 
+                  id="firstname" required>
+            </div>
+            <div class="messages"></div>
+          </div>
+        </div>
+        <div class="column is-6-desktop is-6-tablet is-12-mobile">
+          <div class="field">
+            <label class="label">Apellido</label>
+            <div class="control">
+              <input class="input" type="text" placeholder="Ingrese su apellido" name="lastname" id="lastname">
+            </div>
+            <div class="messages"></div>
+          </div>
+        </div>
+        <div class="column is-6-desktop is-6-tablet is-12-mobile">
+          <div class="field">
+            <label class="label">Correo electronico</label>
+            <div class="control">
+              <input class="input" type="email" placeholder="Ingrese su corre electronico" name="email" id="email" readonly style="border: 0px;background-color: #EEE;"
+              {% if email %}
+                value="{{email}}"
+              {% endif %}
+              >
+            </div>
+            <div class="messages"></div>
+          </div>
+        </div>
+        <div class="column is-6-desktop is-6-tablet is-12-mobile">
+          <div class="field">
+            <label class="label">Pais</label>
+            <div class="control">
+              <div class="select">
+                <select name="regcountry" id="regcountry">
+                  {% for country in countries %}
+                    <option value="{{country.code}}"
+                    {% if navCountry == country.code %} selected {% endif %}>{{country.name}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="column is-6-desktop is-6-tablet is-12-mobile">
+          <div class="field has-addons has-addons-centered" style="flex-direction: column;">
+            <label class="label">Documento</label>
+            <div style="flex-direction: row;display: flex;">
+              <p class="control">
+                <span class="select">
+                  <select id="customerDocumentType" name="customerDocumentType">
+                    <option>CI</option>
+                    <option>DNI</option>
+                    <option>Pasaporte</option>
+                    <option>Otro</option>
+                  </select>
+                </span>
+              </p>
+              <p class="control">
+                <input class="input" type="text" id="customerDocumentId" name="customerDocumentId">
+              </p>
+            </div>
+            <div class="messages"></div>
+          </div>
+        </div>
+        <div class="column is-6-desktop is-6-tablet is-12-mobile">
+          <div class="field">
+            <label class="label">Ciudad</label>
+            <div class="control">
+              <div >
+                <select id="selCity" name="selCity">
+                </select>
+                <input type="hidden" id="cityId" name="cityId">
+                <input type="hidden" id="cityName" name="cityName">
+              </div>
+            </div>
+            <div class="messages"></div>
+          </div>
+        </div>
+        <div class="column is-6-desktop is-6-tablet is-12-mobile">
+          <div class="field">
+            <label class="label">Dirección</label>
+            <div class="control">
+              <input class="input" type="text" placeholder="Dirección de residencia" name="address" id="address">
+            </div>
+            <div class="messages"></div>
+          </div>
+        </div>
+        <div class="column is-6-desktop is-6-tablet is-12-mobile">
+          <div class="field">
+            <label class="label">Teléfono</label>
+            <div class="control">
+              <input class="input" type="text" placeholder="Teléfono de contacto" name="phonenumber" id="phonenumber">
+            </div>
+            <div class="messages"></div>
+          </div>
+        </div>
+      </div>
+      <div class="columns is-multiline is-mobile" style="border-top: 2px solid #BBB;margin-top: 0px;">
+        <div class="column is-6-desktop is-6-tablet is-12-mobile">
+          <div class="field">
+            <label class="label">Contrase&ntilde;a</label>
+            <div class="control">
+              <input class="input" type="password" name="password" id="password">
+            </div>
+            <div class="messages"></div>
+          </div>
+        </div>
+        <div class="column is-6-desktop is-6-tablet is-12-mobile">
+          <div class="field">
+            <label class="label">Repetir contrase&ntilde;a</label>
+            <div class="control">
+              <input class="input" type="password" name="password2" id="password2">
+            </div>
+            <div class="messages"></div>
+          </div>
+        </div>
+      </div>
+      {% if showBillAsOption %}
+        <div class="columns is-multiline is-mobile" style="border-top: 2px solid #BBB;margin-top: 0px;">
+          <div class="column is-12-desktop is-12-tablet is-12-mobile">
+            <div class="field">
+              <div class="control">
+                <label class="checkbox">
+                  <input type="checkbox" name="invoiceAsCompany" id="invoiceAsCompany">
+                  Facturar como empresa
+                </label>
+                <div style="font-size: 13px;color: #888;margin-left: 17px;">
+                  Si necesita que la factura de la compra y de la subscripción estén a nombre de una empresa, habilítelo aquí y complete los datos
+                </div>
+              </div>
+              <div class="messages"></div>
+            </div>
+          </div>
+          <div class="column is-6-desktop is-6-tablet is-12-mobile" style="display:none">
+            <div class="field">
+              <label class="label">Nombre fiscal</label>
+              <div class="control">
+                <input class="input" type="text" name="invoiceCompanyName" id="invoiceCompanyName">
+              </div>
+              <div class="messages"></div>
+            </div>
+          </div>
+          <div class="column is-6-desktop is-6-tablet is-12-mobile" style="display:none">
+            <div class="field">
+              <label class="label">Número fiscal (RUT)</label>
+              <div class="control">
+                <input class="input" type="text" name="invoiceCompanyRUT" id="invoiceCompanyRUT">
+              </div>
+              <div class="messages"></div>
+            </div>
+          </div>
+          <div class="column is-6-desktop is-6-tablet is-12-mobile" style="display:none">
+            <div class="field">
+              <label class="label">Dirección de la empresa</label>
+              <div class="control">
+                <input class="input" type="text" name="invoiceCompanyAddress" id="invoiceCompanyAddress">
+              </div>
+              <div class="messages"></div>
+            </div>
+          </div>
+          <div class="column is-6-desktop is-6-tablet is-12-mobile" style="display:none">
+            <div class="field">
+              <label class="label">Estado/departamento</label>
+              <div class="control">
+                <input class="input" type="text" name="invoiceCompanyState" id="invoiceCompanyState">
+              </div>
+              <div class="messages"></div>
+            </div>
+          </div>
+          <div class="column is-6-desktop is-6-tablet is-12-mobile" style="display:none">
+            <div class="field">
+              <label class="label">Ciudad</label>
+              <div class="control">
+                <input class="input" type="text" name="invoiceCompanyCity" id="invoiceCompanyCity">
+              </div>
+              <div class="messages"></div>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+      <div class="columns is-multiline is-mobile" style="border-top: 2px solid #BBB;margin-top: 0px;">
+        <div class="column is-12-desktop is-12-tablet is-12-mobile">
+          <div class="field">
+            <div class="control">
+              <label class="checkbox">
+                <input type="checkbox" name="terms" id="terms">
+                Acepto los <a href="{{ path('terms_conditions') }}">Terminos y Condiciones</a> y la <a href="{{ path('privacy_policy') }}">Política de Privacidad</a>
+              </label>
+            </div>
+            <div class="messages"></div>
+          </div>
+        </div>
+      </div>
+      <div class="columns">
+        <div class="column is-6">
+          <div class="control">
+            {% if allowChangeEmail %}
+              <button class="button is-text" type="button" id="step0back">Volver</button>
+            {% endif %}
+          </div>
+        </div>
+        <div class="column is-6" style="justify-content: flex-end;display: flex;">
+          <div class="control">
+            <button class="button is-primary" type="submit" id="step0next">{{registerBtnText}}</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+</div>

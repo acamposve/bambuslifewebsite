@@ -1,0 +1,156 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Médicos para atención de sus observaciones | BambusLife{% endblock %}
+
+{% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('patient-practitioner') }}
+{% endblock %}
+
+{% block body %}
+
+<div class="container white-box" style="min-height: 600px;padding:10px">
+
+  <div class="columns">
+    <div class="column is-full">
+      <h3 style="margin-top: 20px;" class="subtitle is-3">Médicos para diagnósticos de sus electrocardiogramas</h3>
+      <div class="content">
+        <p>
+          El médico tratante es elegido por usted con el fin de que reciba los exámenes suyos que 
+          tengan alguna alteración que en general son alertas originadas por los dispositivos de 
+          color amarillo o rojo. En caso de que el médico de su preferencia no esté en la lista, 
+          nosotros contactaremos al médico para hacer la consulta y si está dispuesto a recibir 
+          sus análisis. Igualmente, en caso que no elija ningún médico, el servicio incluye 
+          un soporte médico, para todo lo 
+          referente a segunda opinión de los análisis. 
+        </p>
+        <p>
+          Los servicios prestados por el Ecosistema 
+          Colaborativo de Salud BambusLife no son de emergencia ni urgencia, en caso de que ese sea su 
+          caso le recomendamos que asista inmediatamente a su institución médica o llame a su servicio de emergencia.
+        </p>
+        <br>
+      </div>
+    </div>
+  </div>
+
+  {# ERROR MSG #}
+  {% if err_message is defined and err_message != NULL %}
+    <div class="columns is-8" style="">
+      <div class="column">
+        <article class="message is-danger">
+          <div class="message-body">
+            {{ err_message | raw }}
+          </div>
+        </article>
+      </div>
+    </div>
+  {% endif %}
+
+  {# MSG #}
+  {% if message is defined and message != NULL %}
+    <div class="columns is-8" style="">
+      <div class="column">
+        <article class="message">
+          <div class="message-body">
+            {{ message | raw }}
+          </div>
+        </article>
+      </div>
+    </div>
+  {% endif %}
+
+  <div style="max-width: 500px;margin: 0 auto;">
+
+    {% for service in services %}
+      <div class="columns" style="border-bottom: 1px solid #E5E5E5;">
+        <div class="column is-5-desktop is-5-tablet is-12-mobile">
+          <div style="font-weight: 600;" id="serviceName-{{loop.index}}">{{service.name}}</div>
+          <div style="font-style: italic;">{{service.speciality}}</div>
+        </div>
+        <div class="column is-5-desktop is-5-tablet is-12-mobile">
+          <div>{{service.organizationName}}</div>
+          <div>
+            {% if service.locationAddress is defined and service.locationAddress!="" %}
+              {{service.locationAddress}}
+              {% if service.city and service.city | length > 0 %}
+                , {{service.city}}, {{service.countryAdmin1}}, {{service.countryName}}
+              {% endif %}
+            {% else %}
+              Solo virtual
+            {% endif %}
+          </div>
+        </div>
+        <div class="column is-2-desktop  is-2-tablet is-12-mobile" style="align-self: center;text-align: right;">
+          <a class="assignPractitioner" data-index="{{loop.index}}" href="{{ path('selectPatientPractitioner', {practitionerId: service.id, orgId: service.organizationId}) }}">Asignar</a>
+        </div>
+      </div>
+    {% else %}
+      <div style="text-align: center;padding: 10px;background-color: #FFF;border-radius: 5px;">
+        <i class="fas fa-calendar-minus" style="font-size: 30px;color: #999;margin-bottom: 20px;"></i>
+        <div>En estos momentos no hay médicos disponibles.</div>
+      </div>
+      {# <p>No hay médicos tratantes en la lista, será atendido por el soporte médico 24x7 para realizarle recomendaciones.</p> #}
+    {% endfor %}
+
+  </div>
+
+  {# <div>
+
+    <table class="table" style="width: 100%;background-color:transparent">
+      {% for service in services %}
+        <tr style=" list-style-type: none;">
+          <td>
+            {{service.name}}
+          </td>
+          <td>
+            {{service.speciality}}
+          </td>
+          <td>
+            {% if service.locationAddress is defined and service.locationAddress!="" %}
+              {{service.locationAddress}}, {{service.city}}
+            {% else %}
+              Virtual
+            {% endif %}
+          </td>
+          <td>
+            {{service.organizationName}}
+          </td>
+          <td>
+            <a href="{{ path('selectPatientPractitioner', {practitionerId:service.id}) }}">Asignar</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </table>    
+        
+  </div> #}
+
+  <div class="modal" id="confirmModal">
+    <div class="modal-background" id="confirmModalBack"></div>
+    <div class="modal-card">
+      <section class="modal-card-body">
+        <h3 class="subtitle is-4">Confirmación de asignación</h3>
+        ¿Confirma que desea seleccionar y asignar a <span style="font-weight:bold" id="confirmModalPractName"></span> como su médico tratante ?
+        <div style="background-color: #EEE;border: 1px solid #CCC;margin-top: 20px;padding: 6px;border-radius: 3px;">
+          <i class="fas fa-exclamation-circle" style="color: #2196F3;"></i> 
+          El médico tratante recibirá sus observaciones para atenderlas pero en caso de que no esté disponible
+          o demore más de 24 horas, el informe será realizado por el servicio de soporte.
+        </div>
+      </section>
+      <footer class="modal-card-foot" style="justify-content: flex-end;">
+        <button class="button is-link" id="confirmModalOK">Asignar</button>
+        <button class="button" id="confirmModalCancel">Cancelar</button>
+      </footer>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

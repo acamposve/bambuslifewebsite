@@ -1,0 +1,153 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Carrito de compras | BambusLife{% endblock %}
+
+{% block description %}Resumen de su compra{% endblock %}
+
+{% block keywords %}Carrito , Compras, Carrito de compras{% endblock %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {{ encore_entry_link_tags('cart') }}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('cart') }}
+{% endblock %}
+
+
+{% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+
+  {# ERROR MSG #}
+  {% if error_msg is defined and error_msg != NULL %}
+
+    <div class="columns is-8">
+      <div class="column">
+        <article class="message is-danger">
+          <div class="message-body">
+            {{ error_msg | raw }}
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <div style="background-color: #FFF;margin: 20px;padding: 10px;">
+      <div class="columns is-1" style="padding:20px">
+        <div class="column is-full">
+          <div class="content">
+            <h4 class="subtitle is-5">Item no agregado</h4>
+            <p>No fue posible agregar el item al carrito en este momento.</p>
+            <div style="margin: 20px 0px;">
+              <a class="button is-white is-primary" href="{{ path('order_index') }}">
+                <span>Ver productos</span>
+                <span class="icon">
+                  <i class="fas fa-chevron-right"></i>
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  {% else %}
+
+    {% if info_msg is defined and info_msg != NULL and info_msg | length > 0 %}
+      <div class="columns is-8">
+        <div class="column">
+          <article class="message is-success">
+            <div class="message-body">
+              {{ info_msg | raw }}
+            </div>
+          </article>
+        </div>
+      </div>
+    {% endif %}
+
+    <div class="cart-cntr">
+      
+      {# ITEMS #}
+      <div class="columns is-1 cart-items">
+        <div class="column is-full">
+          <div class="content">
+            <h1 class="subtitle is-4">Carrito</h1>
+            {% if details is defined and details.items is defined %}
+              {{ render(controller('App\\Controller\\Components\\InvoiceLinesController::index', {'data': details, 'show_remove': TRUE})) }} 
+            {% else %}
+              <div style="padding: 20px;margin: 50px 0px;text-align: center;">
+                <h4 class="subtitle is-6">Su carrito est&aacute; vac&iacute;o.</h4>
+                <div>Visite la secci&oacute;n de productos para ver las opciones.</div>
+                <div style="margin: 20px 0px;">
+                  <a class="button is-white is-primary" href="{{ path('order_index') }}">
+                    <span>Ver productos</span>
+                    <span class="icon">
+                      <i class="fas fa-chevron-right"></i>
+                    </span>
+                  </a>
+                </div>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      {% if details is defined and details.subscriptions is defined and details.subscriptions | length > 0 %}
+        {# INFO DE SUBSCRIPCION #}
+        <div class="columns is-1" style="border-top: 1px solid #DDD;">
+          <div class="column">
+            <div class="content">
+              <h4 class="subtitle is-5">Detalles de subscripci&oacute;n</h4>
+              <p style="margin: 0px;font-size: 95%;">Con la compra de los dispositivos y para que estos funcionen se debe abonar una suscripci&oacute;n mensual.</p>
+              <p style="font-size: 95%;">Las siguientes subscripciones ser&aacute;n cargadas a la misma tarjeta que utiliz&oacute; en esta compra.  </p>
+              {{ render(controller('App\\Controller\\Components\\SubscriptionLinesController::index', {'data': details})) }} 
+            </div>
+          </div>
+        </div>
+
+      {% endif %}
+
+      {# BUTTONS #}
+      {% if details is defined and details.items is defined %}
+        <div class="columns is-multiline">
+          <div class="column is-12-mobile is-4-desktop is-offset-2-desktop">
+            <div class="control">
+              <a class="button is-white is-fullwidth-mobile" href="{{ path('order_index') }}">
+                <span class="icon">
+                  <i class="fas fa-chevron-left"></i>
+                </span>
+                <span>Continuar comprando</span>
+              </a>
+            </div>
+          </div>
+          <div class="column is-12-mobile is-4-desktop">
+            <div class="control" style="text-align: right;">
+              <a class="button is-white is-primary is-fullwidth-mobile" href="{{ path('checkout_userinfo') }}">
+                <span>Confirmar compra</span>
+                <span class="icon">
+                  <i class="fas fa-chevron-right"></i>
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+
+    </div>
+
+
+  {% endif %}
+
+</div>
+
+{% endblock %}
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

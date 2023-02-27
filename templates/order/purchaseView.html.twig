@@ -1,0 +1,202 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {{ encore_entry_link_tags('cart') }}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('order-view') }}
+{% endblock %}
+
+{% block title %}Orden de compra | BambusLife{% endblock %}
+
+{% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+
+  <div class="order-cntr">
+    {# ERROR MSG #}
+    {% if error_msg is defined and error_msg != NULL %}
+
+      <div class="columns is-8">
+        <div class="column">
+          <article class="message is-danger">
+            <div class="message-body">
+              {{ error_msg | raw }}
+            </div>
+          </article>
+        </div>
+      </div>
+
+    {% else %}
+
+      {% if first_confirmation %}
+        <div class="columns">
+          <div class="column is-full" style="text-align: center; margin-bottom: 20px;">
+            <i class="far fa-check-circle" style="font-size: 45px;padding: 30px;color: #4CAF50;"></i>
+            <h4 class="title is-4">Su orden de compra ha sido confirmada y recibida</h4>
+            <p>La estaremos procesando en los pr&oacute;ximos minutos y recibir&aacute; actualizaciones en su correo electr&oacute;nico.</p>
+          </div>
+        </div>
+      {% endif %}
+
+      {# INTL ORDER #}
+      <div class="columns is-1" style="margin: 0px;">
+      
+        {% if intlOrder %}
+          <div class="column is-6-desktop is-12-mobile">
+            <div style="padding: 10px;border: 1px solid #bbdefb;">
+              <div class="columns" >
+                <div class="column is-8" style="background-color: #BBDEFB;display: flex;align-items: center;">
+                  <h4 class="subtitle is-5">Orden: {{intlOrder.name}}</h4>
+                </div>
+                <div class="column is-4" style="background-color: #BBDEFB;text-align:right">
+                  <a class="button is-link" href="{{ path('order_view', {orderId: intlOrder.hashedName}) }}">Ver detalles</a>
+                </div>
+              </div>
+              <div class="columns" >
+                <div class="column">
+                  <div class="content">
+                    {% for item in intlOrder.items %}
+                      <div>{{item.qty}} x {{item.item_name}}</div>
+                    {% endfor %}
+                  </div>
+                  {% if intlOrder.shipping_rule and intlOrder.shipping_rule | length > 0 %}
+                    <div style="border-top: 1px solid #DDD;padding: 5px 0px;">
+                      Metodo de envio: {{intlOrder.shipping_rule}}
+                    </div>
+                  {% endif %}
+                  <div  style="border-top: 1px solid #DDD;padding: 5px 0px;font-size:16px">
+                    Total: USD <span style="font-weight:bold">{{intlOrder.base_grand_total}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+
+        {# LOCAL ORDER #}
+        {% if localOrder %}
+          <div class="column is-6-desktop is-12-mobile">
+            <div style="padding: 10px;border: 1px solid #bbdefb;">
+              <div class="columns" >
+                <div class="column is-8" style="background-color: #BBDEFB;display: flex;align-items: center;">
+                  <h4 class="subtitle is-5">Orden: {{localOrder.name}}</h4>
+                </div>
+                <div class="column is-4" style="background-color: #BBDEFB;text-align:right">
+                  <a class="button is-link" href="{{ path('order_view', {orderId: localOrder.hashedName}) }}">Ver detalles</a>
+                </div>
+              </div>
+              <div class="columns" >
+                <div class="column">
+                  <div class="content">
+                    {% for item in localOrder.items %}
+                      <div>{{item.qty}} x {{item.item_name}}</div>
+                    {% endfor %}
+                  </div>
+                  {% if localOrder.shipping_rule and localOrder.shipping_rule | length > 0 %}
+                    <div style="border-top: 1px solid #DDD;padding: 5px 0px;">
+                      Metodo de envio: {{localOrder.shipping_rule}}
+                    </div>
+                  {% endif %}
+                  <div  style="border-top: 1px solid #DDD;padding: 5px 0px;font-size:16px">
+                    Total: USD <span style="font-weight:bold">{{localOrder.base_grand_total}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+
+      </div>
+
+      {# CUSTOMER AND PAYMENT #}
+      <div class="columns is-1" style="margin: 30px 0px;">
+        <div class="column is-6-desktop is-12-mobile">
+          <div style="margin: 6px;border: 1px solid #DDD;padding: 6px 10px;height: 100%;">
+            <h2 class="subtitle is-5">Informaci&oacute;n de pago</h2>
+            {{customer.customer_name}}<br>
+            {{customer.email_id}}<br>
+            {% if shippingAddress.phone is defined and shippingAddress.phone | length > 0 %}
+              {{shippingAddress.phone}}
+            {% endif %}
+            {% if paymentEntry %}
+              <div style="color: #4CAF50;">Pago procesado</div>
+              <strong>USD {{paymentEntry.base_paid_amount}}</strong><br>
+              Transacci&oacute;n: {{paymentEntry.name}}-{{paymentEntry.hhub_payment_trxid}}
+            {% else %}
+              <div style="color: #2196F3;">Pago en proceso</div>
+            {% endif %}
+          </div>
+        </div>
+        <div class="column is-6-desktop is-12-mobile">
+          <div style="margin: 6px;border: 1px solid #DDD;padding: 6px 10px;height: 100%;">
+            <h2 class="subtitle is-5">Detalles de env&iacute;o</h2>
+            {% if shippingAddress.address_type == 'Pickup' %}
+              A retirar de <strong>{{shippingAddress.address_recipient}}</strong><br>
+            {% else %}
+              A nombre de <strong>{{shippingAddress.address_recipient}}</strong><br>
+            {% endif %}
+            {{shippingAddress.address_line1}}
+            {% if shippingAddress.address_line2 is defined and shippingAddress.address_line2 | length > 0 %}
+              {{shippingAddress.address_line2}}<br>
+            {% endif %}
+            {% if shippingAddress.pincode  is defined and shippingAddress.pincode | length > 0 %}
+              {{shippingAddress.pincode}},&nbsp;
+            {% endif %}
+            {% if shippingAddress.city  is defined and shippingAddress.city | length > 0 %}
+              {{shippingAddress.city}},&nbsp;
+            {% endif %}
+            {% if shippingAddress.country  is defined and shippingAddress.country | length > 0 %}
+              {{shippingAddress.country}},&nbsp;
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      {# NEXT STEPS (FOR PATIENT) #}
+      {% if user.patient is defined and user.patient.id is defined %}
+        <div class="columns is-1" style="margin: 30px 0px;">
+          <div class="column is-12-desktop is-12-mobile">
+            <div style="margin: 6px;border: 1px solid #DDD;padding: 6px 10px;height: 100%;text-align: center;">
+              <h2 class="subtitle is-5">Siguientes pasos</h2>
+              <p>Mientras aguarda el arribo de su compra, por favor complete sus datos cl&iacute;nicos para facilitar la atenci&oacute;n de los m&eacute;dicos en la realizaci&oacute;n de/ informes y asistencias.</p>
+              <p style="margin: 20px 0px 10px 0px;">
+                <a class="button is-primary" href="{{ path('clinicalProfile') }}">Completar mis datos cl&iacute;nicos</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+
+      {# NEXT STEPS (FOR PRACTITIONER) #}
+      {% if user.practitioner is defined and user.practitioner.name | length > 0 %}
+        <div class="columns is-1" style="margin: 30px 0px;">
+          <div class="column is-12-desktop is-12-mobile">
+            <div style="margin: 6px;border: 1px solid #DDD;padding: 6px 10px;height: 100%;text-align: center;">
+              <h2 class="subtitle is-5">Siguientes pasos</h2>
+              <p>Mientras aguarda el arribo de su compra, puede acceder al HealthHub para gestionar su organizaci&oacute;n.</p>
+              <p style="margin: 20px 0px 10px 0px;">
+                <a class="button is-primary" href="https://app.bambus.life">Gestionar oganizaci&oacute;n</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+
+    {% endif %}
+
+  </div>
+</div>
+
+{% endblock %}
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

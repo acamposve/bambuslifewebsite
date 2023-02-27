@@ -1,0 +1,335 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {{ encore_entry_link_tags('checkout-s3-shippinginfo') }}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('checkout-s3-shippinginfo') }}
+{% endblock %}
+
+{% block title %}Compra - Datos de entrega | BambusLife{% endblock %}
+
+{% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block body %}
+
+  <div class="container" style="background-color: #FEFEFE;padding: 10px;">
+
+    {# STEPS #}
+    <div class="bl-steps">
+      <ul class="steps is-narrow is-medium is-centered has-content-centered">
+        <li class="steps-segment">
+          <a href="{{ path('checkout_userinfo') }}" class="has-text-dark">
+            <span class="steps-marker">
+              <span class="icon">
+                <i class="fas fa-user"></i>
+              </span>
+            </span>
+            <div class="steps-content">
+              <p class="heading" >Datos personales</p>
+            </div>
+          </a>
+        </li>
+        {# <li class="steps-segment">
+          <a href="{{ path('checkout_patientinfo') }}" class="has-text-dark">
+            <span class="steps-marker">
+              <span class="icon">
+                <i class="fas fa-user"></i>
+              </span>
+            </span>
+            <div class="steps-content">
+              <p class="heading" >Datos cl&iacute;nicos</p>
+            </div>
+          </a>
+        </li> #}
+        <li class="steps-segment is-active has-gaps">
+            <span class="steps-marker">
+              <span class="icon">
+                <i class="fas fa-truck"></i>
+              </span>
+            </span>
+            <div class="steps-content">
+              <p class="heading" style="color: #38b09d;">Datos de env&iacute;o</p>
+            </div>
+          </a>
+        </li>
+        <li class="steps-segment has-gaps ">
+          <span class="steps-marker is-hollow">
+              <span class="icon">
+              <i class="fas fa-credit-card"></i>
+              </span>
+          </span>
+          <div class="steps-content">
+              <p class="heading">Pago</p>
+          </div>
+        </li>
+        <li class="steps-segment has-gaps">
+          <span class="steps-marker is-hollow">
+              <span class="icon">
+              <i class="fas fa-check"></i>
+              </span>
+          </span>
+          <div class="steps-content">
+              <p class="heading">Confirmaci&oacute;n</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    {# ERROR MSG #}
+    {% if error_msg is defined and error_msg != NULL %}
+      <div class="columns is-8" style="margin-top: 20px;">
+        <div class="column">
+          <article class="message is-danger">
+            <div class="message-body">
+              {% for msg in error_msg %}
+                {{ msg | raw }}
+              {% endfor %}
+            </div>
+          </article>
+        </div>
+      </div>
+    {% endif %}
+
+    {# FORMS #}
+    {% if deliveryOptions is defined and deliveryOptions != NULL %}
+      {% if deliveryOptions.deliveryAvailable %}
+        <form name="shippingInfo" id="shippingInfo" method="post" action="{{ path('checkout_shipping_post') }}"  style="margin-top: 20px;padding: 20px;">
+          
+          <div class="columns">
+            <div class="column is-6-desktop is-12-mobile ">
+              <h5 class="title is-5">Datos de entrega</h5>
+            </div>
+          </div>
+
+          <div class="columns">
+            {% if deliveryOptions.pickups and deliveryOptions.pickups | length > 0 %}
+              <div class="column is-6-desktop is-12-mobile delivery_cntr">
+                {# PICKUP OPTION #}
+                <div class="delivery_options">
+                  <label class="radio">
+                    <input type="radio" name="delivery_option" value="0">
+                    <span>Pickup</span>
+                    <div>
+                      <div>Seleccione uno de nuestros centros de pickup</div>
+                      {% if deliveryOptions.deliveryCosts and deliveryOptions.deliveryCosts.pickup %}
+                        <div class="price">Costo: USD {{deliveryOptions.deliveryCosts.pickup.base_price}}</div>
+                        <div style="font-size:80%;color:#BBB">
+                          {% for rule in deliveryOptions.deliveryCosts.pickup.rules %}
+                            {{rule.name}}
+                            {# : USD {{rule.base_price}}, #}
+                          {% endfor %}
+                        </div>
+                      {% endif %}
+                    </div>
+                  </label>
+                </div>
+
+                {# Pikcup Locations #}
+                <div class="address_cntr">
+                  {% for address in deliveryOptions.pickups %}
+                    <div class="address">
+                      <label class="radio">
+                        <input type="radio" name="pickup_option" value="{{address.name}}">
+                        {{address.address_title}}
+                        <div>
+                          <div>{{address.address_line1}}</div>
+                          {% if address.address_line2 %}
+                            <div>{{address.address_line2}}</div>
+                          {% endif %}
+                          <div>{{address.city}}, {{address.country}}</div>
+                          <div>{{address.address_recipient}}</div>
+                          {% if address.phone %}
+                            <div>Tel: {{address.phone}}</div>
+                          {% endif %}
+                        </div>
+                      </label>
+                    </div>
+                  {% endfor %}
+                </div>
+
+              </div>
+            {% endif %}
+            <div class="column is-6-desktop is-12-mobile delivery_cntr">
+              {# DELIVERY OPTION #}
+              <div class="delivery_options">
+                <label class="radio">
+                  <input type="radio" name="delivery_option" value="1">
+                  <span>Entrega a domicilio</span>
+                  <div>
+                    <div>Seleccione o ingrese la direccion donde recibir el envio.</div>
+                    <div>Metodo de envio: DHL Express (5-7 dias)</div>
+                    {% if deliveryOptions.deliveryCosts and deliveryOptions.deliveryCosts.shipping %}
+                      <div class="price">Costo: USD {{deliveryOptions.deliveryCosts.shipping.base_price}}</div>
+                      <div style="font-size:80%;color:#BBB">
+                        {% for rule in deliveryOptions.deliveryCosts.shipping.rules %}
+                          {{rule.name}}
+                          {# : USD {{rule.base_price}}, #}
+                        {% endfor %}
+                      </div>
+                    {% endif %}
+                    
+                  </div>
+                </label>
+              </div>
+
+              {# User Addresses #}
+              <div class="address_cntr">
+                {% for address in deliveryOptions.addresses %}
+                  <div class="address">
+                    <label class="radio">
+                      <input type="radio" name="delivery_address" value="{{address.name}}">
+                      {{address.address_title}}
+                      <div>
+                        <div>{{address.address_line1}}</div>
+                        {% if address.address_line2 %}
+                          <div>{{address.address_line2}}</div>
+                        {% endif %}
+                        <div>{{address.city}}, {{address.country}}</div>
+                        <div>{{address.address_recipient}}</div>
+                        {% if address.phone %}
+                          <div>Tel: {{address.phone}}</div>
+                        {% endif %}
+                      </div>
+                    </label>
+                  </div>
+                {% endfor %}
+
+                <div class="address">
+                  <label class="radio" style="width: 100%;">
+                    <input type="radio" name="delivery_address" value="__new__" id="newDeliveryAddress">
+                    Nueva direccion de envio
+                  </label>
+                  <div style="padding: 16px;display:none" id="newAddressFields">
+                    <div class="field">
+                      <label class="label">Nombre completo</label>
+                      <div class="control">
+                        <input class="input" type="text" placeholder="Ingrese su nombre completo"
+                          name="fullname" id="fullname" value="">
+                      </div>
+                      <div class="messages"></div>
+                    </div>
+                    <div class="field">
+                      <label class="label">Direcci&oacute;n</label>
+                      <div class="control">
+                        <input class="input" type="text" placeholder="Ingrese su direcci&oacute;n de puerta"
+                          name="address" id="address" value="">
+                      </div>
+                      <div class="messages"></div>
+                    </div>
+                    <div class="field">
+                      <label class="label">Pa&iacute;s</label>
+                      <div class="control">
+                        {# 
+                        <div class="select">
+                          <select id="countryCode" name="countryCode">
+                            <option value="UY">Uruguay</option>
+                            <option value="CL">Chile</option>
+                          </select> 
+                        </div>
+                        #}
+                        <input type="hidden" value="{{country.code}}" name="countryCode">
+                        {{country.name}} <a style="font-size:90%" href="{{ path('listLocal') }}?r={{currentPath}}">Cambiar de país</a>
+                        <div id ="countriesTitle" style="margin-top:10px;cursor:pointer">¿Porqué no está mi país? <i class="fas fa-info-circle" style="color: #999;"></i></div>
+                        {% include 'components/countriesRestriction.html.twig' with {'countryName': country.name, 'showMessage': false} %}
+                      </div>
+                    </div>
+                    <div class="field">
+                      <label class="label">Ciudad</label>
+                      <div class="control">
+                        <input class="input" type="text" placeholder="Ingrese su ciudad"
+                          name="city" id="city" value="">
+                      </div>
+                      <div class="messages"></div>
+                    </div>
+                    <div class="field">
+                      <label class="label">C&oacute;digo postal</label>
+                      <div class="control">
+                        <input class="input" type="text" placeholder="Ingrese el c&oacute;digo postal"
+                          name="postalCode" id="postalCode" value="" >
+                      </div>
+                      <div class="messages"></div>
+                    </div>
+                    <div class="field">
+                      <label class="label">Tel&eacute;fono de contacto</label>
+                      <div class="control">
+                        <input class="input" type="text" placeholder="Ingrese su tel&eacute;fono"
+                          name="phone" id="phone" value="">
+                      </div>
+                      <div class="messages"></div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+
+          {# GENERAL ERROR MESSAGE #}
+          <div class="columns is-mobile" style="padding: 20px;">
+            <div class="column is-12">
+              <div class="help-block error" id="gralError" style="text-align: right;display:none">
+              </div>
+            </div>
+          </div>
+
+          {# STEPS BUTTON #}
+          <div class="columns is-mobile" style="padding: 20px;">
+            <div class="column is-6-mobile is-4-desktop is-offset-2-desktop">
+              <div class="control">
+                <a class="button is-white" href="{{ path('checkout_patientinfo') }}">
+                  <span class="icon">
+                    <i class="fas fa-chevron-left"></i>
+                  </span>
+                  <span>Atras</span>
+                </a>
+              </div>
+            </div>
+            <div class="column is-6-mobile is-4-desktop">
+              <div class="control" style="text-align: right;">
+                <button type="submit" class="button is-primary" id="btnContinue" name="btnContinue">
+                  <span>Continuar</span>
+                  <span class="icon">
+                    <i class="fas fa-chevron-right"></i>
+                  </span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </form>
+      {% else %}
+        <div style="padding:30px;">
+          <div>
+            <h5 class="title is-5">Entrega no disponible</h5>
+            <div class="content">
+              <p>
+                Lamentablemente las entregas para {{country.name}} aún no están diponibles.
+              </p>
+              <p>
+                En su país, estamos trabajando para poder tener todas las autorizaciones regulatorias 
+                para poder brindar el mejor servicio preventivo de salud, esperamos poder darle una pronta buena noticia.
+              </p>
+            </div>
+          </div>
+          <div style="margin-top: 30px;border-top: 1px solid #DDD;padding-top: 10px;margin-bottom: 100px;font-size: 14px;">
+            <i class="fas fa-info-circle" style="color: #2196F3;"></i> En caso de encontrarse en alguno de los países 
+            habilitados puede solicitar la entrega en éstos, con entrega a domicilio de un hotel o de los puntos de pickup 
+            disponibles. <a href="{{ path('listLocal') }}?r={{currentPath}}">Cambiar de país</a>
+          </div>
+        </div>
+      {% endif %}
+    {% endif %}
+  </div>
+
+{% endblock %}
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

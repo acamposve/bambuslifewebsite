@@ -1,0 +1,18 @@
+<!-- Soporte -->
+<script src="{{asset('build/callus.js')}}"></script>
+
+{% if not supportDisabled|default(false) %}
+<call-us id="callus"
+    phonesystem-url="https://bambuslife.us/"
+    party="{{supportParty}}"
+    minimized="true"
+    allow-call="true"
+    allow-video="true"
+    popout="false"
+    operator-name="BambusLife"
+    allow-soundnotifications="true"
+    operator-icon="build/images/BambusLogo50.png"
+    invite-message="Hola! ¿Cómo podemos ayudarlo?"
+    ignore-queueownership="true"
+    authentication="both"></call-us>
+{% endif %}

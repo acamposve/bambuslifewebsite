@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Invitación aceptada | BambusLife{% endblock %}
+
+{% block description %}Invitación aceptada | BambusLife{% endblock %}
+
+
+{% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+
+{% block body %}
+
+<div class="container" style="padding: 20px">
+  {# ERROR MSG #}
+  {% if error_msg is defined and error_msg != NULL %}
+    <div class="columns is-8" style="">
+      <div class="column">
+        <article class="message is-danger">
+          <div class="message-body">
+            {{ error_msg | raw }}
+          </div>
+        </article>
+      </div>
+    </div>
+  {% else %}
+    <div class="columns is-1">
+      <div class="column is-full" style="text-align: center; margin-bottom: 20px;">
+        <i class="far fa-check-circle" style="font-size: 45px;padding: 30px;color: #4CAF50;"></i>
+        <h4 class="title is-4">Invitación aceptada</h4>
+        <p>
+          La invitación fue aceptada con éxito. Ya forma parte del plan familiar de <span style="font-weight:600">{{invitation.ownerFirstname}}</span>
+          y puede comenzar a utilizar el dispositivo con número de serie <span style="font-weight:600">{{invitation.invitationData.deviceSerialNum}}<span>.
+        </p>
+      </div>
+    </div>
+    <div class="columns is-1">
+      <div class="column is-full" style="text-align: center;">
+        <p>
+          Para facilitar los informes de diagnostico por parte de los médicos, es importante que complete sus datos clínicos.
+        </p>
+        <p style="margin: 20px 0px 10px 0px;">
+          <a class="button is-primary" href="{{ path('clinicalProfile') }}">Completar mis datos cl&iacute;nicos</a>
+        </p>
+      </div>
+    </div>
+  {% endif %}
+</div>
+
+
+{% endblock %}
+
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

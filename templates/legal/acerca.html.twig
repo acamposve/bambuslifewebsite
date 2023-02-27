@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Acerca de BambusLife | BambusLife{% endblock %}
+
+{% block description %}Acerca de BambusLife | BambusLife{% endblock %}
+
+
+{% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block body %}
+
+<div class="container white-box" style="padding: 20px">
+
+  <h1 class="title is-4">Acerca de BambusLife</h1>
+  <div class="content">
+    <p>
+      Somos una empresa de base tecnológica que brinda servicios de información y conectividad de dispositivos móviles relacionados con la salud con una clara orientación a dar soluciones basadas en tecnología a las Entidades Médicas, los Médicos y los Pacientes en general.
+    </p>
+    <p>
+      Nos apasiona fomentar nuevas formas de hacer, de innovar, con el fin de facilitar los servicios de salud que dan los prestadores y profesionales de la salud a sus pacientes.
+    </p>
+    <p>
+      Estamos conformando un grupo de empresas del sector tecnológico, con presencia en varios paises con nuestra  casa matriz basada en Uruguay. Uruguay es reconocido por su liderazgo y apego a las formas jurídicas, regulatorias, tecnológicas y derechos de propiedad y privacidad de los datos e información.
+    </p>
+  </div>
+  <h2 class="title is-4">Quienes somos</h2>
+  <div class="content">
+    <p>
+      Somos un grupo de profesionales de varias especialidades que día a día trabajan para ser una empresa líder, rentable, en continuo crecimiento, que se diferencie por su carácter innovador, el servicio de excelencia que brinda, su aporte a la sociedad y al desarrollo de cada uno de nuestros integrantes.
+    </p>
+    <p>
+      Buscamos ser líderes a nivel regional en calidad del tiempo dedicado al cuidado de la salud y su impacto en la vida laboral, social y deportiva, bajo soluciones que mantengan las relaciones formales establecidas y reguladas para Entidades Médicas, Profesionales de salud y Pacientes en general.
+    </p>
+    <p>
+      En esta primera etapa, brindamos servicios de interconexión para el monitoreo de equipos y dispositivos médicos, con foco en satisfacer los diversos requerimientos regulatorios en cada mercado, utilizando los estándares de salud y mucha tecnología en todas sus aplicaciones, siempre mejorando procesos, innovando y reduciendo costos, de tal forma que seamos considerados un referente como aliado estratégico para el desarrollo de modelos de servicios de salud basados en tecnología.
+    </p>
+    <p>
+      BambusLife® orienta su trabajo hacia una búsqueda constante que haga de la información y el conocimiento, un valor accesible en todas partes, cumpliendo con las regulaciones locales con respecto a la protección de datos y el derecho de que la información es para uso exclusivo de la mejora de los servicios al paciente final.
+    </p>
+  </div>
+  <h2 class="title is-4">Nuestras creencias</h2>
+  <div class="content">
+    <p>
+      Para nosotros BambusLife® es más que una empresa, es un concepto que resume la importancia y valor de la prevención para tener un crecimiento sano y que impacte además en un crecimiento sostenible.
+    </p>
+    <p>
+      Hemos descubierto que este concepto está intimamente relacionado a la vida de una variedad de bambú muy especial, una de las subespecies del Bambú Nigra, que es una especie de bambú asiático que incluso después de cinco años de riego, deshierbe y fertilización es apenas visible y puede estar incluso oculto a la vista.
+    </p>
+    <p>
+      Pero luego de ese largo tiempo y en un período de seis semanas, crece a una velocidad asombrosa de hasta 50 cm por día hasta que alcanza alturas de 20 mts. y más. Crece tan rápido que realmente se puede escuchar el crecimiento.
+    </p>
+    <p>
+      Lo notable de este bambú es el extenso y profundo sistema de raíces que se desarrolla en los primeros cinco años de su vida, asi que toma las precauciones adecuadas durante los primeros años para soportar ese posterior crecimiento espectacular.
+    </p>
+    <p>
+      Elegimos el nombre de BambusLife, porque creemos en una visión para el futuro y de esa forma proporcionar la base necesaria para apoyar un crecimiento sano y sostenible.
+    </p>
+    <p>
+      Nuestra creencia principal es comenzar con una base sólida en los procesos de innovación y operación siempre en base a tecnologías disruptivas que nos permitar sostener los servicios y asi impulsar nuestro compromiso con la prevención sustentable en salud.
+    </p>
+  </div>
+</div>
+
+{% endblock %}
+
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

@@ -1,0 +1,97 @@
+
+{# BUTTON DISCOUNTS #}
+{% if navCountry == 'UY' %}
+  <div style="margin: 10px 0px;">
+    <div class="button is-text" id="btnDiscount" style="color: #209cee;font-size: 15px;">
+      <i class="fas fa-gift" style="margin-right: 6px;"></i> Cupones de descuento
+    </div>
+  </div>
+{% endif %}
+
+
+{# MODAL DISCOUNTS #}
+{% if navCountry == 'UY' %}
+  <div id="modalDiscount" class="modal" style="position: fixed;">
+    <div class="modal-background" id="modalDiscountBack"></div>
+    <div class="modal-card">
+      {# DISCOUNTS FOR URUGUAY #}
+      {% if navCountry == 'UY' %}
+        <header class="modal-card-head">
+          <p class="modal-card-title">Cupones de descuento</p>
+        </header>
+        <section class="modal-card-body">
+          <div id="discountsPanel">
+            {# ######################### 
+               ANTEL PANEL 
+             ######################### #}
+            <div id="discAntel">
+              <div>
+                <img src="{{asset('build/images/products/benefits/LogoAntel.png')}}" alt="Antel">
+              </div>
+              {# BENEFIT #}
+              <div style="margin-top: 5px;padding: 6px;border-radius: 3px;font-size: 15px;">
+                <i class="fas fa-gift" style="color: #FF5722;"></i> 
+                <span style="font-size: 16px;font-weight: 500;">Beneficio</span><br>
+                <div style="padding: 5px 20px;">
+                  20% de descuento en la compra de dispositivos ECG Móvil. 
+                  El descuento aplica a los dispositivos CardioSecur Pro y CardioSecur Active.
+                </div>
+              </div>
+              {# EXPLANATION #}
+              <div style="margin-top: 20px;padding: 6px;border-radius: 3px;font-size: 15px;">
+                <i class="fas fa-exclamation-circle" style="color: #2196F3;"></i> 
+                <span style="font-size: 16px;font-weight: 500;">Cómo conseguir un cupón</span><br>
+                <ol style="padding-left: 40px;">
+                  <li>Desde su celular llame al número *789# o mediante la aplicación móvil MiAntel buscando en Beneficios a BambusLife</li>
+                  <li>Siga las instrucciones en pantalla para recibir el código de cupón</li>
+                  <li>Ingrese su número de celular y el código de descuento recibido</li>
+                  <li>El carrito le va a confirmar el descuento aplicado y el precio se actualizará acorde</li>
+                </ol>
+              </div>
+              {# LEGAL #}
+              <div style="margin: 15px 0px 0px 0px;font-size: 12px;color: #888;">
+                Beneficio sujeto a vigencia del convenio<br>
+                Aviso Legal: El rol de Antel radica únicamente en la comunicación de los beneficios a sus clientes, 
+                no asumiendo responsabilidad de ningún tipo respecto al producto en sí mismo y a su aprovisionamiento.
+              </div>
+            </div>
+            {# #########################
+               CLUB EL PAIS PANEL 
+              ######################### #}
+            <div id="discCEP" style="margin-top:30px">
+              <div>
+                <img src="{{asset('build/images/products/benefits/cep.png')}}" alt="Club El País">
+              </div>
+              {# BENEFIT #}
+              <div style="margin-top: 5px;padding: 6px;border-radius: 3px;font-size: 15px;">
+                <i class="fas fa-gift" style="color: #FF5722;"></i> 
+                <span style="font-size: 16px;font-weight: 500;">Beneficio</span><br>
+                <div style="padding: 5px 20px;">
+                  20% de descuento en la compra de dispositivos ECG Móvil. 
+                  El descuento aplica a los dispositivos CardioSecur Pro y CardioSecur Active.
+                </div>
+              </div>
+              {# EXPLANATION #}
+              <div style="margin-top: 20px;padding: 6px;border-radius: 3px;font-size: 15px;">
+                <i class="fas fa-exclamation-circle" style="color: #2196F3;"></i> 
+                <span style="font-size: 16px;font-weight: 500;">Cómo usar el beneficio</span><br>
+                <p>
+                  Ingrese su número de tarjeta del Club para aplicar el descuento.
+                </p>
+              </div>
+              {# LEGAL #}
+              <div style="margin: 15px 0px 0px 0px;font-size: 12px;color: #888;">
+                Beneficio sujeto a vigencia del convenio.<br>
+                Aviso Legal: El rol de Club El País radica únicamente en la comunicación de los beneficios a sus clientes, 
+                no asumiendo responsabilidad de ningún tipo respecto al producto en sí mismo y a su aprovisionamiento.
+              </div>
+            </div>
+          </div>
+        </section>
+      {% endif %}
+      <footer class="modal-card-foot" style="justify-content: flex-end;">
+        <button class="button" id="modalDiscountCancel">Cerrar</button>
+      </footer>
+    </div>
+  </div>
+{% endif %}

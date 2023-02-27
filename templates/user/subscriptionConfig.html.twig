@@ -1,0 +1,166 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Configuraci&oacute;n de subscripci&oacute;n | BambusLife{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('sub-config') }}
+{% endblock %}
+
+{% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block body %}
+
+<div class="container" style="min-height: 600px;">
+
+  <div class="columns" >
+    <div class="column is-full">
+      <h3 style="margin-top: 20px;" class="subtitle is-3">Configuraci&oacute;n</h3>
+    </div>
+  </div>
+
+  <form action="{{ path('checkout_patientinfo_post') }}" method="POST">
+
+    <div class="white-box" style="padding: 10px;">
+      <table class="table table-borderless" style="width: 100%;background-color:transparent">
+        <tr>
+          <th>Plan</th>
+          <th>Paciente</th>
+          <th>Dispositivo</th>
+        </tr>
+        {% for plan in subscription.plans %}
+          <tr style="border-top:1px solid #DDD">
+            <td>
+              {% if plan.patient.id == NULL %}
+                <span class="icon" style="font-size: 12px;color: #FF9800;margin-right: 1px;">
+                  <i class="fas fa-exclamation-triangle"></i>
+                </span>
+              {% endif %}
+              {{plan.name}}
+              {% if plan.patient.id == NULL %}
+                <div style="display: inline-flex;padding: 3px 0px;font-size: 12px;border-radius: 4px;color: #FF9800;line-height: 15px;">
+                  <div >
+                    Este plan a&uacute;n no esta asignado. Ingrese los datos del usuario que desee que lo utilice y el dispositivo que usar&aacute;                  
+                  </div>
+                </div>
+              {% endif %}
+            </td>
+            <td>
+              <div >
+                <div>{{plan.patient.firstname}} {{plan.patient.lastname}}</div>
+                <div>{{plan.patient.email}}</div>
+                <button class="button is-text" id="btnModalPatient_{{loop.index0}}" data-idx="{{loop.index0}}">
+                  {% if plan.patient.id == NULL %}
+                    Asignar
+                  {% else %}
+                    Editar
+                  {% endif %}
+                </button>
+              </div>
+              <div class="modal" id="modalPatient_{{loop.index0}}">
+                <div class="modal-background"></div>
+                <div class="modal-content" style="background-color: #FFF;padding: 20px;border-radius: 5px;">
+                  <div style="border-bottom: 1px solid #CCC;">
+                    <h3 class="subtitle is-4">Datos de usuario/paciente</h3>
+                    <p>Complete los datos del usuario/paciente para este plan</p>
+                  </div>
+                  <div class="field" style="border-bottom: 1px solid #CCC;padding: 20px 0px;">
+                    <label class="checkbox">
+                      <input type="checkbox">
+                      Lo usar&eacute; yo mismo.
+                    </label>
+                  </div>
+                  <div class="field">
+                    <label class="label">Nombre</label>
+                    <div class="control">
+                      <input class="input" type="text" placeholder="Ingrese el nombre" value="{{plan.patient.firstname}}">
+                    </div>
+                  </div>
+                  <div class="field">
+                    <label class="label">Apellido</label>
+                    <div class="control">
+                      <input class="input" type="text" placeholder="Ingrese el apellido" value="{{plan.patient.lastname}}">
+                    </div>
+                  </div>
+                  <div class="field">
+                    <label class="label">Correo electr&oacute;nico</label>
+                    <div class="control">
+                      <input class="input" type="text" placeholder="Ingrese el correo electr&oacute;nico" value="{{plan.patient.email}}">
+                    </div>
+                    <article class="message is-warning">
+                      <div class="message-body">
+                        Por favor ingrese el mismo correo electroinico usado para registrarse en la app de CS
+                      </div>
+                    </article>
+                  </div>
+                  <div class="field">
+                    <label class="label">Fecha de nacimiento</label>
+                    <div class="control">
+                      <input class="input" type="text" placeholder="Ingrese fecha de nacimiento">
+                    </div>
+                  </div>
+                  <div class="field">
+                    <label class="label">G&eacute;nero</label>
+                    <div class="control">
+                      <div class="select">
+                        <select>
+                          <option>Masculino</option>
+                          <option>Femenino</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="field is-grouped">
+                    <div class="control">
+                      <button class="button is-link">Guardar</button>
+                    </div>
+                    <div class="control">
+                      <button class="button is-text" id="closeModalPatient_{{loop.index0}}">Cancelar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="field">
+                <div class="control">
+                  <div class="select">
+                    <select>
+                      <option>Seleccione Dispositivo</option>
+                      <option>CardioSecur Active MM1234</option>
+                      <option>CardioSecur Active MM1299</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+        {% endfor %}
+      </table>
+
+      <div>
+        <div class="field is-grouped">
+          <div class="control">
+            <button class="button is-primary">Guardar</button>
+          </div>
+          <div class="control">
+            <button class="button is-text">Cancelar</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </form>
+  
+</div>
+
+{% endblock %}
+
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}
+

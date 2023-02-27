@@ -1,0 +1,55 @@
+@media (max-width: 767px) {
+  // .app-presentation {
+  //   width: 102px;
+  //   height: 208px;
+  // }
+
+  // .app-presentation-background {
+  //   width: 102px;
+  //   height: 208px;
+  // }
+
+  // .app-presentation-video {
+  //   top: 24px;
+  //   left: 7px;
+  //   width: 89px;
+  // }
+
+  // .step-img {
+  //   height: 180px;
+  // }
+
+  .mobile-image-container {
+    p {
+      font-size: 24px;
+    }
+  }
+
+  .circle-blue {
+    width: 45px;
+    height: 45px;
+    border-radius: 55%;
+    font-size: 27px;
+    line-height: 45px;
+    margin: 20px auto;
+  }
+
+
+  .prod-box-two {
+    display: flex;
+    max-width: 100%;
+    margin: 20px 0px;
+  }
+
+  .csact-whentouse {
+    
+
+    h2 {
+      font-weight: 400;
+      font-size: 25px !important;
+    }
+    a {
+      margin-bottom: 40px;
+    }
+  }
+}

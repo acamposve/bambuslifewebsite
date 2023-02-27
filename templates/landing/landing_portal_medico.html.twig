@@ -1,0 +1,101 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Portal Médico | BambusLife{% endblock %}
+
+{% block header %}
+{{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+{{ encore_entry_link_tags('landing-portal-medico') }}
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+{{ encore_entry_script_tags('landing-portal-medico') }}
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <section>
+        <div class="columns">
+            <div class="column">
+                <h1 class="title-portal-medico"><span></span></h1>
+                <p class="has-text-justified">El <strong class="txt-blue">Portal médico</strong> es una aplicación web en la que médicos y profesionales de la salud pueden acceden a gestionar la información de sus dispositivos y sus pacientes, así como las observaciones generadas por ambos.
+                </p>
+                <p class="has-text-justified">Está basado en tecnología web (Progressive Web Application) que permite que pueda ser accedido desde prácticamente cualquier dispositivo, con una interfaz gráfica que se adapta y reorganiza según el tamaño de pantalla.
+                </p>
+                <p class="has-text-justified">A su vez el <strong class="txt-blue">Portal médico</strong> permite a los médicos suscribirse al <strong class="txt-blue">Programa de servicios de BambusLife</strong> y ofrecer sus servicios a pacientes registrados y no registrados aún. El alcance actual cubre el servicio de informe de diagnóstico de electrocardiogramas, pero se irán agregando servicios y dispositivos para diferentes especialidades.</p>
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column">
+                <h3 class="title">Pacientes</h3>
+                <p>Permite gestionar la información de pacientes definidos en el sistema para almacenar los estudios (observaciones) generados por los dispositivos.
+                </p>
+                <p>Funcionalidades incluidas:</p>
+                <ul class="circle">
+                    <li>datos patronímicos</li>
+                    <li>alergias</li>
+                    <li>condiciones</li>
+                    <li>observaciones: signos vitales, historia social, ECGs, etc.)</li>
+                    <li>antecedentes familiares</li>
+                    <li>contactos</li>
+                </ul>
+                <h3 class="title">Dispositivos</h3>
+                <p>Permite gestionar los dispositivos que son parte de la organización del médico. </p>
+                <p>
+                    Funcionalidades incluidas:
+                </p>
+                <ul class="circle">
+                    <li>recibir y procesar observaciones reportadas (ECGs)</li>
+                    <li>agregar observaciones a historia clínica del paciente</li>
+                    <li>asociar dispositivos a pacientes</li>
+                    <li>recibir aviso de observaciones con nivel de alerta<br>amarillo o rojo</li>
+                </ul>
+                <h3 class="title">Doctores</h3>
+                <p>Permite definir otros usuarios con el rol de médicos dentro de la organización.</p>
+            </div>
+            <div class="column"><img src="{{asset('build/images/portal-medico-image.jpg')}}" class="is-fullwidth"></div>
+        </div>
+    </section>
+    <section class="content-border-blue">
+        <div class="columns">
+            <div class="column">
+                <h2 class="title is-2 has-text-centered">Programa de servicios de BambusLife</h2>
+                <p class="has-text-justified">Este programa permite ofrecer servicios a los pacientes de BambusLife y recibir pedidos de informes de diagnóstico de electrocardiogramas para informar. Incluye cobro al paciente y pagos al médico por los servicios prestados.</p>
+
+                <h3 class="title">Encuentros</h3>
+                <p class="has-text-justified">Registros de encuentros (consultas) con pacientes, donde se registran síntomas, observaciones, condiciones, diagnóstico y el plan a tomar.</p>
+
+                <p class="has-text-justified">Los encuentros cuentan con formularios de check-in para facilitar y mejorar la experiencia de la consulta, tanto para los médicos como los pacientes.</p>
+
+                <h3 class="title">Agenda de reservas</h3>
+                <p class="has-text-justified">Sistema de agenda de servicios ofrecidos para reserva de encuentros (consultas). Los médicos definen sus servicios a ofrecer y su disponibilidad para que los pacientes puedan acceder a un catálogo de servicios, ver la disponibilidad de los profesionales y realizar reservas.</p>
+
+                {# 
+                <h3 class="title">Integración con Red Salud (UY)</h3>
+                <p class="has-text-justified">A través de la integración con Red Salud, los documentos importantes generados para los pacientes son subidos a la Historia Clínica Electrónica Nacional (HCEN) del paciente. A su vez, el médico puede acceder a la historia clínica del paciente y obtener información importante para la toma de decisiones.</p> 
+                #}
+
+                <h3 class="title">Consulta remota</h3>
+                <p>Soporte para consultas remotas mediante video-llamadas facilitando la atención de pacientes.</p>
+            </div>
+        </div>
+    </section>
+    <div class="columns">
+        <div class="column has-text-centered call-to-action-bottom">
+            <ul class="list-logos">
+                <li><img src="{{ asset('build/images/logo-cardio-secur.svg') }}" height="60" width="auto"></li>
+                <li><img src="{{ asset('build/images/logo-bambuslife.svg') }}" height="60" width="auto"></li>
+            </ul>
+            <a class="button is-primary is-rounded is-medium" href="{{ path('prod_scientific_studies') }}">Ver estudios científicos realizados</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %}
+{{ include('components/footer.html.twig') }}
+{% endblock %}

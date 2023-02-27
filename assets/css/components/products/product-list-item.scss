@@ -1,0 +1,32 @@
+@import "../../pages/order/order.scss";
+
+.prd-list-item{
+
+  @at-root {
+    a#{&} {
+      display: flex;
+      color: #333;
+      max-width: 200px;
+      flex-direction: column;
+
+      @media (max-width: 787px) {
+        max-width: 100vw;
+      }
+    }
+  }
+  picture {
+    display: flex;
+    justify-content: center;
+
+    img {
+      width: 100%;
+      max-width: 100%;
+    }
+  }
+  .prd-list-item-desc {
+    font-size: 13px;
+  }
+  .price-tag {
+    margin-top: 10px;
+  }
+}

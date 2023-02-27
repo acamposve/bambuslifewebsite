@@ -1,0 +1,165 @@
+<script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script>
+<link rel="stylesheet" type="text/css" href="{{asset('build/css/payment-methods.' ~ country ~ '.css')}}">
+
+<div style="text-align: center;">
+
+  <div class="button is-link {{btnSize}}" id="payModalBtn" style="min-width: 100px;justify-content: center;"
+    data-payCurrency="{{currency}}" data-payAmount="{{amountToPay}}" data-mppkey="{{mpPublicKey}}">{{btnText}}</div>
+
+  {# FOR TESTING PURPOSES ONLY #}
+  {# <div style="color: #FF9800;">
+    [ A PAGAR: {{currency}} {{amountToPay}} ]
+  </div> #}
+
+  <div style="padding: 20px 0px;">
+    <!-- Unordered List -->
+    <ul>
+      {% for paymentMethod in paymentMethods %}
+        <li class="paymentmethod-{{paymentMethod['css_class']}} paymentmethod-large">{{paymentMethod['name']}}</li>
+      {% endfor %}
+    </ul>
+  </div>
+
+
+  {# <div>
+    <div>Usar estas tarjetas</div>
+    <div><strong>Uruguay</strong></div>
+    <div>Master: 5161 4413 1585 2061</div>
+    <div>Visa: 4157 2362 1173 6486</div>
+    <div><strong>Chile</strong></div>
+    <div>Master: 5416 7526 0258 2580</div>
+    <div>Visa: 4168 8188 4444 7115</div>
+  </div> #}
+
+  <div class="modal" id="payModal">
+    <div class="modal-background" id="payModalBack"></div>
+    <div class="modal-content" style="background-color: #FFF;text-align: center;
+        padding: 30px 10px 10px 10px;     min-height: 680px;
+        border-radius: 4px;
+        position:relative">
+
+      <h3 class="subtitle is-5">Pago</h3>
+      <div>Todas las transacciones son seguras y encriptadas</div>
+
+      <form action="{{callbackUrl}}" method="post" id="pay" name="pay" class="payForm">
+        <fieldset>
+
+          <div class="form-section">
+            <div class="columns">
+              <div class="column is-12">
+                <div class="field">
+                  <label class="label">Tarjeta</label>
+                  <div class="control has-icons-left has-icons-right">
+                    <input class="input cardNumber" type="text" id="cardNumber" data-checkout="cardNumber" 
+                      onselectstart="return false" placeholder="N&uacute;mero de tarjeta"
+                      onpaste="return false" onCopy="return false" onCut="return false" 
+                      onDrag="return false" onDrop="return false" autocomplete=off
+                      
+                      value=""
+                      {# value="5161441315852061" #}
+                      
+                      
+                      
+                      >
+                    <span class="icon">
+                      <i class="fas fa-credit-card"></i>
+                    </span>
+                    <div  style="display: flex;position: absolute;right: 5px;top: 0px;align-items: center;bottom: 3px;opacity: 0.7;">
+                      <div id="pmicon" class="paymentmethod-small"></div>
+                    </div>
+                  </div>
+                  <p id="hlpr-cardNumber" class="help is-danger" style="display:none;text-align: left;">N&uacute;mero de tarjeta inv&aacute;lido</p>
+                </div>
+              </div>
+            </div>
+            <div class="columns">
+              <div class="column is-12">
+                <div class="field">
+                  {# <label class="label">Nombre titular</label> #}
+                  <div class="control has-icons-left ">
+                    <input class="input"  type="text" id="cardholderName" data-checkout="cardholderName" 
+                      placeholder="Nombre del titular" />
+                    <span class="icon">
+                      <i class="fas fa-user"></i>
+                    </span>
+                  </div>
+                  <p id="hlpr-cardholderName" class="help is-danger" style="display:none;text-align: left;">Nombre del titular inv&aacute;lido</p>
+                </div>
+              </div>
+            </div>
+            <div class="columns">
+              <div class="column is-6">
+                <div class="field">
+                  <div class="control has-icons-left ">
+                    <input class="input cardExpiration"  type="text" id="cardExpiration" data-checkout="cardExpiration" 
+                      placeholder="MM/AA"  onselectstart="return false" onpaste="return false" onCopy="return false" 
+                      onCut="return false" onDrag="return false" onDrop="return false" autocomplete=off />
+                    <input type="hidden" id="cardExpirationMonth" data-checkout="cardExpirationMonth" />
+                    <input type="hidden" id="cardExpirationYear" data-checkout="cardExpirationYear" />
+                    <span class="icon">
+                      <i class="fas fa-calendar-alt"></i>
+                    </span>
+                  </div>
+                  <p id="hlpr-cardExpiration" class="help is-danger" style="display:none;text-align: left;">La fecha no es v&aacute;lida</p>
+                </div>
+              </div>
+              <div class="column is-6">
+                <div class="field">
+                  <div class="control ">
+                    <input class="input" type="text" id="securityCode" data-checkout="securityCode" 
+                      placeholder="CVV" onselectstart="return false" onpaste="return false" onCopy="return false" 
+                      onCut="return false" onDrag="return false" onDrop="return false" autocomplete=off />
+                  </div>
+                  <p id="hlpr-securityCode" class="help is-danger" style="display:none;text-align: left;">El c&oacute;digo de seguridad es incorrecto</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-section">
+            <label class="label">Documento</label>
+            <div class="columns">
+              <div class="column is-3">
+                <div class="field">
+                  <div class="control ">
+                    <div class="select">
+                      <select id="docType" data-checkout="docType"></select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="column is-9">
+                <div class="field">
+                  <div class="control ">
+                    <input class="input" type="text" id="docNumber" data-checkout="docNumber" placeholder="12345678" />
+                    <div style="font-size: 12px;">Sin puntos ni guiones</div>
+                  </div>
+                  <p id="hlpr-docNumber" class="help is-danger" style="display:none;text-align: left;">N&uacute;mero de documento inv&aacute;lido</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <p id="hlpr-form" class="help is-danger" style="display:none;text-align: left;">Verifique los datos ingresados</p>
+
+          <input class="button is-link {{btnSize}} is-fullwidth" type="submit" value="{{btnText}}" style="justify-content: center;margin-top: 30px;" />
+
+        </fieldset>
+      </form>
+
+      <div style="text-align: left;position: relative;">
+        <img src="{{asset('build/images/mp-small.png')}}" alt="MerdaoPago" width="50" height="46">
+        <div style="position: absolute;padding-left: 58px;top: 0px;font-size: 12px;">
+          EL PRECIO PUBLICADO CORRESPONDE A PRECIO CONTADO EN 1 PAGO<br>
+          Los pagos son procesados a través de Mercado Pago y se realizan en moneda local.<br>
+          La cotizaci&oacute;n del dolar lo realizar&aacute; Mercado Pago al momento de confirmar la transacci&oacute;n<br>
+          <small>
+          Toda la información que ingreses queda automáticamente protegida por el sistema SSL (Secure Sockets Layer) que garantiza una transacción 100% segura. Este sistema encripta los datos suministrados y evita su uso desautorizado.
+          </small>
+        </div>
+      </div>
+
+      <button id="payModalCloseBtn" class="modal-close is-medium" aria-label="close"></button>
+    </div>
+  </div>
+
+</div>

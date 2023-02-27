@@ -1,0 +1,19 @@
+@import "../variables.scss";
+@import "./node_modules/bulma/sass/utilities/_all.sass";
+@import "./node_modules/bulma/sass/base/_all.sass";
+@import "./node_modules/bulma-calendar/src/sass/index.sass";
+@import "./node_modules/bulma-calendar/src/sass/timepicker.sass";
+
+.datetimepicker-dummy .datetimepicker-dummy-wrapper {
+  border: 1px solid #dbdbdb;
+  border-radius: 4px;
+}
+
+.datetimepicker-dummy.is-primary .datetimepicker-clear-button {
+  color: #CCC;
+  margin-top: 3px;
+}
+
+.datetimepicker-dummy.is-primary::before, .datetimepicker-dummy.is-primary:before {
+  background-color: #888;
+}

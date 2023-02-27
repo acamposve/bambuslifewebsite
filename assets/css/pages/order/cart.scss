@@ -1,0 +1,47 @@
+
+.cart-cntr{
+  background-color: #FFF;
+  margin: 20px;
+  padding: 10px;
+}
+
+.cart-items{
+  padding: 20px;
+}
+
+table.cart {
+  font-size:14px;
+}
+
+table.cart th {
+  font-size:13px;
+}
+
+.cart-total-val {
+  border-top: 2px solid #CCC;
+  text-align:right;
+  font-weight:600;
+  font-size: 110%;
+  color: #30a290;
+  white-space: nowrap;
+
+  span {
+    font-size: 80%;
+    color: #60bbad;
+  }
+}
+
+.cart-total-lbl {
+  border-top: 2px solid #CCC;
+  text-align:right;
+  font-weight:600;
+  font-size: 100%;
+}
+
+.order-cntr {
+  background-color: #FFF;
+  margin: 20px;
+  padding: 10px;
+}
+
+@import "/cart-mobile.scss";

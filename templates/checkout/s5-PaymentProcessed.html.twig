@@ -1,0 +1,109 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Compra completada | BambusLife{% endblock %}
+
+{% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+
+  {# Purchase confirmation #}
+  <div style="background-color: #FFF;margin: 20px;padding: 20px;">
+    
+    <div class="columns is-1">
+      <div class="column is-full" style="text-align: center; margin-bottom: 20px;">
+        <i class="far fa-check-circle" style="font-size: 45px;padding: 30px;color: #4CAF50;"></i>
+        <h4 class="title is-4">Su orden ha sido confirmada y recibida</h4>
+        <p>La estaremos procesando en los pr&oacute;ximos minutos y recibir&aacute; actualizaciones en su correo electr&oacute;nico.</p>
+      </div>
+    </div>
+    
+    <div class="columns is-1">
+      <div class="column is-half">
+        <h4 class="subtitle is-5">Detalles de la orden</h4>
+        <table class="table table-borderless table-thinpad">
+          <tr>
+            <td>Nro. de orden</td>
+            <td>{{orderData.order_id}}</td>
+          </tr>
+          <tr>
+            <td>A nombre de</td>
+            <td>{{orderData.customer}}</td>
+          </tr>
+          <tr>
+            <td>Pago</td>
+            <td>
+              #{{paymentData.transaction_id}}<br>
+              {{ paymentData.currency_id }} {{ paymentData.transaction_amount }}<br>
+              {{ paymentData.issuer_name }} (terminada en {{paymentData.card_last_four}})
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="column is-half">
+        <h4 class="subtitle is-5">Detalles de env&iacute;o</h4>
+        <p>{{shippingData.method}}</p>
+        <p>{{shippingData.name}}</p>
+        <p>{{shippingData.address}} </p>
+        <p>{{shippingData.city}}, {{shippingData.countryName}}</p>
+        <p>CP {{shippingData.postalcode}}</p>
+      </div>
+    </div>
+    
+    <div class="columns is-1">
+      <div class="column is-full">
+        <h4 class="subtitle is-5">Items de la orden</h4>
+        <table class="table" style="width: 100%;">
+          <tr>
+            <th>Item</th>
+            <th>Cantidad</th>
+            <th>Precio</th>
+          </tr>
+          {% for item in orderData.items %}
+            <tr>
+              <td>{{item.item_name}}</td>
+              <td>{{item.qty}}</td>
+              <td style="text-align:right;">{{item.amount}}</td>
+            </tr>
+          {% endfor %}
+          <tr>
+            <td colspan="2" style="text-align:right;border: 0px;padding: 2px;">Subtotal ({{orderData.items | length}}):</td>
+            <td style="text-align:right;border: 0px;padding: 2px 10px 2px 2px;">{{orderData.total}}</td>
+          </tr>
+          <tr>
+            <td colspan="2" style="text-align:right;border: 0px;padding: 2px;">Shipping:</td>
+            <td style="text-align:right;border: 0px;padding: 2px 10px 2px 2px;">{{orderData.shipping_amount}}</td>
+          </tr>
+          <tr>
+            <td colspan="2" style="text-align:right;border: 0px;padding: 2px;">Impuestos:</td>
+            <td style="text-align:right;border: 0px;padding: 2px 10px 2px 2px;">{{orderData.taxes_amount}}</td>
+          </tr>
+          <tr>
+            <td colspan="2" style="text-align:right;border: 0px;padding: 2px;">Total:</td>
+            <td style="text-align:right;font-weight:500;border: 0px;padding: 2px 10px 2px 2px;">{{orderData.rounded_total}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="columns is-1" style="margin: 30px 0px;">
+      <div class="column is-one-quarter"></div>
+      <div class="column" style="text-align: center;background-color: #B3E5FC;border-radius: 5px;">
+        <div style="font-size: 16px;font-weight: 600;">Llamenos al +598-123-123 o conteste este mail</div>
+        <div>por cualquier consulta o inquietud</div>
+      </div>
+      <div class="column is-one-quarter"></div>
+    </div>
+
+  </div>
+
+</div>
+
+{% endblock %}
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

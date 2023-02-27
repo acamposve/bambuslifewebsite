@@ -1,0 +1,41 @@
+.prod-box-two {
+    max-width: 50%;
+    display: inline-flex;
+    justify-content: center;
+}
+
+.infobox {
+    background-color: rgba(125, 180, 216, .2)!important;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    h4 {
+        font-size: 23px;
+        line-height: 28px;
+        font-weight: 100;
+        text-align: center;
+        margin: 10px auto;
+        min-height: 70px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    p {
+        padding: 10px 30px 20px 30px;
+        text-align: center;
+        font-size: 16px;
+        line-height: 19px;
+    }
+
+}
+
+.infobox-cntr > div {
+    //border-right: 1px solid #DDD;
+}
+
+.infobox-cntr > div:last-child {
+    //border-right: 0px;
+}
+

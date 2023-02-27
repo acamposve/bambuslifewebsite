@@ -1,0 +1,215 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Completar registro | BambusLife{% endblock %}
+
+{% block description %}Completar registro de usuario | BambusLife{% endblock %}
+
+{% block header %}
+  {{ include('components/header.html.twig') }}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('complete-registration') }}
+{% endblock %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {{ encore_entry_link_tags('complete-registration') }}
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+  <div class="columns" style="min-height: 600px;">
+    <div class="column">
+
+      {% if not completed %}
+
+          <form name="completeRegistration" id="completeRegistration"
+                method="post" action="{{ path('completeRegistration_POST', {token: token}) }}" 
+                style="padding: 40px 20px;">
+            
+            <h1 class="subtitle is-3">Completar registro</h1>
+            <h2>Verifique y complete los siguientes datos para completar su registro</h2>
+            <br>
+            {% if error %}
+              <article class="message is-danger">
+                <div class="message-body">
+                  {{ error }}
+                </div>
+              </article>
+            {% endif %}
+            
+            {% if patient is defined and patient is not null %}
+
+              <div class="columns is-multiline is-mobile" style="max-width: 600px;">
+                <div class="column is-12-desktop is-12-tablet is-12-mobile">
+                  <div class="field">
+                    <label class="label">
+                      {% if country == 'UY' or country == 'BO' or country == 'CL' or country == 'CR' or country == 'EC' or country == 'NI' or country == 'VE' %}
+                        Cédula de identidad (CI)
+                      {% elseif country == 'AR' or country == 'PE' %}
+                        Documento nacional de identidad (DNI)
+                      {% elseif country == 'BR' %}
+                        Registro Geral (RG)
+                      {% elseif country == 'CO' %}
+                        Cédula de ciudadanía (CC)
+                      {% elseif country == 'SV' %}
+                        Documento único de identidad (DUI)
+                      {% elseif country == 'GT' %}
+                        Documento personal de identificación (DPI)
+                      {% elseif country == 'HN' %}
+                        Tarjeta de identidad (TDI)
+                      {% elseif country == 'MX' %}
+                        Clave Única de Registro de Población (CURP) 
+                      {% elseif country == 'PA' %}
+                        Cédula de identidad personal (CIP)
+                      {% elseif country == 'PY' %}
+                        Cédula de identidad civil (CIC/CI)
+                      {% elseif country == 'DO' %}
+                        Cédula de identidad y electoral (CIE)
+                      {% else %}
+                        Documento 
+                      {% endif %}
+                    </label>
+                    <div class="control">
+                      <input class="input " type="text"  value="{{ patient.document }}"
+                              name="inputDocument" id="inputDocument" required
+                              placeholder="Ingrese su documento" style="width:200px">
+                    </div>
+                    <div style="font-size:13px">Sin puntos ni guiones</div>
+                  </div>
+                </div>
+                <div class="column is-6-desktop is-6-tablet is-12-mobile">
+                  <div class="field">
+                    <label class="label">Nombre</label>
+                    <div class="control">
+                      <input class="input " type="text"  value="{{ patient.given }}"
+                              name="inputGiven" id="inputGiven" required
+                              placeholder="Ingrese su nombre" >
+                    </div>
+                  </div>
+                </div>
+                <div class="column is-6-desktop is-6-tablet is-12-mobile">
+                  <div class="field">
+                    <label class="label">Apellido</label>
+                    <div class="control">
+                      <input class="input " type="text"  value="{{ patient.family }}"
+                              name="inputFamily" id="inputFamily" required
+                              placeholder="Ingrese su apellido" >
+                    </div>
+                  </div>
+                </div>
+                <div class="column is-6-desktop is-6-tablet is-12-mobile">
+                  <div class="field">
+                    <label class="label">Género</label>
+                    <div class="control">
+                      <div class="select">
+                        <select name="gender" id="gender" prevvalue="{{patient.gender}}">
+                          <option value="m" {% if patient.gender == 'm'%}selected{% endif %} >Hombre</option>
+                          <option value="f" {% if patient.gender == 'f'%}selected{% endif %}>Mujer</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="column is-6-desktop is-6-tablet is-12-mobile">
+                  <div class="field">
+                    <label class="label">Fecha de nacimiento</label>
+                    <div class="control">
+                      <input type="date" name="inputBirthdate" id="inputBirthdate" class="input" 
+                              value="{{patient.birthdate}}" 
+                              placeholder="Ingrese su fecha de nacimiento" >
+                    </div>
+                  </div>
+                </div>
+                <div class="column is-6-desktop is-6-tablet is-12-mobile">
+                  <div class="field">
+                    <label class="label">Domicilio</label>
+                    <div class="control">
+                      <input class="input " type="text"  value="{{ patient.homeAddress }}"
+                              name="inputHomeAddress" id="inputHomeAddress" required
+                              placeholder="Ingrese su domicilio" >
+                    </div>
+                  </div>
+                </div>
+                <div class="column is-6-desktop is-6-tablet is-12-mobile">
+                  <div class="field">
+                    <label class="label">Ciudad</label>
+                    <div class="control">
+                      <div  style="width: 100%;">
+                        <select id="contactSelCity" name="contactSelCity">
+                        </select>
+                      </div>
+                      <input type="hidden" id="inputHomeCityId" name="inputHomeCityId" country="{{country}}">
+                      <input type="hidden" id="inputHomeCityName" name="inputHomeCityName">
+                    </div>
+                  </div>
+                </div>
+                <div class="column is-6-desktop is-6-tablet is-12-mobile">
+                  <div class="field">
+                    <label class="label">Teléfono de contacto</label>
+                    <div class="control">
+                      <input class="input " type="text"  value="{{ patient.homePrimaryPhone }}"
+                              name="homePrimaryPhone" id="inputHomePrimaryPhone" required
+                              placeholder="Ingrese un teléfono de contacto" >
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="columns is-multiline is-mobile" style="max-width: 600px;">
+                <div class="column is-12-desktop is-12-mobile">
+                  <div class="field">
+                    <label class="label">Contraseña</label>
+                    <div class="control">
+                      <input class="input " type="password" 
+                              name="password" id="password" required
+                              placeholder="Ingrese una contraseña" style="width:200px">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <input type="hidden" id="token" name="token" value="{{token}}">
+
+              <div style="margin: 30px 0px 20px 0px;font-size: 12px;">
+                Al hacer click en "Actualizar mis datos" acepta los <a href="{{ path('terms_conditions') }}">Terminos y Condiciones</a> y la <a href="{{ path('privacy_policy') }}">Política de Privacidad</a>.
+              </div>
+              <div class="field">
+                <p class="control">
+                  <button id="btnRegister" class="button is-primary" type="submit">
+                    Actualizar mis datos
+                  </button>
+                </p>
+              </div>
+            {% endif %}
+
+          </form>
+
+      {% else %}
+        <h1 class="subtitle is-3">Registro completo</h1>
+        <h2>Gracias por registrarse con nosotros</h2>
+
+        <p style="margin-top: 20px;">
+          Usted como paciente tiene las funcionalidades para que pueda interactuar con los médicos a 
+          distancia, ya sea enviando algunos datos clínicos como también reservar una consulta presencial 
+          o por videollamada.
+        </p>
+
+        <div style="margin-top: 40px;">
+          <a  class="button is-primary" href="{{ path('clinicalProfile') }}">
+            Completar datos clínicos
+          </a>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

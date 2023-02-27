@@ -1,0 +1,392 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {{ encore_entry_link_tags('order-cspro') }}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('order-cspro') }}
+  {{ include('sd/breadcrumbs.html.twig', { 'items': [{'name':'Comprar',"url":path('order_index')},{'name':'CardioSecur Pro',"url":path('order_cspro')}] }) }}
+{% endblock %}
+
+{% block title %}Comprar CardioSecur Pro | Monitor cardiaco | BambusLife{% endblock %}
+
+{% block description %}
+ Comprar CardioSecur Pro | Monitor cardiaco con 12 o 22 derivaciones. Realice electrocardiagramas (ECG) desde su teléfono iPhone o Android.
+{% endblock %}
+
+{% block keywords %}CardioSecur Pro{% endblock %}
+
+{% block extrameta %}
+  <meta property="og:title" content="CardioSecur Pro | Monitor Cardiaco Profesional | BambusLife" />
+  <meta property="og:description" content="Registre electrocardiogramas de nivel hospitalario con su teléfono iPhone o Android de 12 o 22 derivaciones." />
+  <meta property="og:type"  content="website" />
+  <meta property="og:url"   content="https://bambus.life{{ app.request.requestUri }}" />
+  <meta property="og:image" content="{{asset('build/images/og/cspro.png')}}" />
+{% endblock %}
+
+{% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block body %}
+
+  <div class="container">
+
+    {# IMAGES AND CONFIGURATION #}
+    <div class="columns is-multiline is-mobile" style="padding: 20px;background-color: #FEFEFE;">
+
+      <div class="column is-half-desktop is-half-tablet is-full-mobile">
+        <img src="{{asset('build/images/order/cspro/image-pro.jpeg')}}" alt="ecgPro">
+      </div>
+
+      <div class="column is-half-desktop is-half-tablet is-full-mobile">
+
+        <form action="{{ path('cart_add') }}" method="post" id="formBuy">
+        {# <form action="{{ path('checkout_userinfo_post', {'mode': '0'}) }}" method="post" id="formBuy"> #}
+
+          <div style="display: flex;align-items: baseline;">
+            <h1 class="subtitle is-3">CardioSecur Pro</h1>
+            <a class="button is-small is-text" href="/docs/brochure/Folleto_CS_Pro_-_uso_Medico.pdf" style="color: #209cee;">
+              <span class="icon is-small">
+                <i class="far fa-file-pdf"></i>
+              </span>
+              <span>Descargar folleto</span>
+            </a>
+          </div>
+          
+          {# PRODUCTS #}
+          <h2 class="subtitle is-5" style="margin: 10px 0px;">Mi sistema operativo (tel&eacute;fono celular)</h2>
+          <div class="field" id="prods">
+            {% for product in priceData.product %}
+              <div class="control">
+                <label class="radio" >
+                  <input type="radio" name="cspro_os" value="{{product.code}}" data-price="{{product.price}}"
+                  data-stock="{{product.stock}}" data-islocal="{{product.isLocal ? '1' : '0'}}"
+                  checked >
+                  {{product.name}}
+                </label>
+              </div>
+            {% else %}
+              <div>No hay variantes disponibles en stock</div>
+            {% endfor %}
+          </div>
+
+          {# SUBSCRIPTIONS #}
+          <h5 class="subtitle is-5" style="margin: 25px 0px 10px 0px;">Derivaciones</h5>
+          <div class="control">
+            {% for subs in priceData.subscription %}
+              <div>
+                <label class="radio">
+                  <input type="radio" id="cspro_subs_{{subs.code}}" name="cspro_subs" value="{{subs.code}}" 
+                  data-price="{{subs.price}}" data-currency="{{subs.currency}}" 
+                  {% if (loop.index0 == 0) %}checked{% endif %} >
+                  {{subs.name}}
+                </label>
+                {# <span style="color:#AAA">( {{subs.currency}} {{subs.price}} )</span> #}
+                {% if subs.code == 'CS-PRO-SUBS-22' %}
+                  <span style="font-size: 10px;color: #FF5722;border: 1px solid #FF5722;padding: 1px 6px;border-radius: 10px;letter-spacing: 1px;">
+                    Promo<span>
+                {% endif %}
+              </div>
+            {% endfor %}
+          </div>
+
+           {# ADDITIONALS #}
+          {# {% if priceData and priceData | length > 0 %}
+              <h5 class="subtitle is-5" style="margin: 50px 0px 10px 0px;cursor:pointer" >Adicionales</h5>
+              {% for additional in priceData.additionals %}
+                <label class="checkbox">
+                  <input type="checkbox" id="{{'additional'~loop.index0}}" name="{{'additional'~loop.index0}}" value="{{additional.code}}" data-price="{{additional.price}}" class="fAdds">
+                  {{additional.name}}
+                  <span style="opacity:0.5"> ({{additional.code}}, {{additional.currency}} {{additional.price}}, {{additional.stock}})</span>
+                </label>
+              {% endfor %}
+              <input type="hidden" id="additionals" name="additionals" value="{{priceData.additionals | length }}">
+          {% endif %} #}
+
+          {# AUTOMATIC FEATURE #}
+          {# <h5 class="subtitle is-5" style="margin: 25px 0px 10px 0px;">Interpretación Automática</h5>
+          <div class="control">
+            <label class="radio">
+              <input type="radio" name="partner_auto_interpretation">
+              No
+            </label>
+            <label class="radio">
+              <input type="radio" name="partner_auto_interpretation">
+              Con int. automática
+            </label>
+          </div> #}
+
+          {# PRICES #}
+          {% if priceOptions is defined and priceOptions != NULL %}
+
+            <h5 class="subtitle is-5" style="margin: 25px 0px 10px 0px;">Opciones de pago</h5>
+            <div>
+              {# NEW OPTIONS BASED OFFER #}
+              {% for option in priceOptions %}
+
+                <div class="cspro-option">
+                  <label class="radio">
+                    <input type="radio" id="cspro_option_{{loop.index0}}" name="payment_option" 
+                        value="{{option.option}}" 
+                        data-price="{{option.price}}" 
+                        data-currency="{{option.currency}}" 
+                        {% if (loop.index0 == 0) %}checked{% endif %} >
+                    {{option.name}}
+                    <div>
+                      <span style="color:#AAA;width:100px;">
+                        {% if option.fees == 0 %}
+                          Pago único
+                        {% else %}
+                          Pago inicial
+                        {% endif %}
+                      </span>
+                      <span >
+                        <span style="font-size: 80%;">{{option.currency}}</span> <span>{{option.price}}</span>
+                      </span>
+                      {% if deliveryAvailable and loop.index0 == 0 %}
+                        <span id="isRemoteLbl" style="color: #999;font-size: 14px;display:none"><a id="priceDisclaimerDetailsBtn" href="#">Más información</a></span>
+                      {% endif %}
+                    </div>
+                    
+                    {% if option.fees > 0 or option.fees == -1 %}
+                      <div>
+                        <span style="color:#AAA;width:100px;">
+                          {% if option.fees > 0 %}
+                            {{option.fees}} cuotas
+                          {% elseif option.fees == -1 %}
+                            Mensualidad
+                          {% endif %}
+                        </span>
+                        <span>
+                          <span style="font-size: 80%;">{{option.subsCurrency}}</span> <span>{{option.subsPrice}}</span>
+                        </span>
+                      </div>
+                    {% endif %}
+                  </label>
+                </div>
+
+                {# <tr>
+                  <td class="price-tag-label"  style="min-width: 129px;padding-top: 5px;">Pago inicial:</td>
+                  <td style="padding-left:10px">
+                    <span style="font-size: 80%;">{{option.currency}}</span> 
+                    <span id="priceTag">{{option.price}}</span> 
+                    {% if deliveryAvailable %}
+                      <span id="isRemoteLbl" style="color: #999;font-size: 14px;display:none"><a id="priceDisclaimerDetailsBtn" href="#">Más información</a></span>
+                    {% endif %}
+                    <span id="isLocalLbl" style="color: #999;font-size: 14px;display:none"></span>
+                  </td>
+                </tr>
+                {% if option.fees > 0 or option.fees == -1 %}
+                  <tr>
+                    <td>
+                      <span class="price-tag-label">
+                        {% if option.fees > 0 %}
+                          {{option.fees}} consultas
+                        {% elseif option.fees == -1 %}
+                          Mensualidad
+                        {% endif %}
+                      </span>
+                    </td>
+                    <td style="padding-left:10px">
+                      <span style="font-size: 80%;" id="subsCurrency">{{option.subsCurrency}}</span> <span id="subsPrice">
+                        {{option.subsPrice}} / mes </span>
+                    </td>
+                  </tr> 
+                {% endif %} #}
+              {% endfor %}
+            </div>
+
+          {% else %}
+
+            {# OLD WAY #}
+            <table style="margin-top:20px">
+              <tr>
+                <td class="price-tag-label"  style="min-width: 129px;padding-top: 5px;">Registro inicial: <br><span style="font-size: 80%;">(pago único)</span> </td>
+                <td style="padding-left:10px">
+                  <span style="font-size: 80%;">{{priceData.currency}}</span> 
+                  <span id="priceTag">{{priceData.price}}</span> 
+                  {% if deliveryAvailable %}
+                    <span id="isRemoteLbl" style="color: #999;font-size: 14px;display:none"><a id="priceDisclaimerDetailsBtn" href="#">Más información</a></span>
+                  {% endif %}
+                  <span id="isLocalLbl" style="color: #999;font-size: 14px;display:none"></span>
+                </td>
+              </tr> 
+              {# <tr>
+                <td style="padding:10px;color: #999;font-size: 16px;line-height: 18px;">
+                  <span style="font-size: 80%;text-decoration: line-through;">{{priceData.currency}}</span> 
+                  <span style="text-decoration: line-through;">245</span> 
+                  <span style="font-size: 14px;line-height: 15px;">(precio promocional hasta 10-nov-2019)</span>
+                </td>
+              </tr> #}
+              <tr>
+                <td>
+                  <span class="price-tag-label">Subscripci&oacute;n: </span>
+                </td>
+                <td style="padding-left:10px">
+                  <span style="font-size: 80%;" id="subsCurrency">{{priceData.subsCurrency}}</span> <span id="subsPrice">{{priceData.subsPrice}} / mes </span>
+                </td>
+              </tr> 
+            </table>
+
+          {% endif %}
+
+          {# {% include 'components/electrodes-providers.html.twig' %} #}
+
+          {# CHECK AVAILABILITY IN CURRENT COUNTRY #}
+          {% if not deliveryAvailable %}
+            {% include 'components/countriesRestriction.html.twig' with {'countryName': country.name, 'showMessage':true}%}
+          {% endif %}
+          <br>
+          {% if priceData.totalStock > 0 %}
+            <div class="columns is-multiline is-1">
+              <div class="column is-narrow">
+                <button type="submit" class="button is-medium is-info" id="btnBuy">Comprar</button>
+              </div>
+              <div class="column ">
+                {# CHECK COUPONS #}
+                {% include 'components/couponsInfo.html.twig' %}
+              </div>
+            </div>
+          {% else %}
+            <div style="margin-top: 20px;color: #FF9800;">
+              <i class="fas fa-exclamation-triangle"></i>
+              Moment&aacute;neamente sin stock
+            </div>
+          {% endif %}
+        
+          {% include 'components/price-tag-disclaimer.html.twig' %}
+
+        </form>
+
+      </div>
+
+    </div>
+
+    {# DESCRIPTION #}
+    <div class="columns white-box" style="margin: 20px 0px;">
+      <div class="column">
+        {# <h5 class="subtitle is-5" style="margin: 10px 0px;">El registro inicial de CardioSecur incluye:</h5>
+        <div class="content">
+          <ul>
+            <li>Cable ECG ultra ligero de alta tecnología (50 g)</li>
+            <li>Un mes de tele-asistencia gratuita para entrenamiento y consultas de 2da. opinión con cardiólogos, para que conozca el equipo y las funcionalidades del Ecosistema Colaborativo de Salud BambusLife.</li>
+            <li>Un usuario gratuito del EHR Express para uso por médicos independientes o clínicas, compatible con los estándares de la Historia Clínica Electrónica Nacional (HCEN), SNOMED CT, LOINC, HL7.</li>
+          </ul>
+        </div>
+        <h5 class="subtitle is-5" style="margin: 10px 0px;">La suscripci&oacute;n de CardioSecur incluye:</h5>
+        <div class="content">
+          <ul>
+            <li>La aplicación CardioSecur y todas las actualizaciones futuras</li>
+            <li>Número ilimitado de ECGs (hasta 30 minutos por ECG)</li>
+            <li>Acceso a la plataforma de dispositivos médicos compatible con GDPR</li>
+            <li>Archivo de ECG local en el iPhone o iPad</li>
+            <li>Asignación de ECG a cada paciente y opción para insertar comentarios</li>
+            <li>Envíe ECG directamente desde su iPhone o iPad (correo electrónico, iChat, Airdrop)</li>
+            <li>Imprima ECG directamente desde su iPhone o iPad (AirPrint)</li>
+            <li>Opción: 22 derivaciones</li>
+            <li>Opción: interpretación automática o medición a través del algoritmo HES.</li>
+            <li>Opción: transmisión de datos a su Sistema de Información del Hospital (HIS) a través de una conexión API</li>
+            <li>¡iPhone o iPad no están incluidos en esta compra!</li>
+          </ul>
+        </div> #}
+        <h5 class="subtitle is-5" style="margin: 10px 0px;">El arrendamiento de CardioSecur PRO incluye:</h5>
+        <div class="content">
+          <ul>
+            <li>Cable ECG ultra ligero de alta tecnología (50 g)</li>
+            <li>La aplicación CardioSecur y todas las actualizaciones futuras</li>
+            <li>Un usuario gratuito para el médico en el Portal de Médico, ideal para uso independiente o por clínicas, compatible con los estándares de la Historia Clínica Electrónica Nacional (HCEN), SNOMED CT, LOINC, HL7.</li>
+            <li>Número ilimitado de ECGs (de hasta 30 minutos por ECG)</li>
+            <li>Archivo de ECG local en el iPhone o iPad</li>
+            <li>Asignación de ECG a cada paciente y opción para insertar comentarios</li>
+            <li>Envíe ECG directamente desde su iPhone o iPad (correo electrónico, iChat, Airdrop)</li>
+            <li>Imprima ECG directamente desde su iPhone o iPad (AirPrint)</li>
+            <li>Opción: 12 o 22 derivaciones</li>
+            <li>Opción: interpretación automática o medición a través del algoritmo HES.</li>
+            <li>Opción: transmisión de datos al Sistema de Información del Hospital (HIS) a través de una conexión API</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    {# SPECS AND DETAILS #}
+    <div>
+
+      <div class="tabs is-boxed is-fullwidth" style="margin-bottom: 0px;">
+        <ul>
+          <li class="tab is-active" onclick="openTab(event,'tabShipping')"><a>Entrega</a></li>
+          <li class="tab" onclick="openTab(event,'tabCompat')"><a>Compatibilidad</a></li>
+          <li class="tab" onclick="openTab(event,'tabCancel')"><a>Cancelación</a></li>
+          <li class="tab" onclick="openTab(event,'tabSpecs')"><a>Detalles técnicos</a></li>
+        </ul>
+      </div>
+      <div class="container section" style="margin: -1px 0px 30px 0px;border: 1px solid #DDD;padding: 10px;background-color: #FEFEFE;">
+        <div id="tabShipping" class="content-tab" >
+          <div class="content">
+            <ul>
+              <li>Tiempo de entrega: 48 hrs.</li>
+              <li>Entregas en Uruguay y Chile (los costos pueden variar)</li>
+              <li>M&eacute;todos de pago: tarjetas de cr&eacute;dito, d&eacute;bito (via MercadoPago)</li>
+              <li>El celular o tablet no est&aacute;n incluidos</li>
+            </ul>
+          </div>
+        </div>
+        <div id="tabCompat" class="content-tab" style="display:none">
+          <div class="content">
+            <h6 class="subtitle is-6">Apple iOS (se requiere iOS 8 o superior) *</h6>
+            <p>Compatible con:</p>
+            <ul>
+              <li>iPhone X, iPhone XS, iPhone XR, iPhone XS Max</li>
+              <li>iPhone 8, iPhone 8 Plus</li>
+              <li>iPhone 7, iPhone 7 Plus</li>
+              <li>​iPhone 6s, iPhone 6s Plus</li>
+              <li>iPhone 6, iPhone 6 Plus, iPhone SE</li>
+              <li>iPhone 5, iPhone 5s, iPhone 5c</li>
+            </ul>
+            <div style="font-size: 11px;color: #999;">
+              <p>* Un iPhone / iPad no está incluido con su entrega. iPhone / iPad son marcas comerciales de Apple Inc., registradas en los EE. UU. y en otros países. "Hecho para iPhone / iPad" significa que un accesorio electrónico ha sido diseñado para conectarse específicamente a iPhone y iPad y ha sido certificado por el desarrollador para cumplir con los estándares de rendimiento de Apple. Apple no es responsable del funcionamiento de este dispositivo ni de su cumplimiento con las normas de seguridad y reglamentarias. Tenga en cuenta que el uso de este accesorio con iPhone / iPad puede afectar el rendimiento inalámbrico.</p>
+            </div>
+          </div>
+        </div>
+        <div id="tabCancel" class="content-tab" style="display:none">
+          <div class="content">
+            {# <ul>
+              <li>Usted puede cancelar instantáneamente su suscripci&oacute;n en cualquier mes, con sólo un pre-aviso de 30 días</li>
+              <li>En este caso, BambusLife pausar&aacute; sus funciones (uso del dispositivo, 
+                actualizaci&oacute;n de aplicaciones m&oacute;viles) 
+                hasta que eventualmente decida reactivar su suscripci&oacute;n. Si usted no 
+                cancela, su suscripci&oacute;n se renovar&aacute; autom&aacute;ticamente cada mes. 
+                El cable ECG de CardioSecur es de su propiedad. </li>
+            </ul> #}
+            El contrato de arrendamiento es de 1 año, luego del primer año usted puede cancelar su suscripción en cualquier mes, con solo un pre-aviso de 30 días y previa entrega del dispositivo.
+          </div>
+        </div>
+        <div id="tabSpecs" class="content-tab" style="display:none">
+          <div class="content">
+            <ul>
+              <li>Modos de revisión y grabación.</li>
+              <li>Desplazar y hacer zoom en el ECG</li>
+              <li>Eje de tiempo: 10; 25; 50 mm / s</li>
+              <li>Eje de amplitud: 0.5; 1; 2 mV / cm</li>
+              <li>Filtros: tensión muscular, 50 Hz.</li>
+              <li>Fácil exportación de datos de ECG como PDF a través de correo electrónico, AirPrint, AirDrop, iMessage u otros servicios de mensajería instalados</li>
+              <li>Lectura rápida: registre un ECG con un solo clic en una situación de emergencia</li>
+              <li>10,000 minutos de grabación de ECG requieren 1 GB de almacenamiento</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+  </div>
+
+{% endblock %}
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

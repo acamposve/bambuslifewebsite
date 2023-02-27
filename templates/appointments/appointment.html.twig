@@ -1,0 +1,172 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reserva de cita | BambusLife{% endblock %}
+
+{% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {{ encore_entry_link_tags('appointment') }}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('appointment') }}
+{% endblock %}
+
+{% block body %}
+
+<div class="container" style="min-height: 600px;padding:10px">
+
+  {# ERROR MSG #}
+  {% if error_msg is defined and error_msg != NULL %}
+    <div class="columns is-8" style="">
+      <div class="column">
+        <article class="message is-danger">
+          <div class="message-body">
+            {{ error_msg | raw }}
+          </div>
+        </article>
+      </div>
+    </div>
+  {% endif %}
+
+  <div style="margin: 0 auto;max-width: 400px;box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.4);border-radius: 5px;">
+    <div style="padding: 15px 30px;">
+      <div class="columns is-mobile is-multiline">
+        {% if confirmed %}
+          <div class="column is-12 has-text-centered">
+            <div style="padding:20px 20px 0px 20px;font-size:90px">
+              <i class="far fa-check-circle" style="font-size: 70px;padding: 30px;color: #4CAF50;"></i>
+            </div>
+          </div>
+          <div class="column is-12 has-text-centered">
+            <div class="appo-stats appo-stats-bok">Reserva confirmada</div>
+          </div>
+        {% else %}
+          <div class="column is-12 has-text-centered">
+            <div style="padding:20px 20px 0px 20px;font-size:90px"><i class="fas fa-calendar-alt" style="color: #AAA;"></i></div>
+          </div>
+          <div class="column is-12 has-text-centered">
+            {% if appointment.status == 'CANCELLED' %}
+              <div class="appo-stats appo-stats-can">
+                La reserva esta cancelada
+              </div>
+            {% elseif appointment.status == 'BOOKED' %}
+              {% if appointment.endDateDirection == 'future' %}
+                <div class="appo-stats appo-stats-bok">La reserva esta activa</div>
+              {% else %}
+                <div class="appo-stats appo-stats-past">La cita ya ocurrió</div>
+              {% endif %}
+            {% else %}
+              <div></div>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+      <div class="columns is-mobile is-multiline">
+        <div class="column is-12 has-text-centered" style="border-bottom: 1px solid #DDD;">
+          <div style="font-size:20px;font-weight:600">{{appointment.startDateHour}}</div>
+        </div>
+        <div class="column is-12 has-text-centered">
+          <div style="font-size:20px;font-weight:600">{{appointment.practitioner.name}}</div>
+        </div>
+      </div>
+      <div class="columns">
+        <div class="column is-12 has-text-centered" style="color: #888;text-transform: uppercase;font-size: 13px;">
+          <div>{{appointment.startDateDay}} {{appointment.startDateDayN}} de {{appointment.startDateMonth}}, {{appointment.startDateYear}}</div>
+          <div style="font-size: 80%;">( {{appointment.startDateRelative}} )</div>
+          {% if not appointment.roomParticipants is defined or appointment.roomParticipants == NULL %}
+            <div style="margin-top: 10px;">
+              {{appointment.organization.name}}, {{appointment.location.name}}<br>
+              {{appointment.location.address}}, {{appointment.location.city}}<br>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+
+      {# VIRTUAL ENCOUNTER #}
+      {% if appointment.roomParticipants is defined
+        and appointment.status == 'BOOKED'
+        and appointment.roomParticipants != NULL 
+        and (appointment.startDateDirection == 'future' or (appointment.startDateDirection == 'past') 
+        and appointment.endDateDirection == 'future' ) %}
+        <div class="columns" style="max-width: 400px;margin: 0 auto;background-color: #FAFAFA;border-radius: 5px;border: 1px solid #EEE;">
+          <div class="column is-12 has-text-centered">
+            <div>Esta cita es virtual, al momento de la consulta haga click en acceder para entrar a la misma.</div>
+            {% if appointment.startDateDirection == 'past' and appointment.endDateDirection == 'future' %}
+              <a class="button is-link is-rounded" href="{{ path('virtualAppointment', {appId: appointment.encodedId}) }}" style="margin-top: 12px;">
+                <span>Acceder</span>
+              </a>
+            {% elseif appointment.startDateDirection == 'future' %}
+              <a class="button is-link is-rounded" disabled >
+                <span>Acceder</span>
+              </a>
+              <div style="font-size: 12px;color: #777;margin-top: 10px;">El acceso se habilitará a la hora indicada de la cita</div>
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+
+      {# CANCEL BUTTON #}
+      {% if appointment.status == 'BOOKED' and appointment.endDateDirection == 'future' %}
+        <div class="columns">
+          <div class="column is-12 has-text-centered">
+            <a id="btnCancel" class="button is-text " style="margin-top: 12px;">
+              <span>Cancelar reserva</span>
+            </a>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+
+    {# METADATA #}
+    <div style="background: #F5F5F5;color: #BBB;font-size: 10px;text-align: center;border-bottom-left-radius: 5px;border-bottom-right-radius: 5px;">
+      #{{appointment.id}}
+    </div>
+  </div>
+
+  {# Back #}
+  <div class="columns is-8" style="padding: 20px 20px 100px 20px;">
+    <div class="column">
+      <div class="control">
+        <a class="button is-white" href="{{ path('appointments') }}">
+          <span class="icon">
+            <i class="fas fa-chevron-left"></i>
+          </span>
+          <span>Volver</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  {# Modal Confirm cancel #}
+  <div id="modalCancel" class="modal" style="position: fixed;">
+    <div class="modal-background" id="modalCancelBack"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Confirme la cancelación</p>
+      </header>
+      <section class="modal-card-body">
+        <form action="{{ path('cancelAppointment', {appId: appId}) }}" method="POST" id="formCancel">
+          <div style="margin-bottom: 10px;padding-bottom: 10px;">
+            ¿Está seguro que desea cancelar la reserva?
+          </div>
+        </form>
+      </section>
+      <footer class="modal-card-foot" style="justify-content: flex-end;">
+        <button class="button is-danger" id="modalCancelOK">Si, cancelar la reservar</button>
+        <button class="button" id="modalCancelCancel">Cancelar</button>
+      </footer>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}La Secretaría Nacional del Deporte recibió aparatos para prevenir problemas cardíacos | BambusLife{% endblock %}
+
+{% block description %}La Secretaría Nacional del Deporte recibió aparatos para prevenir problemas cardíacos | BambusLife{% endblock %}
+
+{% block keywords %}Secretaría Nacional del Deporte aparatos prevenir problemas cardíacos bambuslife cardiosecur electrocardiograma ECG{% endblock %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {{ encore_entry_link_tags('pressrelease') }}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('pressrelease') }}
+{% endblock %}
+
+{% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block body %}
+
+<div class="container white-box" style="padding: 20px 20px 120px 20px;max-width: 800px;">
+  <h1 class="subtitle is-3" style="margin-top: 10px;margin-bottom: 0px;">
+    La Secretaría Nacional del Deporte recibió aparatos para prevenir problemas cardíacos
+  </h1>
+  <time style="color: #999;font-size: 14px;">10 de Septiembre 2020 </time>
+  <div style="display: flex;">
+    <figure class="image is-4by3">
+      <img src="{{ asset('build/images/pressreleases/p_secnacdep.jpg') }}" alt="La Secretaría Nacional del Deporte recibió aparatos para prevenir problemas cardíacos">
+    </figure>
+  </div>
+  <div style="padding-top:15px;">
+    <p>El jueves pasado el Directorio de BambusLife con mucha alegría entrego 20
+      equipos de registro de electrocardiogramas a la Secretaria Nacional del Deporte,
+      para el desarrollar un piloto de Telemedicina, en particular de Telemetría de
+      Electrocardiogramas, con el fin de realizar el control y prevención de los más de
+      200.000 deportistas del Uruguay.
+    </p>
+    <br>
+    <p>
+      <a href="https://www.ovaciondigital.com.uy/multideportivo/secretaria-nacional-deporte-recibio-aparatos-prevenir-problemas-cardiacos.html">
+        Ver nota completa
+      </a>
+    </p>
+
+
+  </div>
+  
+</div>
+
+{% endblock %}
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

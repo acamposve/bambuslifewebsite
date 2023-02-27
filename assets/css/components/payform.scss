@@ -1,0 +1,25 @@
+.payForm {
+  padding: 2px;
+  max-width: 400px;
+  margin: 0 auto 40px auto;
+  
+
+  .control {
+
+    .icon {
+      color: #999;
+      top: 3px;
+      font-size: 18px;
+      left: 6px;  
+    }
+
+  }
+
+  .form-section {
+    border: 1px solid #EEE;
+    border-radius: 4px;
+    padding: 8px;
+    margin-top: 5px;
+    text-align: left;
+  }
+}

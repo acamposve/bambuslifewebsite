@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+{{ encore_entry_link_tags('practitioner-register') }}
+{% endblock %}
+
+
+{% block javascripts %}
+{{ parent() }}
+{{ encore_entry_script_tags('practitioner-register') }}
+{% endblock %}
+
+{% block title %}Bienvenido | BambusLife{% endblock %}
+
+{% block header %}
+{{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block body %}
+
+
+<div class="container" style="background-color: #FEFEFE;padding: 10px;">
+
+  <div class="columns" style="min-height: 400px;">
+    <div class="column " style="text-align:center">
+      <h5 class="title is-5">¡Bienvenido a BambusLife!</h5>
+      <div>Hola {{practitionerName}}, le damos la bienvenida a BambusLife.</div>
+      <div>
+        Puede iniciar sesi&oacute;n en <a href="https://bambus.life/">BambusLife</a> o en 
+        nuestro Portal de Médicos para administrar su organizac&oacute;n
+      </div>
+      <div style="margin-top:30px">
+        <a href="http://app.bambus.life/login" class="button is-primary">
+          Portal de Médicos
+        </a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}
+
+{% block footer %}
+{{ include('components/footer.html.twig') }}
+{% endblock %}

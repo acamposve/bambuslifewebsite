@@ -1,0 +1,13 @@
+@media (max-width: 787px) {
+  .retable {
+    .retableRow .column.billTotal{
+      position: absolute;
+      right: 6px;
+      top: 10px;
+      font-weight: 500;
+    }
+    .retableRow .column.billPeriod, .retableRow .column.billStatus{
+      padding: 0px 8px;
+    }
+  }
+}

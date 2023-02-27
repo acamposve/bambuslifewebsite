@@ -1,0 +1,183 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reservar | BambusLife{% endblock %}
+
+{% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {{ encore_entry_link_tags('resources-select') }}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('resources-select') }}
+{% endblock %}
+
+{% block body %}
+
+<div class="container " style="min-height: 600px;padding:10px">
+
+  {# STEPS #}
+  {# <div class="bl-steps">
+    <ul class="steps is-narrow is-medium is-centered has-content-centered">
+      <li class="steps-segment has-gaps">
+        <span class="steps-marker">
+          <span class="icon">
+            <i class="fas fa-search"></i>
+          </span>
+        </span>
+        <div class="steps-content">
+          <p class="heading">Buscar recursos</p>
+        </div>
+      </li>
+      <li class="steps-segment is-active has-gaps">
+        <span class="steps-marker">
+          <span class="icon">
+            <i class="fas fa-id-card-alt"></i>
+          </span>
+        </span>
+        <div class="steps-content">
+          <p class="heading" style="color: #38b09d;">Seleccionar recurso</p>
+        </div>
+      </li>
+      <li class="steps-segment has-gaps">
+        <span class="steps-marker">
+            <span class="icon">
+            <i class="fas fa-calendar-alt"></i>
+            </span>
+        </span>
+        <div class="steps-content">
+            <p class="heading">Hora y dia</p>
+        </div>
+      </li>
+      <li class="steps-segment has-gaps">
+        <span class="steps-marker">
+            <span class="icon">
+            <i class="fas fa-laptop-medical"></i>
+            </span>
+        </span>
+        <div class="steps-content">
+            <p class="heading">Razon y tipo de consulta</p>
+        </div>
+      </li>
+      <li class="steps-segment has-gaps">
+        <span class="steps-marker">
+            <span class="icon">
+            <i class="fas fa-check"></i>
+            </span>
+        </span>
+        <div class="steps-content">
+            <p class="heading">Confirmacion</p>
+        </div>
+      </li>
+      <li class="steps-segment has-gaps">
+        <span class="steps-marker">
+            <span class="icon">
+            <i class="fas fa-notes-medical"></i>
+            </span>
+        </span>
+        <div class="steps-content">
+            <p class="heading">Datos pre consulta</p>
+        </div>
+      </li>
+    </ul>
+  </div> #}
+
+  {# ERROR MSG #}
+  {% if error_msg is defined and error_msg != NULL %}
+    <div class="columns is-8" style="">
+      <div class="column">
+        <article class="message is-danger">
+          <div class="message-body">
+            {{ error_msg | raw }}
+          </div>
+        </article>
+      </div>
+    </div>
+  {% else %}
+    {% if resources is defined and resources | length > 0 %}
+      <div class="appwzrd-cntr">
+        <div class="appwzrd-header">
+          <div class="appwzrd-title">
+            <span class="icon">
+              <i class="fas fa-id-card-alt"></i>
+            </span>
+            <span>
+              Médicos disponibles
+            </span>
+          </div>
+          <div class="appwzrd-subtitle">
+            Seleccione un médico de la lista para continuar
+          </div>
+        </div>
+        {% for resource in resources %}
+          <div class="column is-12-desktop is-12-tablet is-12-mobile" >
+            <div class="appn-wiz-res-list" 
+                 data-practId="{{resource.practitionerId}}"
+                 data-practRoleId="{{resource.practitionerRoleId}}"
+                 data-serviceId="{{resource.serviceId}}">
+              <div class="columns is-mobile is-multiline">
+                <div class="column is-8-desktop is-8-tablet is-12-mobile">
+                  <h4 class="subtitle is-5" style="color: #111;">{{resource.practitionerName}}</h4>
+                  <h5 class="subtitle is-7">Servicio: {{resource.serviceName}}</h5>
+                  <div class="appn-wiz-res-list-xt" style="display: flex;">
+                    <i class="fas fa-hospital" style="margin-right: 5px;"></i>
+                    <div>
+                      <div style="color: #444;">{{resource.organizationName}}</div>
+                      <div>{{resource.locationName}} - {{resource.locationAddress}}</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="column is-4-desktop is-4-tablet is-12-mobile appn-wiz-res-btn">
+                  <a href="{{ path('selectAppointmentDate', {
+                    practId: resource.practitionerId, 
+                    practRoleId: resource.practitionerRoleId, 
+                    serviceId: resource.serviceId,
+                    locationId: resource.locationId}) }}" 
+                    class="button is-primary is-rounded">
+                    <span>Reservar cita</span>
+                    <span class="icon is-small">
+                      <i class="fas fa-chevron-right"></i>
+                    </span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>            
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="columns is-8" style="padding: 20px 20px 10px 20px;">
+        <div class="column">
+        <div style="font-size: 21px;font-weight: 100;">No se encontró ningun médico disponible</div>
+        <div style="color: #AAA;">Vuelva a intente cambiando los filtros de búsqueda</div>
+        </div>
+      </div>
+    {% endif %}
+    
+  {% endif %}
+
+  {# Back #}
+  <div class="columns is-8" style="padding: 20px 20px 100px 20px;">
+    <div class="column">
+      <div class="control">
+        <a class="button is-white" onclick="history.back()">
+          <span class="icon">
+            <i class="fas fa-chevron-left"></i>
+          </span>
+          <span>Volver</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

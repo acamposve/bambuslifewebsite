@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Iniciar sesi&oacute;n en tu cuenta | BambusLife{% endblock %}
+
+{% block description %}Inicia sesi&oacute;n en BambusLife para poder comprar y administrar tus dispositivos | BambusLife{% endblock %}
+
+{% block keywords %}Iniciar sesion, Login{% endblock %}
+
+{% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+  <div class="columns" style="min-height: 600px;">
+    {# <div class="column is-three-fifths is-hidden-mobile">
+      <div>
+        <picture>
+          <source srcset="{{asset('build/images/login.webp')}}" type="image/webp">
+          <source srcset="{{asset('build/images/login.png')}}" type="image/png">
+          <img src="{{asset('build/images/login.png')}}" alt="loginImg">
+        </picture>
+      </div>
+    </div> #}
+    <div class="column is-5">
+        <br><br><br><br>
+        <h1 class="subtitle is-3">Portal M&eacute;dico &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://medico.bambus.life/">
+        <button class="button is-primary is-fullwidth-mobile">Ingresar</button></a><br></h1>
+        <h1 class="subtitle is-3">Portal Paciente &nbsp;&nbsp;&nbsp;&nbsp;<a href="{{ path('ventanillalogin') }}">
+        <button class="button is-primary is-fullwidth-mobile">Ingresar</button></a><br></h1>        
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

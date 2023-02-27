@@ -1,0 +1,12 @@
+.price-tag{
+  margin: 30px 0px 15px 0px;
+  font-size: 18px;
+
+  .price-tag-label {
+    color: #999;
+    font-size: 90%;
+    line-height: 114%;
+  }
+}
+
+@import "/order-mobile.scss";

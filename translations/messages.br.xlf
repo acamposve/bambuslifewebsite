@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="uy" target-language="br" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="o51L1Yk" resname="La tecnología al servicio de una mejor calidad de vida">
+        <source>La tecnología al servicio de una mejor calidad de vida</source>
+        <target>Tecnologia a serviço de uma melhor qualidade de vida</target>
+      </trans-unit>
+      <trans-unit id="3KGVF9i" resname="Ahora los médicos pueden registrar fácilmente un ECG, de 12 derivaciones, con un cable ultraligero (50 g) que requiere sólo 4 electrodos y una aplicación.">
+        <source>Ahora los médicos pueden registrar fácilmente un ECG, de 12 derivaciones, con un cable ultraligero (50 g) que requiere sólo 4 electrodos y una aplicación.</source>
+        <target>Agora os médicos podem gravar facilmente um ECG de 12 derivações, com um cabo ultraleve (50 g) que requer apenas 4 eletrodos e uma aplicação.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

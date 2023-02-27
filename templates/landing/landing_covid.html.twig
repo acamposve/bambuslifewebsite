@@ -1,0 +1,166 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}COVID-19 | BambusLife{% endblock %}
+
+{% block header %}
+{{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+{{ encore_entry_link_tags('landing-covid') }}
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+{{ encore_entry_script_tags('landing-covid') }}
+{% endblock %}
+
+{% block body %}
+
+<div id="covid-content" class="container">
+    <!-- Banner COVID -->
+    <section class="hero is-primary container covid">
+        <div class="hero-body columns has-text-centered">
+            <div class="column"><img src="{{ asset('build/images/covid.svg') }}" width="250" height="40"></div>
+        </div>
+    </section>
+    <div class="columns">
+        <div class="column">
+            <section class="accordions">
+                <article class="accordion covid-article-1">
+                    <div class="columns is-variable is-8" style="margin-right: 0;">
+                        <div class="column is-two-thirds has-text-justified">
+                            <h2>¿Cómo puede ayudar un Tele-ECG móvil durante la crisis de Coronavirus COVID - 19?</h2>
+                            <h3><strong>CASO ALEMANIA</strong> (artículo traducido)</h3>
+                            <p>La pandemia causada por el nuevo coronavirus COVID-19 está aumentando actualmente en todo el mundo y la crisis resultante también está teniendo un gran impacto en los sistemas de salud. Los médicos<sup>1</sup> y las principales asociaciones profesionales, como el Colegio Americano de Cardiología (ACC)<sup>2</sup>, ahora exigen la implementación rápida de la telemedicina para romper las cadenas de infección y aliviar la carga del sistema de salud.</p>
+                        </div>
+                        <div class="column">
+                            <img src="{{ asset('build/images/covid-1.jpg') }}" class="is-fullwidth">
+                        </div>
+                    </div>
+                    <div class="accordion-header toggle">
+                        <p id="accordion-alemania">Leer el artículo completo<span></span></p>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="accordion-content">
+                            <div class="columns is-variable is-8" style="margin-right: 0;">
+                                <div class="column is-two-thirds has-text-justified">
+                                    <p>La pandemia causada por el nuevo coronavirus COVID-19 está aumentando actualmente en todo el mundo y la crisis resultante también está teniendo un gran impacto en los sistemas de salud. Los médicos1 y las principales asociaciones profesionales, como el Colegio Americano de Cardiología (ACC), ahora exigen la implementación rápida de la telemedicina para romper las cadenas de infección y aliviar la carga del sistema de salud.</p>
+                                    <p>Si bien los hospitales y las prácticas médicas están llegando a sus límites con sus recursos, la única medida sensata en caso de sospecha de infección es evitar el contacto personal con otras personas. El distanciamiento social también se recomienda al público en general y muchos países tienen toques de queda, prohibiciones de contacto y otras medidas para minimizar la propagación de la infección. Por lo tanto, las recomendaciones oficiales ahora recomiendan contactar a médicos o clínicas por teléfono. Sin embargo, los casos sospechosos de enfermedad cardiovascular en particular podrían tratarse de manera mucho más eficiente. Esto se demuestra mediante dispositivos médicos basados en aplicaciones basados en tecnologías de ECG móviles que ya están disponibles en la actualidad.</p>
+                                    <p>"Un Tele-ECG móvil (CardioSecur) puede ayudar muy fácilmente a los pacientes con COVID-19 con afecciones cardíacas a detectar rápidamente posibles complicaciones sin tener que salir de casa. La implementación de la atención telemédica debería comenzar de inmediato", exige el Dr. Niels Jacobsohn, cardiólogo de Berlín. . De hecho, los pacientes cardíacos tienen un riesgo significativamente mayor si se enferman con el nuevo coronavirus y, según los números de casos hasta la fecha, aproximadamente el 40% de los pacientes hospitalizados con COVID-19 padecen enfermedades cardiovasculares crónicas.</p>
+                                    <p>Por lo tanto, el ACC también recomienda la identificación rápida y el aislamiento de pacientes cardiovasculares con síntomas COVID-19 de otros pacientes. Sin embargo, los síntomas de una infección por COVID-19 pueden superponerse con los síntomas clásicos y los cuadros clínicos típicos de infarto agudo de miocardio (IAM) y existe un riesgo de diagnóstico insuficiente. Aquí, también, un ECG móvil puede apoyar el diagnóstico.</p>
+                                    <p>Otra ventaja decisiva de la telemedicina es la mejora estructural para clínicas y prácticas médicas totalmente utilizadas. "La atención nacional para pacientes cardíacos con un tele-ECG móvil ahora es necesaria. Puede aliviar enormemente las clínicas y, por ejemplo, prevenir una infección adicional por parte del personal de la clínica sin síntomas. Los cardiólogos ahora usan CardioSecur", dice el Dr. Jacobsohn. Los pacientes sin síntomas de COVID-19 que necesitan un diagnóstico de ECG simplemente pueden enviarlo desde su casa a su médico de cabecera, cardiólogo o internista. Los pacientes que ya dieron positivo para COVID-19 y tienen un mayor riesgo cardiovascular pueden registrar un ECG en el hogar en cuarentena y recibir un desencadenante para actuar. El médico personal obtiene información sobre el ECG y, en la mayoría de los casos, puede hacer un diagnóstico sin contacto personal. En caso de eventos cardíacos graves, estos</p>
+                                </div>
+                                <div class="column has-text-justified">
+                                    <p>
+                                      pacientes pueden recibir ayuda rápida y efectiva. 
+                                      Sin embargo, en el caso de hallazgos discretos de ECG, los pacientes pueden quedarse en casa con tranquilidad y 
+                                      evitar visitas innecesarias a los consultorios médicos y hospitales donde el riesgo de infección es particularmente alto. 
+                                      Esto minimiza la probabilidad de infección y el riesgo de exponerse a COVID-19.
+                                    </p>
+                                    <p>Más allá del riesgo personal, también hay un efecto económico positivo para la salud, ya que los pacientes solo visitan la clínica en caso de emergencia y el personal y los recursos materiales ya agotados, como los médicos, el personal de enfermería y las camas, están disponibles para los casos realmente graves de COVID-19.</p>
+                                    <br />
+                                    <p class="is-size-7">1 Judd E. Hollander, M.D. and Brendan G. Carr, M.D. "Virtually Perfect? Telemedicine for Covid-19". The New England Journal of Medicine. March 11, 2020. <a href="https://www.nejm.org/doi/full/10.1056/NEJMp2003539" target="_blank">https://www.nejm.org/doi/full/10.1056/NEJMp2003539</a></p>
+                                    <p class="is-size-7">2 American Colege of Cardiology. "Telehealth: Rapid Implementation For Your Cardiology Clinic (Updated March 24, 2020)". March 13, 2020. <a href="https://www.acc.org/latest-in-cardiology/articles/2020/03/01/08/42/feature-telehealth-rapid-implementation-for-your-cardiology-clinic-coronavirus-disease-2019-covid-19" target="_blank">https://www.acc.org/latest-in-cardiology/articles/2020/03/01/08/42/feature-telehealth-rapid-implementation-for-your-cardiology-clinic-coronavirus-disease-2019-covid-19</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="accordion covid-article-2">
+                    <div class="columns">
+                        <div class="column has-text-centered">
+                            <h2>Servicio de Telemetría Cardíaca para uso Intra-Hospitalario y Domiciliario en pacientes COVID-19</h2>
+                        </div>
+                    </div>
+                    <div class="columns is-variable is-8">
+                        <div class="column is-two-thirds has-text-justified">
+                            <p>Este Servicio de Telemetría Cardíaca que se basa en proveer los equipos médicos CardioSecur para uso intra-hospitalario y domiciliario en pacientes afectados al COVID-19 y a aquellos pacientes crónicos cardíacos que no pueden ser normalmente atendidos dadas las recomendaciones de mantenimiento de la distancia social. El médico puede para realizar el ECG desde fuera de la habitación del paciente, se ejecuta el registro a distancia (telemetría), diminuyendo así la exposición de carga viral del profesional de salud.</p>
+                            <div class="columns logos">
+                                <div class="column is-narrow">
+                                    <a href="https://www.german-ma.de/en/">
+                                        <img src="{{ asset('build/images/made-in-germany.png') }}" alt="Made In Germany" title="Made In Germany">
+                                    </a>
+                                </div>
+                                <div class="column is-narrow">
+                                    <a href="">
+                                        <img src="{{ asset('build/images/ce.png') }}" alt="" title="">
+                                    </a>
+                                </div>
+                                <div class="column is-narrow">
+                                    <a href="">
+                                        <img src="{{ asset('build/images/tuv.png') }}" alt="" title="">
+                                    </a>
+                                </div>
+                                <div class="column is-narrow">
+                                    <a href="">
+                                        <img src="{{ asset('build/images/iso.png') }}" alt="" title="">
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="column">
+                            <img src="{{ asset('build/images/covid-ilustracion.svg') }}" class="is-fullwidth">
+                        </div>
+                    </div>
+                    <div class="accordion-header toggle">
+                        <p id="accordion-telemetria">Más información <span></span></p>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="accordion-content">
+                            <div class="columns is-variable is-8">
+                                <div class="column is-two-thirds has-text-justified">
+                                    <p>Los pacientes COVID-19, si bien son tratados de varias formas en este momento, tienen que ser monitoreados en su funcionamiento cardíaco, ya sea por temas de embolia, coágulos y/o por los medicamentos, ya que pueden incidir en cambios del QTc del paciente.</p>
+                                    <p>Cada paciente tendrá un equipo médico CardioSecur en su sala o domicilio con el fin que pueda realizar su registro del electrocardiograma, sin intervención del profesional de salud de piso. Esta modalidad permite que el médico especialista realice el informe de diagnóstico y control sin contacto con el paciente afectado.</p>
+                                </div>
+                                <div class="column">
+                                    <img src="{{ asset('build/images/esquema.svg') }}" alt="Bambus Life">
+                                </div>
+                            </div>
+                            <div class="columns">
+                                <div class="column has-text-justified">
+                                    <p>Los principales servicios a brindar en base a los equipos médicos CardioSecur son:</p>
+                                    <ul>
+                                        <li>atención de pacientes COVID-19 que están internado en salas/habitaciones de cuidados intensivos e intermedios en entidades médicas.</li>
+                                        <li>atención de pacientes COVID-19 que están en cuidados domiciliarios con problemas cardíacos previos.</li>
+                                        <li>atención de pacientes cardíacos crónicos sin COVID-19 y que tienen resentida su asistencia debido al foco en la atención COVID-19.</li>
+                                        <li>soporte a las policlínicas de atención primaria que no tienen especialistas, con el fin de que los pacientes no se trasladen para realizar exámenes cardiológicos de control. </li>
+                                    </ul>
+                                    <br>
+                                    <p class="txt-blue"><strong>Objetivo Principal</strong></p>
+                                    <p>
+                                        Fortalecer el cuidado de los profesionales de salud minimizando la exposición de los mismos a la carga viral al disminuir el ingreso a la sala de internación o domicilio para realizar los controles a los pacientes.
+                                    </p>
+                                    <p>Como resultados secundarios se destacan:</p>
+                                    <ul>
+                                        <li>mejora de la disponibilidad de los tiempos en actividad de los médicos, ya que no deberían realizar los protocolos que debían realizar al entrar a una habitación o ir a un domicilio.</li>
+                                        <li>ahorro de material médico descartable que usan los profesionales de salud cada vez que ingresan a una sala o domicilio con paciente COVID-19.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+            </section>
+        </div>
+    </div>
+    <div class="columns">
+        <div class="column has-text-centered covid-calltoaction-bottom">
+            <ul class="list-logos">
+                <li><img src="{{ asset('build/images/logo-cardio-secur.svg') }}" height="60" width="auto"></li>
+                <li><img src="{{ asset('build/images/logo-bambuslife.svg') }}" height="60" width="auto"></li>
+            </ul>
+            <a class="button is-primary is-rounded is-medium" href="{{ path('prod_scientific_studies') }}">Ver estudios científicos realizados</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block footer %}
+{{ include('components/footer.html.twig') }}
+{% endblock %}

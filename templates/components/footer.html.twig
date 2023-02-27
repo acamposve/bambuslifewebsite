@@ -1,0 +1,47 @@
+<footer class="footer">
+    <div class="container">
+        <div class="columns">
+            <div class="column">
+                <div class="flogo">
+                    <img src="{{ asset('build/images/logo-bambuslife-white.svg') }}" height="40" width="110">
+                </div>
+
+                <p><a href="mailto:info@bambus.life">info@bambus.life</a>
+                    <br>Bulevar España 2630, of. 301
+                    <br>CP 11300
+                    <br>Montevideo, Uruguay</p>
+            </div>
+
+            <div class="column">
+                <h4>Productos y servicios</h4>
+                <ul>
+                    <li><a href="{{ path('prod_csactive') }}">Para pacientes</a></li>
+                    <li><a href="{{ path('prod_cspro') }}">Para profesionales de salud</a></li>
+                    <li><a href="{{ path('prod_cspro_orgs') }}">Para entidades m&eacute;dicas</a></li>
+                   <!-- <li><a href="{{ path('practitioner_register') }}">Registro de M&eacute;dicos</a></li>-->
+                </ul>
+            </div>
+            <div class="column">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="{{ path('acerca') }}">Acerca</a></li>
+                    <li><a href="{{ path('privacy_policy') }}">Pol&iacute;tica de privacidad</a></li>
+                    <li><a href="{{ path('terms_use') }}">T&eacute;rminos de uso</a></li>
+                    <li><a href="{{ path('terms_conditions') }}">T&eacute;rminos y condiciones</a></li>
+                    <li><a href="{{ path('doc_conditions') }}">Condiciones para médicos</a></li>
+                    <li><a href="{{ path('hw_guarantee') }}">Garant&iacute;a de hardware</a></li>
+                </ul>
+            </div>
+            <div class="column">
+                <h4>Soporte</h4>
+                <ul>
+                    <li><a href="{{ path('prod_scientific_studies') }}">Estudios Cientificos</a></li>
+                    <li><a href="{{ path('faq') }}">Preguntas frecuentes</a></li>
+                    <li><a href="{{ path('contact_form') }}">Consulta</a></li>
+                    <li><a href="{{ path('distribuidores') }}">Representantes y Proveedores de Servicios Médicos</a></li>
+                    <li><a href="{{ path('pressreleases') }}">Noticias</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>

@@ -1,0 +1,98 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Atenci&oacute;n! | BambusLife{% endblock %}
+
+{% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+
+    <div class="columns white-box" style="margin: 10px 10% 50px 10%;">
+      <div class="column" style="text-align:center">
+        <i class="fas fa-file-medical-alt" style="margin:30px 0px;font-size:35px"></i>
+        <h1 class="title is-4">Electrocardiograma de referencia</h1>
+        {% if missingECGs == 1 %}
+          <h2 class="subtitle is-4">No ha seleccionado el an&aacute;lisis de su primer electrocardiograma de referencia</h2>
+        {% else %}
+          <h2 class="subtitle is-4">A {{missingECGs}} CardioSecur Active no ha seleccionado el an&aacute;lisis de su primer electrocardiograma de referencia</h2>
+        {% endif %}
+        <p>
+          El electrocardiograma de referencia es usado por <strong>CardioSecur Active</strong> para el control y 
+          seguimiento de los posteriores an&aacute;lisis. Al detectar cambios estos son analizados y 
+          mostrados como alertas de gravedad media o cr&iacute;tica. 
+        </p>
+        <br>
+        <p>
+          Para esto, es recomendado realizar un diagn&oacute;stico del primer electrocardiograma de referencia 
+          por un cardi&oacute;logo para asegurar que el mismo se observa sin detalles.
+        </p>
+        <br>
+        <p>
+          BambusLife ofrece este diagn&oacute;stico a trav&eacute;s de nuestros cardi&oacute;logos, 
+          quienes una vez recibido el primer electro, realizan un diagn&oacute;stico que es entregado a 
+          usted por correo electr&oacute;nico y nos aseguramos de que todo est&eacute; correcto para el 
+          uso &oacute;ptimo del dispositivo.
+        </p>
+        {# <p style="margin: 30px 0px;">
+          <label class="checkbox" style="font-weight: 600;">
+            <input type="checkbox" id="completeEcgInter" name="completeEcgInter" >
+            Incluir interpretaci&oacute;n en los CardioSecur Active faltantes
+          </label>
+        </p> #}
+        
+        <div class="columns is-multiline" style="padding: 20px 0px;">
+          <div class="column is-12">
+            <a href="{{ path('checkout_userinfo') }}?wpa=1&waa=1&ad=1" 
+                class="button is-primary"  style="height:auto">
+              <div>
+                <div style="font-weight: 600;font-size: 110%;">
+                  Agregar interpretaciones
+                </div>
+                <div style="font-size: 90%">
+                  a dispositivos faltantes
+                </div>
+                <div style="font-size: 90%">
+                  (se agregar&aacute;n {{totalEcgCurrency}} {{totalEcgPrice}} al carrito)
+                </div>
+              </div>
+              <span class="icon">
+                <i class="fas fa-chevron-right"></i>
+              </span>
+            </a>
+          </div>
+          <div class="column is-12">
+            <a href="{{ path('checkout_userinfo') }}?wpa=1&waa=1&ad=0" class="button is-text">
+              <span>Continuar sin agregar</span>
+              <span class="icon">
+                <i class="fas fa-chevron-right"></i>
+              </span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    {# <div class="columns " style="padding: 20px;">
+      <div class="column is-8 is-offset-2">
+        <div class="control" style="text-align: right;">
+          <a href="{{ path('checkout_userinfo') }}?wpa=1&waa=1" class="button is-primary" id="btnContinue" name="btnContinue">
+            <span>Continuar</span>
+            <span class="icon">
+              <i class="fas fa-chevron-right"></i>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div> #}
+
+</div>
+
+{% endblock %}
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

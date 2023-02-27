@@ -1,0 +1,142 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mis observaciones | BambusLife{% endblock %}
+
+{% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+{% endblock %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {{ encore_entry_link_tags('observation-list') }}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('observation-list') }}
+{% endblock %}
+
+{% block body %}
+
+<div class="container white-box" style="min-height: 600px;padding:10px">
+
+  {# ERROR MSG #}
+  {% if error_msg is defined and error_msg != NULL %}
+    <div class="columns is-8" style="">
+      <div class="column">
+        <article class="message is-danger">
+          <div class="message-body">
+            {{ error_msg | raw }}
+          </div>
+        </article>
+      </div>
+    </div>
+  {% else %}
+    <h3 style="margin-top: 20px;" class="subtitle is-3">Mis electrocardiogramas</h3>
+    <p style="margin-bottom: 20px;">
+      Estos son sus estudios de electrocardiogramas realizados. Puede ver el detalles de los mismos y solicitar y ver informes de diagnóstico.
+    </p>
+    <div style="max-width:700px;margin:0 auto">
+      <div class="columns is-hidden-mobile" style="border-bottom: 1px solid #E5E5E5">
+        <div class="column is-3-desktop is-3-tablet is-12-mobile"></div>
+        <div class="column is-2-desktop is-2-tablet is-12-mobile has-text-centered">Estado</div>
+        <div class="column is-3-desktop is-3-tablet is-12-mobile has-text-centered">Fecha de realizado</div>
+        <div class="column is-4-desktop is-4-tablet is-12-mobile"></div>
+      </div>
+      <div class="obs-list">
+        {% for observation in observations %}
+          <div class="columns is-multiline is-mobile" style="border-bottom: 1px solid #E5E5E5;">
+            <div class="column is-3-desktop is-3-tablet is-8-mobile ">
+              <div>
+                {{observation.type}} 
+                <span style="font-size: 13px;line-height: 15px;color: #999;"> #{{observation.id}} </span>
+              </div>
+              {# <div style="font-style: italic;">{{observation.hasDiagnostic?"( Diagnosticado) ":""}}</div> #}
+            </div>
+            <div class="column is-2-desktop is-2-tablet is-4-mobile has-text-centered">
+              {% if observation.autoeval == 'HIGH' %}
+                <div class="obs-status obs-status-red"></div>
+              {% elseif observation.autoeval == 'LOW' %}
+                <div class="obs-status obs-status-yellow"></div>
+              {% else %}
+                <div class="obs-status obs-status-green"></div>
+              {% endif %}
+              {# <div>{{observation.autoeval=='HIGH'?'ROJO':(observation.autoeval=='LOW'?'AMARILLO':'VERDE')}}</div> #}
+            </div>
+            <div class="column is-3-desktop is-5-tablet is-6-mobile">
+              <div>
+                <div>
+                  <span class="is-hidden-desktop">Realizado </span>
+                  {{observation.niceDate}}
+                </div>
+                {% if observation.niceDiagCreatedDate is defined and observation.niceDiagCreatedDate != NULL %}
+                  <div style="font-size: 14px;line-height: 18px;color: #999;">
+                    Informe realizado {{observation.niceDiagCreatedDate}}
+                  </div>
+                {% elseif observation.serviceRequestDate is defined and observation.serviceRequestDate != NULL %}
+                  <div style="font-size: 14px;line-height: 18px;color: #999;">
+                    Informe solicitado {{observation.niceServiceRequestDate}}
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+            <div class="column is-4-desktop  is-2-tablet is-12-mobile" style="align-self: center;text-align: right;">
+              {% if observation.coding == 'LOINC' and observation.code == '11524-6' %}
+                <a class="button is-text" href="{{ path('observationPdf', {obsId: observation.id, dl: 0}) }}" style="margin-left:10px;font-size: 13px;">
+                  <span>VER PDF</span>
+                  <span class="icon">
+                    <i class="far fa-eye"></i>
+                  </span>
+                </a>
+                {# 
+                !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                !!!!!!!!! TEMPORARY DISABLED !!!!!!!!
+                !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                 #}
+                {% if false %}
+                  {% if not observation.hasDiagnostic and (observation.serviceRequestDate is not defined or observation.serviceRequestDate == NULL) %}
+                    <a class="button is-text" href="{{ path('requestDiagRep', {obsId:observation.id}) }}" style="font-size: 13px;">
+                      <span>SOLICITAR INFORME</span>
+                      <span class="icon">
+                        <i class="fas fa-file-medical-alt"></i>
+                      </span>
+                    </a>
+                  {% endif %}
+                {% endif %}
+                {% if observation.hasDiagnostic %}
+                  <a class="button is-text" href="{{ path('diagnosticReport', {obId:observation.id}) }}" style="font-size: 13px;">
+                    <span>VER INFORME</span>
+                    <span class="icon">
+                      <i class="fas fa-file-medical-alt"></i>
+                    </span>
+                  </a>
+                {% endif %}
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+
+  {# Back #}
+  <div class="columns is-8" style="padding: 20px 20px 100px 20px;">
+    <div class="column">
+      <div class="control">
+        <a class="button is-white" href="{{ path('profile') }}">
+          <span class="icon">
+            <i class="fas fa-chevron-left"></i>
+          </span>
+          <span>Volver</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}

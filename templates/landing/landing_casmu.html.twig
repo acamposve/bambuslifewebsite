@@ -1,0 +1,226 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sorteo Casmu | BambusLife{% endblock %}
+
+{% block header %}
+  {{ include('components/header.html.twig') }}
+  {{ include('components/captcha.html.twig') }}
+{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+{{ encore_entry_link_tags('landing-casmu') }}
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+{{ encore_entry_script_tags('landing-casmu') }}
+{% endblock %}
+
+{% block body %}
+
+<div id="landing-casmu-content" class="container">
+  <div class="columns">
+    <div class="column">
+      <div style="display: flex;flex-direction: column;align-items: center;margin:50px 10px 10px 10px">
+        <img src="{{ asset('build/images/home/casmu.png') }}" style="margin: 0px 0px 50px 0px;width: 200px;height: 52px;">
+        <div style="display: flex;flex-direction: column;align-items: center;margin: 0px 0px 30px 0px;">
+          <img src="{{ asset('build/images/home/sdc2021-3.png') }}" width="100" height="100">
+          <strong>SEMANA DEL CORAZÓN</strong>
+          <div>24 al 30 de setiembre</div>
+        </div>
+
+        <h1 class="title">Sorteo</h1>
+        <h2 class="subtitle has-text-centered" >6 socios CASMU recibirán TeleAsistencia Cardiológica en domicilio</h2>
+        <div>Durante 6 meses</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="columns" style="max-width: 600px;margin: 0px auto;">
+    {% if flagForm == 0 %}
+      <div class="column ">
+        <div style="text-align:center">
+          <h2 class="subtitle" style="margin-top:50px;">Ingrese los datos para participar del sorteo</h2>
+        </div>
+        <form name="sorteoForm" id="sorteoForm" method="post" action="{{ path('landing_casmu_post') }}" style="padding: 40px 20px;">
+          
+          {% if error %}
+            <article class="message is-danger">
+              <div class="message-body">
+                {{ error }}
+              </div>
+            </article>
+          {% endif %}
+            
+          <div class="field">
+            <label class="label">Nombre completo</label>
+            <div class="control">
+              <input class="input " type="text"  value=""
+                      name="name" id="name" required
+                      placeholder="Ingrese su nombre completo" >
+            </div>
+            <div class="messages"></div>
+          </div>
+
+          <div class="field">
+            <label class="label">Nro de cédula</label>
+            <div class="control">
+              <input class="input " type="text"  value=""
+                      name="nrosocio" id="nrosocio" required
+                      placeholder="Ingrese su número de cédula" >
+            </div>
+            <div class="messages"></div>
+          </div>
+
+          <div class="field">
+            <label class="label">Tel&eacute;fono</label>
+            <div class="control">
+              <input class="input " type="tel"  value=""
+                      name="phone" id="phone" required
+                      placeholder="Ingrese su numero de telefono" >
+            </div>
+            <div class="messages"></div>
+          </div>
+
+          <div class="field">
+            <label class="label">Email</label>
+            <div class="control">
+              <input class="input" type="email" 
+                      name="email" id="email" required
+                      placeholder="Ingrese su email" >
+            </div>
+            <div class="messages"></div>
+          </div>
+
+          <div class="field" >
+            <p class="control" style="text-align:center">
+              <button class="button is-info" type="submit" id="btnSend" name="btnSend">
+                Participar del sorteo
+              </button>
+            </p>
+          </div>
+
+          <input type="hidden" name="recaptcha_response" id="recaptchaResponse">
+
+        </form>
+      </div>
+    {% endif %}
+
+    {% if flagForm == 1 %}
+      <div class="column ">
+        <div style="display: flex;flex-direction: column;padding: 10px;align-items: center;">
+          <span class="icon" style="font-size: 60px;color: #4caf50;">
+            <i class="far fa-check-circle"></i>
+          </span>
+
+          <h3 style="font-size: 24px;color: #4caf50;margin: 10px;">
+            Datos recibidos
+          </h3>
+          <div style="text-align: center;">
+            Hemos recibido sus datos y ya está participando. Suerte!
+          </div>
+        </div>
+      </div>
+    {% endif %}
+
+    {% if flagForm == 2 %}
+      <div class="column ">
+        <div style="display: flex;flex-direction: column;padding: 10px;align-items: center;">
+          <span class="icon" style="font-size: 60px;color: #ff5722;">
+            <i class="fas fa-times"></i>
+          </span>
+
+          <h3 style="font-size: 24px;color: #ff5722;margin: 10px;">
+            Error
+          </h3>
+          <div style="text-align: center;">
+            Ocurrió un error al intentar procesar sus datos. Por favor inténtelo más tarde.
+          </div>
+        </div>
+      </div>
+    {% endif %}
+
+    {% if flagForm == 3 %}
+      <div class="column ">
+        <div style="display: flex;flex-direction: column;padding: 10px;align-items: center;">
+          <span class="icon" style="font-size: 60px;color: #ff5722;">
+            <i class="fas fa-times"></i>
+          </span>
+
+          <h3 style="font-size: 24px;color: #ff5722;margin: 10px;">
+            Error
+          </h3>
+          <div style="text-align: center;">
+            No se pudo verificar si usted no es un robot. Por favor inténtelo de nuevo.
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="columns" style="max-width: 600px;margin: 0px auto;">
+    <div class="column">
+      <div style="display: flex;flex-direction: column;align-items: center;margin-top:50px">
+        <h2 class="title has-text-centered">Conozca más sobre CardioSecur</h1>
+        
+        <div class="more-info">
+          <h3 class="subtitle">¿Cómo se usan los equipos CardioSecur en su domicilio?</h3> 
+          <p>Conozca como se usan los equipos a través de un video explicativo</p>
+          <div style="text-align:center">
+            <a class="button is-info" href="https://www.youtube.com/watch?v=Oi0L41PYaaw">
+              <span class="icon">
+                <i class="fab fa-youtube"></i>
+              </span>
+              <span>
+              <span>Como usar CardioSecur</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="more-info">
+          <h3 class="subtitle">¿Qué dicen sobre CardioSecur?</h3> 
+          <p>Conozca los testimonios de personas</p>
+          <div style="text-align:center">
+            <a class="button is-info" href="https://www.youtube.com/watch?v=7FBLlhbw5ZM">
+              <span class="icon">
+                <i class="fab fa-youtube"></i>
+              </span>
+              <span>Ver testimonio</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="more-info">
+          <h3 class="subtitle">Saber más sobre CardioSecur Active</h3> 
+          <p>Vea más información sobre el dispositivo Active para pacientes</p>
+          <div style="text-align:center">
+            <a class="button is-info" href="https://bambus.life/uy/cardiosecur-active">
+              <span class="icon">
+                <i class="fas fa-info-circle"></i>
+              </span>
+              <span>
+              <span>Ver más información</span>
+            </a>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div style="margin: 90px 10px 40px 10px;text-align: center;">
+    <div style="font-size: 11px;color: #AAA;">
+      Este sitio est&aacute; protegido por reCAPTCHA y se aplica la
+      <a href="https://policies.google.com/privacy" style="color: #AAA;text-decoration: underline;">Pol&iacute;tica de Privacidad</a> y
+      <a href="https://policies.google.com/terms"  style="color: #AAA;text-decoration: underline;">T&eacute;rminos y Condiciones</a> de Google.
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+
+
+{% block footer %}
+{{ include('components/footer.html.twig') }}
+{% endblock %}
