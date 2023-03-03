@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sitios de registro | BambusLife{% endblock %}
+
+{% block description %}Sitios de registro | BambusLife{% endblock %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {{ encore_entry_link_tags('devices') }}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('devices') }}
+{% endblock %}
+
+{% block header %}
+  {{ render(controller('App\\Controller\\Components\\HeaderController::index')) }}
+  <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
+      integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+      crossorigin=""
+    />
+{% endblock %}
+
+{% block body %}
+
+<div class="container white-box" style="padding: 20px;max-width: 800px;">
+  <h1 class="subtitle is-3" style="margin-top: 10px;margin-bottom: 0px;">
+    Sitios de registro
+  </h1>
+  
+      <div id="map" style="width: 600px; height: 400px"></div>
+
+  </div>
+
+</div>
+ <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
+     integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
+     crossorigin=""></script>
+     <script>
+      var map = L.map("map").setView([-34.901112, -56.164532], 12);
+      L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution:
+          '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      }).addTo(map);
+      var marker_espaciotres = L.marker([-34.8947614, -56.1498746]).addTo(map);
+      var popup = marker_espaciotres.bindPopup(
+        "<b>Espaciotres</b><br />Horario: 10:00 - 18:00."
+      );
+
+      var marker_casa_fuente_del_prado = L.marker([-34.8713008, -56.1914653]).addTo(map);
+      var popup = marker_casa_fuente_del_prado.bindPopup(
+        "<b>Casa Fuente del Prado</b><br />Horario: 10:00 - 18:00."
+      );
+
+      var marker_enfoque = L.marker([-34.8900755, -56.1425343]).addTo(map);
+      var popup = marker_enfoque.bindPopup(
+        "<b>Centro deportivo integral Enfoque</b><br />Horario: 7:00 - 23:00."
+      );
+    </script>
+{% endblock %}
+
+{% block footer %}
+  {{ include('components/footer.html.twig') }}
+{% endblock %}
