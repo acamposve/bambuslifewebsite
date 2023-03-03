@@ -121,6 +121,13 @@ class ProductsController extends AbstractController {
     return $this->render('products/studies/scientific-studies.html.twig');
   }
 
+  // Devices
+  // Product Description Page
+  public function devices(){
+    return $this->render('products/devices.html.twig')
+  } 
+
+
   // Lab (TBD)
   // Product Description Page
   public function lab(){

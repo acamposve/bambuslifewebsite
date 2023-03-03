@@ -1,226 +1,226 @@
-# ======================================================= 
+# =======================================================
 # GENERAL ROUTES
-# ======================================================= 
+# =======================================================
 
 globalIndex:
-    path: /
-    controller: App\Controller\DefaultController::indexGlobal
-    options:
-        sitemap:
-            changefreq: weekly
+  path: /
+  controller: App\Controller\DefaultController::indexGlobal
+  options:
+    sitemap:
+      changefreq: weekly
 
 index:
-    path: /{_locale}
-    # defaults:
-    #     _locale: '%locale%'
-    requirements:
-        _locale: '%app.locales%'
-    controller: App\Controller\DefaultController::index
-    options:
-        sitemap:
-            changefreq: weekly
+  path: /{_locale}
+  # defaults:
+  #     _locale: '%locale%'
+  requirements:
+    _locale: "%app.locales%"
+  controller: App\Controller\DefaultController::index
+  options:
+    sitemap:
+      changefreq: weekly
 
 listLocal:
-    path: /sel-pais
-    controller: App\Controller\DefaultController::chooseCountry
+  path: /sel-pais
+  controller: App\Controller\DefaultController::chooseCountry
 
 selectLocal:
-    path: /sel-pais-sel/{_selLocal}
-    controller: App\Controller\DefaultController::changeCountry
+  path: /sel-pais-sel/{_selLocal}
+  controller: App\Controller\DefaultController::changeCountry
 
 contact_form:
-    path: /contact
-    controller: App\Controller\ContactForm::contactForm
-    methods: [GET]
-    options:
-        sitemap:
-            changefreq: weekly
+  path: /contact
+  controller: App\Controller\ContactForm::contactForm
+  methods: [GET]
+  options:
+    sitemap:
+      changefreq: weekly
 
 contact_form_post:
-    path: /contact
-    controller: App\Controller\ContactForm::contactFormPost
-    methods: [POST]
+  path: /contact
+  controller: App\Controller\ContactForm::contactFormPost
+  methods: [POST]
 
 do_fast_payment:
-    path: /dofp
-    controller: App\Controller\DefaultController::doFastPay
-    methods: [POST]
+  path: /dofp
+  controller: App\Controller\DefaultController::doFastPay
+  methods: [POST]
 
 landing_covid:
-    path: /landing_covid
-    controller: App\Controller\DefaultController::landing_covid
-    methods: [GET]
+  path: /landing_covid
+  controller: App\Controller\DefaultController::landing_covid
+  methods: [GET]
 
 landing_miecg7:
-    path: /landing_miecg7
-    controller: App\Controller\DefaultController::landing_miecg7
-    methods: [GET]
+  path: /landing_miecg7
+  controller: App\Controller\DefaultController::landing_miecg7
+  methods: [GET]
 
 landing_opciones:
-    path: /landing_opciones
-    controller: App\Controller\DefaultController::landing_opciones
-    methods: [GET]
+  path: /landing_opciones
+  controller: App\Controller\DefaultController::landing_opciones
+  methods: [GET]
 
 landing_portal_medico:
-    path: /portal_medico
-    controller: App\Controller\DefaultController::portal_medico
-    methods: [GET]
+  path: /portal_medico
+  controller: App\Controller\DefaultController::portal_medico
+  methods: [GET]
 
 landing_casmu:
-    path: /casmu
-    controller: App\Controller\DefaultController::landing_casmu
-    methods: [GET]
+  path: /casmu
+  controller: App\Controller\DefaultController::landing_casmu
+  methods: [GET]
 
 landing_casmu_post:
-    path: /casmu
-    controller: App\Controller\DefaultController::landing_casmu_post
-    methods: [POST]
+  path: /casmu
+  controller: App\Controller\DefaultController::landing_casmu_post
+  methods: [POST]
 
-# ======================================================= 
+# =======================================================
 # USER SESSION ROUTES
-# ======================================================= 
+# =======================================================
 ventanillalogin:
-    path: /ventanillalogin
-    controller: App\Controller\AuthController::ventanillalogin
-    methods: [GET]
+  path: /ventanillalogin
+  controller: App\Controller\AuthController::ventanillalogin
+  methods: [GET]
 
 doVentanillaLogin:
-    path: /ventanillalogin
-    controller: App\Controller\AuthController::ventanillaloginPost
-    methods: [POST]
+  path: /ventanillalogin
+  controller: App\Controller\AuthController::ventanillaloginPost
+  methods: [POST]
 
 login:
-    path: /login
-    controller: App\Controller\AuthController::login
-    methods: [GET]
+  path: /login
+  controller: App\Controller\AuthController::login
+  methods: [GET]
 
 doLogin:
-    path: /login
-    controller: App\Controller\AuthController::loginPost
-    methods: [POST]
+  path: /login
+  controller: App\Controller\AuthController::loginPost
+  methods: [POST]
 
 forgot_password:
-    path: /forgot-password
-    controller: App\Controller\AuthController::forgot_password
-    methods: [GET]
+  path: /forgot-password
+  controller: App\Controller\AuthController::forgot_password
+  methods: [GET]
 
 sendEmailResetPassword:
-    path: /send-email-reset-password
-    controller: App\Controller\AuthController::sendEmailResetPassword
-    methods: [POST]
+  path: /send-email-reset-password
+  controller: App\Controller\AuthController::sendEmailResetPassword
+  methods: [POST]
 
 changePassword:
-    path: /change-password
-    controller: App\Controller\AuthController::changePassword
-    methods: [POST]
+  path: /change-password
+  controller: App\Controller\AuthController::changePassword
+  methods: [POST]
 
 resetPassword:
-    path: /reset-password/{tokenData}
-    controller: App\Controller\AuthController::reset_password
-    methods: [GET]
+  path: /reset-password/{tokenData}
+  controller: App\Controller\AuthController::reset_password
+  methods: [GET]
 
 resetPassword_POST:
-    path: /reset-password/{tokenData}
-    controller: App\Controller\AuthController::reset_password_POST
-    methods: [POST]
+  path: /reset-password/{tokenData}
+  controller: App\Controller\AuthController::reset_password_POST
+  methods: [POST]
 
 logout:
-    path: /logout
-    controller: App\Controller\AuthController::logout
-    methods: [GET]
+  path: /logout
+  controller: App\Controller\AuthController::logout
+  methods: [GET]
 
 completeRegistration:
-    path: /completeregistration/{token}
-    controller: App\Controller\AuthController::getCompleteRegistration
-    methods: [GET]
+  path: /completeregistration/{token}
+  controller: App\Controller\AuthController::getCompleteRegistration
+  methods: [GET]
 
 completeRegistration_POST:
-    path: /completeregistration/{token}
-    controller: App\Controller\AuthController::postCompleteRegistration
-    methods: [POST]
+  path: /completeregistration/{token}
+  controller: App\Controller\AuthController::postCompleteRegistration
+  methods: [POST]
 
 registerPatient:
-    path: /{_locale}/register
-    defaults:
-        _locale: '%locale%'
-    requirements:
-        _locale: '%app.locales%'
-    controller: App\Controller\AuthController::patientRegistration
-    methods: [GET]
+  path: /{_locale}/register
+  defaults:
+    _locale: "%locale%"
+  requirements:
+    _locale: "%app.locales%"
+  controller: App\Controller\AuthController::patientRegistration
+  methods: [GET]
 
-# ======================================================= 
+# =======================================================
 # Profile routes
-# ======================================================= 
+# =======================================================
 
 profile:
-    path: /account
-    controller: App\Controller\Profile::profileRender
-    methods: [GET]
+  path: /account
+  controller: App\Controller\Profile::profileRender
+  methods: [GET]
 
 profile2:
-    path: /cuenta
-    controller: App\Controller\Profile::profileRender
-    methods: [GET]
+  path: /cuenta
+  controller: App\Controller\Profile::profileRender
+  methods: [GET]
 
 change_password:
-    path: /account/password
-    controller: App\Controller\Profile::changePasswordGet
-    methods: [GET]
+  path: /account/password
+  controller: App\Controller\Profile::changePasswordGet
+  methods: [GET]
 
 change_password_post:
-    path: /account/password
-    controller: App\Controller\Profile::changePasswordPost
-    methods: [POST]
+  path: /account/password
+  controller: App\Controller\Profile::changePasswordPost
+  methods: [POST]
 
 patientPractitioner:
-    path: /account/patientPractitioner
-    controller: App\Controller\Profile::patientPractitioner
-    methods: [GET]
+  path: /account/patientPractitioner
+  controller: App\Controller\Profile::patientPractitioner
+  methods: [GET]
 
 selectPatientPractitioner:
-    path: /account/selectPatientPractitioner/{practitionerId}/{orgId}
-    controller: App\Controller\Profile::selectPatientPractitioner
-    methods: [GET]
+  path: /account/selectPatientPractitioner/{practitionerId}/{orgId}
+  controller: App\Controller\Profile::selectPatientPractitioner
+  methods: [GET]
 
 removePatientPractitioner:
-    path: /account/removePatientPractitioner
-    controller: App\Controller\Profile::removePatientPractitioner
-    methods: [POST]
+  path: /account/removePatientPractitioner
+  controller: App\Controller\Profile::removePatientPractitioner
+  methods: [POST]
 
 clinicalProfile:
-    path: /account/clinical
-    controller: App\Controller\Profile::clinicalProfile
-    methods: [GET]
+  path: /account/clinical
+  controller: App\Controller\Profile::clinicalProfile
+  methods: [GET]
 
 clinicalProfilePost:
-    path: /account/clinical
-    controller: App\Controller\Profile::clinicalProfileSave
-    methods: [POST]
+  path: /account/clinical
+  controller: App\Controller\Profile::clinicalProfileSave
+  methods: [POST]
 
 infoDeviceSetup:
-    path: /infoDeviceSetup
-    controller: App\Controller\Profile::infoDeviceSetup
-    methods: [POST]
+  path: /infoDeviceSetup
+  controller: App\Controller\Profile::infoDeviceSetup
+  methods: [POST]
 
 appointments:
-    path: /account/appointments
-    controller: App\Controller\AppointmentsController::appointments
-    methods: [GET]
+  path: /account/appointments
+  controller: App\Controller\AppointmentsController::appointments
+  methods: [GET]
 
 searchResources:
-    path: /newappointment
-    controller: App\Controller\AppointmentsController::getSpecialities
-    methods: [GET]
+  path: /newappointment
+  controller: App\Controller\AppointmentsController::getSpecialities
+  methods: [GET]
 
 selectResource:
-    path: /newappointment/list
-    controller: App\Controller\AppointmentsController::getResources
-    methods: [POST]
+  path: /newappointment/list
+  controller: App\Controller\AppointmentsController::getResources
+  methods: [POST]
 
 selectAppointmentDate:
-    path: /newappointment/date/{practId}/{practRoleId}/{serviceId}/{locationId}
-    controller: App\Controller\AppointmentsController::getAvailableTime
-    methods: [GET]
+  path: /newappointment/date/{practId}/{practRoleId}/{serviceId}/{locationId}
+  controller: App\Controller\AppointmentsController::getAvailableTime
+  methods: [GET]
 
 # moveCalendar:
 #     path: /account/moveCalendar/{practId}/{date}/{move}
@@ -228,718 +228,721 @@ selectAppointmentDate:
 #     methods: [GET]
 
 selectReason:
-    path: /newappointment/reason/{date}/{slotStart}/{slotEnd}
-    controller: App\Controller\AppointmentsController::selectReason
-    methods: [GET]
+  path: /newappointment/reason/{date}/{slotStart}/{slotEnd}
+  controller: App\Controller\AppointmentsController::selectReason
+  methods: [GET]
 
 preConfirmAppointment:
-    path: /newappointment/review
-    controller: App\Controller\AppointmentsController::preConfirmAppointment
-    methods: [POST]
+  path: /newappointment/review
+  controller: App\Controller\AppointmentsController::preConfirmAppointment
+  methods: [POST]
 
 confirmAppointment:
-    path: /newappointment/confirm
-    controller: App\Controller\AppointmentsController::confirmAppointment
-    methods: [GET]
+  path: /newappointment/confirm
+  controller: App\Controller\AppointmentsController::confirmAppointment
+  methods: [GET]
 
 cancelAppointment:
-    path: /appointment/cancel/{appId}
-    controller: App\Controller\AppointmentsController::cancelAppointment
-    methods: [POST]
+  path: /appointment/cancel/{appId}
+  controller: App\Controller\AppointmentsController::cancelAppointment
+  methods: [POST]
 
 appointment:
-    path: /appointment/{appId}
-    controller: App\Controller\AppointmentsController::appointment
-    methods: [GET]
+  path: /appointment/{appId}
+  controller: App\Controller\AppointmentsController::appointment
+  methods: [GET]
 
 virtualAppointment:
-    path: /appointment/video/{appId}
-    controller: App\Controller\AppointmentsController::virtualAppointment
-    methods: [GET]
+  path: /appointment/video/{appId}
+  controller: App\Controller\AppointmentsController::virtualAppointment
+  methods: [GET]
 
-# ======================================================= 
+# =======================================================
 # Observations routes
-# ======================================================= 
+# =======================================================
 observations:
-    path: /account/observations
-    controller: App\Controller\ObservationsController::observations
-    methods: [GET]
+  path: /account/observations
+  controller: App\Controller\ObservationsController::observations
+  methods: [GET]
 
 observationPdf:
-    path: /account/observationpdf/{obsId}/{dl}
-    controller: App\Controller\ObservationsController::viewObservationPdf
-    methods: [GET]
+  path: /account/observationpdf/{obsId}/{dl}
+  controller: App\Controller\ObservationsController::viewObservationPdf
+  methods: [GET]
 
 diagnosticReport:
-    path: /account/diagnosticReport/{obId}
-    controller: App\Controller\ObservationsController::diagnosticReport
-    methods: [GET]
+  path: /account/diagnosticReport/{obId}
+  controller: App\Controller\ObservationsController::diagnosticReport
+  methods: [GET]
 
 diagnosticReportPdf:
-    path: /account/diagnosticReport/{obsId}/{dl}
-    controller: App\Controller\ObservationsController::viewDiagnosticReportPdf
-    methods: [GET]
+  path: /account/diagnosticReport/{obsId}/{dl}
+  controller: App\Controller\ObservationsController::viewDiagnosticReportPdf
+  methods: [GET]
 
 requestDiagRep:
-    path: /account/reqDiagRep/{obsId}
-    controller: App\Controller\ObservationsController::requestDiagnosticReport
-    methods: [GET]
+  path: /account/reqDiagRep/{obsId}
+  controller: App\Controller\ObservationsController::requestDiagnosticReport
+  methods: [GET]
 
 doRequestDiagRep:
-    path: /account/reqDiagRep
-    controller: App\Controller\ObservationsController::doRequestDiagnosticReport
-    methods: [POST]
+  path: /account/reqDiagRep
+  controller: App\Controller\ObservationsController::doRequestDiagnosticReport
+  methods: [POST]
 
-# ======================================================= 
+# =======================================================
 # Practitioner registrations routes
-# ======================================================= 
+# =======================================================
 
 organizationRegister:
-    path: /organizationRegister
-    controller: App\Controller\AuthController::organizationRegister
-    methods: [POST]
+  path: /organizationRegister
+  controller: App\Controller\AuthController::organizationRegister
+  methods: [POST]
 
 practitioner_register_api:
-    path: /pregister/api/{countryCode}
-    controller: App\Controller\AuthController::getCitiesByCountry
-    methods: [POST]
+  path: /pregister/api/{countryCode}
+  controller: App\Controller\AuthController::getCitiesByCountry
+  methods: [POST]
 
 practitioner_register:
-    path: /pregister
-    controller: App\Controller\AuthController::practitionerRegister
-    methods: [GET]
-    options:
-        sitemap:
-            changefreq: weekly
+  path: /pregister
+  controller: App\Controller\AuthController::practitionerRegister
+  methods: [GET]
+  options:
+    sitemap:
+      changefreq: weekly
 
 insertPractitioner:
-    path: /insertPractitioner
-    controller: App\Controller\AuthController::insertPractitioner
-    methods: [POST]
+  path: /insertPractitioner
+  controller: App\Controller\AuthController::insertPractitioner
+  methods: [POST]
 
-# ======================================================= 
+# =======================================================
 # Subscription routes
-# ======================================================= 
+# =======================================================
 
 cancel_subscription:
-    path: /account/cancel
-    controller: App\Controller\Profile::cancelSubscription
-    methods: [GET]
+  path: /account/cancel
+  controller: App\Controller\Profile::cancelSubscription
+  methods: [GET]
 
 cancel_subscription_post:
-    path: /account/cancel
-    controller: App\Controller\Profile::cancelSubscriptionPost
-    methods: [POST]
+  path: /account/cancel
+  controller: App\Controller\Profile::cancelSubscriptionPost
+  methods: [POST]
 
 subscription_config:
-    path: /account/config
-    controller: App\Controller\Profile::subscriptionConfig
-    methods: [GET]
+  path: /account/config
+  controller: App\Controller\Profile::subscriptionConfig
+  methods: [GET]
 
 subscription_config_post:
-    path: /account/config
-    controller: App\Controller\Profile::subscriptionConfigPost
-    methods: [POST]
+  path: /account/config
+  controller: App\Controller\Profile::subscriptionConfigPost
+  methods: [POST]
 
-# ======================================================= 
+# =======================================================
 # Billing routes
-# ======================================================= 
+# =======================================================
 
 billing_details:
-    path: /account/plan
-    controller: App\Controller\Profile::billingDetailsGet
-    methods: [GET]
+  path: /account/plan
+  controller: App\Controller\Profile::billingDetailsGet
+  methods: [GET]
 
 invoice_details:
-    path: /invoice/{invoiceToken}
-    controller: App\Controller\Profile::getInvoiceData
-    methods: [GET]
+  path: /invoice/{invoiceToken}
+  controller: App\Controller\Profile::getInvoiceData
+  methods: [GET]
 
 invoice_payment:
-    path: /invoice/{invoiceToken}/{sid}
-    controller: App\Controller\Profile::processInvoicePayment
-    methods: [POST]
+  path: /invoice/{invoiceToken}/{sid}
+  controller: App\Controller\Profile::processInvoicePayment
+  methods: [POST]
 
-# ======================================================= 
+# =======================================================
 # PRODUCTS ROUTES
-# ======================================================= 
+# =======================================================
 order_index:
-    path: /{_locale}/productos
-    controller: App\Controller\ProductsController::products
-    methods: [GET]
-    options:
-        sitemap:
-            changefreq: weekly
-            
+  path: /{_locale}/productos
+  controller: App\Controller\ProductsController::products
+  methods: [GET]
+  options:
+    sitemap:
+      changefreq: weekly
+
 prod_csactive:
-    path: /{_locale}/cardiosecur-active
-    defaults:
-        _locale: '%locale%'
-    requirements:
-        _locale: '%app.locales%'
-    controller: App\Controller\ProductsController::csactive
-    methods: [GET]
-    options:
-        sitemap:
-            changefreq: weekly
+  path: /{_locale}/cardiosecur-active
+  defaults:
+    _locale: "%locale%"
+  requirements:
+    _locale: "%app.locales%"
+  controller: App\Controller\ProductsController::csactive
+  methods: [GET]
+  options:
+    sitemap:
+      changefreq: weekly
 
 prod_cspro:
-    path: /{_locale}/cardiosecur-pro
-    defaults:
-        _locale: '%locale%'
-    requirements:
-        _locale: '%app.locales%'
-    controller: App\Controller\ProductsController::cspro
-    methods: [GET]
-    options:
-        sitemap: 
-            changefreq: weekly
+  path: /{_locale}/cardiosecur-pro
+  defaults:
+    _locale: "%locale%"
+  requirements:
+    _locale: "%app.locales%"
+  controller: App\Controller\ProductsController::cspro
+  methods: [GET]
+  options:
+    sitemap:
+      changefreq: weekly
 
 prod_cspro_orgs:
-    path: /{_locale}/cardiosecur-pro-active-entidades-medicas
-    defaults:
-        _locale: '%locale%'
-    requirements:
-        _locale: '%app.locales%'
-    controller: App\Controller\ProductsController::csproorgs
-    methods: [GET]
-    options:
-        sitemap: 
-            changefreq: weekly
+  path: /{_locale}/cardiosecur-pro-active-entidades-medicas
+  defaults:
+    _locale: "%locale%"
+  requirements:
+    _locale: "%app.locales%"
+  controller: App\Controller\ProductsController::csproorgs
+  methods: [GET]
+  options:
+    sitemap:
+      changefreq: weekly
 
 prod_cspro_orgs_post:
-    path: /{_locale}/cardiosecur-pro-active-entidades-medicas
-    defaults:
-        _locale: '%locale%'
-    requirements:
-        _locale: '%app.locales%'
-    controller: App\Controller\ProductsController::csproorgsPost
-    methods: [POST]
+  path: /{_locale}/cardiosecur-pro-active-entidades-medicas
+  defaults:
+    _locale: "%locale%"
+  requirements:
+    _locale: "%app.locales%"
+  controller: App\Controller\ProductsController::csproorgsPost
+  methods: [POST]
 
 prod_labs:
-    path: /{_locale}/servicios
-    defaults:
-        _locale: '%locale%'
-    requirements:
-        _locale: '%app.locales%'
-    controller: App\Controller\ProductsController::lab
-    methods: [GET]
-    options:
-        sitemap: 
-            changefreq: weekly
+  path: /{_locale}/servicios
+  defaults:
+    _locale: "%locale%"
+  requirements:
+    _locale: "%app.locales%"
+  controller: App\Controller\ProductsController::lab
+  methods: [GET]
+  options:
+    sitemap:
+      changefreq: weekly
 
 prod_receive_a_diagnosis_for_chest_pain:
-    path: /{_locale}/cardiosecur-active/reciba-diagnostico-por-dolor-pecho
-    defaults:
-        _locale: '%locale%'
-    requirements:
-        _locale: '%app.locales%'
-    controller: App\Controller\ProductsController::receiveADiagnosisForChestPain
-    methods: [GET]
-    options:
-        sitemap:
-            changefreq: weekly
-    
+  path: /{_locale}/cardiosecur-active/reciba-diagnostico-por-dolor-pecho
+  defaults:
+    _locale: "%locale%"
+  requirements:
+    _locale: "%app.locales%"
+  controller: App\Controller\ProductsController::receiveADiagnosisForChestPain
+  methods: [GET]
+  options:
+    sitemap:
+      changefreq: weekly
+
 prod_early_detection_of_symptoms_of_heart_attack:
-    path: /{_locale}/cardiosecur-active/deteccion-temprana-sintomas-ataque-cardiaco
-    defaults:
-        _locale: '%locale%'
-    requirements:
-        _locale: '%app.locales%'
-    controller: App\Controller\ProductsController::earlyDetectionOfSymptomsOfHeartAttack
-    methods: [GET]
-    options:
-        sitemap:
-            changefreq: weekly
-    
+  path: /{_locale}/cardiosecur-active/deteccion-temprana-sintomas-ataque-cardiaco
+  defaults:
+    _locale: "%locale%"
+  requirements:
+    _locale: "%app.locales%"
+  controller: App\Controller\ProductsController::earlyDetectionOfSymptomsOfHeartAttack
+  methods: [GET]
+  options:
+    sitemap:
+      changefreq: weekly
+
 prod_detection_of_cardiac_arrhythmia:
-    path: /{_locale}/cardiosecur-active/deteccion-arritmias-cardiacas
-    defaults:
-        _locale: '%locale%'
-    requirements:
-        _locale: '%app.locales%'
-    controller: App\Controller\ProductsController::detectionOfCardiacArrhythmia
-    methods: [GET]
-    options:
-        sitemap:
-            changefreq: weekly
+  path: /{_locale}/cardiosecur-active/deteccion-arritmias-cardiacas
+  defaults:
+    _locale: "%locale%"
+  requirements:
+    _locale: "%app.locales%"
+  controller: App\Controller\ProductsController::detectionOfCardiacArrhythmia
+  methods: [GET]
+  options:
+    sitemap:
+      changefreq: weekly
 
 prod_prevention:
-    path: /{_locale}/cardiosecur-active/prevencion
-    defaults:
-        _locale: '%locale%'
-    requirements:
-        _locale: '%app.locales%'
-    controller: App\Controller\ProductsController::prevention
-    methods: [GET]
-    options:
-        sitemap:
-            changefreq: weekly
+  path: /{_locale}/cardiosecur-active/prevencion
+  defaults:
+    _locale: "%locale%"
+  requirements:
+    _locale: "%app.locales%"
+  controller: App\Controller\ProductsController::prevention
+  methods: [GET]
+  options:
+    sitemap:
+      changefreq: weekly
 
 ehrexpress_landing:
-    path: /{_locale}/ehrexpress
-    defaults:
-        _locale: '%locale%'
-    requirements:
-        _locale: '%app.locales%'
-    controller: App\Controller\ProductsController::hhub
-    methods: [GET]
-    options:
-        sitemap:
-            changefreq: weekly
+  path: /{_locale}/ehrexpress
+  defaults:
+    _locale: "%locale%"
+  requirements:
+    _locale: "%app.locales%"
+  controller: App\Controller\ProductsController::hhub
+  methods: [GET]
+  options:
+    sitemap:
+      changefreq: weekly
 
 prod_scientific_studies:
-    path: /{_locale}/cardiosecur/estudios-cientificos
-    defaults:
-        _locale: '%locale%'
-    requirements:
-        _locale: '%app.locales%'
-    controller: App\Controller\ProductsController::scientificStudies
-    methods: [GET]
-    options:
-        sitemap:
-            changefreq: weekly
+  path: /{_locale}/cardiosecur/estudios-cientificos
+  defaults:
+    _locale: "%locale%"
+  requirements:
+    _locale: "%app.locales%"
+  controller: App\Controller\ProductsController::scientificStudies
+  methods: [GET]
+  options:
+    sitemap:
+      changefreq: weekly
 
 prod_accessories:
-    path: /{_locale}/accesorios
-    defaults:
-        _locale: '%locale%'
-    requirements:
-        _locale: '%app.locales%'
-    controller: App\Controller\ProductsController::accessories
-    methods: [GET]
-    options:
-        sitemap:
-            changefreq: weekly
+  path: /{_locale}/accesorios
+  defaults:
+    _locale: "%locale%"
+  requirements:
+    _locale: "%app.locales%"
+  controller: App\Controller\ProductsController::accessories
+  methods: [GET]
+  options:
+    sitemap:
+      changefreq: weekly
 
 product:
-    path: /{_locale}/prd/{prdName}/{prdCode}
-    defaults:
-        _locale: '%locale%'
-    requirements:
-        _locale: '%app.locales%'
-    controller: App\Controller\ProductsController::product
-    methods: [GET]
-    options:
-        sitemap:
-            changefreq: weekly
+  path: /{_locale}/prd/{prdName}/{prdCode}
+  defaults:
+    _locale: "%locale%"
+  requirements:
+    _locale: "%app.locales%"
+  controller: App\Controller\ProductsController::product
+  methods: [GET]
+  options:
+    sitemap:
+      changefreq: weekly
 
-# ======================================================= 
+devices:
+  path: /mapa-dispositivos
+  controller: App\Controller\ProductsController::devices
+  method: [GET]
+
+# =======================================================
 # PRODUCTS ORDER ROUTES
-# ======================================================= 
+# =======================================================
 
 order_csactive:
-    path: /{_locale}/comprar/cardiosecur-active
-    defaults:
-        _locale: '%locale%'
-    requirements:
-        _locale: '%app.locales%'
-    controller: App\Controller\OrderController::ordercsactive
-    methods: [GET]
-    options:
-        sitemap:
-            changefreq: weekly
+  path: /{_locale}/comprar/cardiosecur-active
+  defaults:
+    _locale: "%locale%"
+  requirements:
+    _locale: "%app.locales%"
+  controller: App\Controller\OrderController::ordercsactive
+  methods: [GET]
+  options:
+    sitemap:
+      changefreq: weekly
 
 order_cspro:
-    path: /{_locale}/comprar/cardiosecur-pro
-    controller: App\Controller\OrderController::ordercspro
-    methods: [GET]
-    options:
-        sitemap:
-            changefreq: weekly
+  path: /{_locale}/comprar/cardiosecur-pro
+  controller: App\Controller\OrderController::ordercspro
+  methods: [GET]
+  options:
+    sitemap:
+      changefreq: weekly
 
 cart_view:
-    path: /{_locale}/cart
-    controller: App\Controller\OrderController::cartView
-    methods: [GET]
+  path: /{_locale}/cart
+  controller: App\Controller\OrderController::cartView
+  methods: [GET]
 
 cart_add:
-    path: /{_locale}/cart/add
-    controller: App\Controller\OrderController::cartAdd
-    methods: [POST]
+  path: /{_locale}/cart/add
+  controller: App\Controller\OrderController::cartAdd
+  methods: [POST]
 
 cart_remove:
-    path: /{_locale}/cart/rem/{idx}
-    controller: App\Controller\OrderController::cartRemove
-    methods: [GET]
+  path: /{_locale}/cart/rem/{idx}
+  controller: App\Controller\OrderController::cartRemove
+  methods: [GET]
 
 order_view:
-    path: /{_locale}/orden/{orderId}
-    controller: App\Controller\OrderController::orderView
-    methods: [GET]
+  path: /{_locale}/orden/{orderId}
+  controller: App\Controller\OrderController::orderView
+  methods: [GET]
 
 purchase_view:
-    path: /{_locale}/compra/{intlOrderId}/{localOrderId}
-    defaults:
-        _locale: '%locale%'
-    requirements:
-        _locale: '%app.locales%'
-    controller: App\Controller\OrderController::purchaseView
-    methods: [GET]
+  path: /{_locale}/compra/{intlOrderId}/{localOrderId}
+  defaults:
+    _locale: "%locale%"
+  requirements:
+    _locale: "%app.locales%"
+  controller: App\Controller\OrderController::purchaseView
+  methods: [GET]
 
-# ======================================================= 
+# =======================================================
 # CHECKOUT ROUTES
-# ======================================================= 
+# =======================================================
 checkout_userinfo:
-    path: /{_locale}/checkout/userinfo
-    defaults:
-        _locale: '%locale%'
-    requirements:
-        _locale: '%app.locales%'
-    controller: App\Controller\CheckoutController::userInfo
-    methods: [GET]
+  path: /{_locale}/checkout/userinfo
+  defaults:
+    _locale: "%locale%"
+  requirements:
+    _locale: "%app.locales%"
+  controller: App\Controller\CheckoutController::userInfo
+  methods: [GET]
 
 checkout_userinfo_post:
-    path: /{_locale}/checkout/userinfo/{mode}
-    defaults:
-        _locale: '%locale%'
-    requirements:
-        _locale: '%app.locales%'
-    controller: App\Controller\CheckoutController::userInfoPost
-    methods: [POST]
+  path: /{_locale}/checkout/userinfo/{mode}
+  defaults:
+    _locale: "%locale%"
+  requirements:
+    _locale: "%app.locales%"
+  controller: App\Controller\CheckoutController::userInfoPost
+  methods: [POST]
 
 checkout_patientinfo:
-    path: /{_locale}/checkout/patientinfo
-    defaults:
-        _locale: '%locale%'
-    requirements:
-        _locale: '%app.locales%'
-    controller: App\Controller\CheckoutController::patientInfo
-    methods: [GET]
+  path: /{_locale}/checkout/patientinfo
+  defaults:
+    _locale: "%locale%"
+  requirements:
+    _locale: "%app.locales%"
+  controller: App\Controller\CheckoutController::patientInfo
+  methods: [GET]
 
 checkout_patientinfo_post:
-    path: /{_locale}/checkout/patientinfo
-    defaults:
-        _locale: '%locale%'
-    requirements:
-        _locale: '%app.locales%'
-    controller: App\Controller\CheckoutController::patientInfoPost
-    methods: [POST]
+  path: /{_locale}/checkout/patientinfo
+  defaults:
+    _locale: "%locale%"
+  requirements:
+    _locale: "%app.locales%"
+  controller: App\Controller\CheckoutController::patientInfoPost
+  methods: [POST]
 
 checkout_shipping:
-    path: /{_locale}/checkout/shippinginfo
-    defaults:
-        _locale: '%locale%'
-    requirements:
-        _locale: '%app.locales%'
-    controller: App\Controller\CheckoutController::shippingInfo
-    methods: [GET]
+  path: /{_locale}/checkout/shippinginfo
+  defaults:
+    _locale: "%locale%"
+  requirements:
+    _locale: "%app.locales%"
+  controller: App\Controller\CheckoutController::shippingInfo
+  methods: [GET]
 
 checkout_shipping_post:
-    path: /{_locale}/checkout/shippinginfo
-    defaults:
-        _locale: '%locale%'
-    requirements:
-        _locale: '%app.locales%'
-    controller: App\Controller\CheckoutController::shippingInfoPost
-    methods: [POST]
+  path: /{_locale}/checkout/shippinginfo
+  defaults:
+    _locale: "%locale%"
+  requirements:
+    _locale: "%app.locales%"
+  controller: App\Controller\CheckoutController::shippingInfoPost
+  methods: [POST]
 
 checkout_pay:
-    path: /{_locale}/checkout/paymentinfo
-    defaults:
-        _locale: '%locale%'
-    requirements:
-        _locale: '%app.locales%'
-    controller: App\Controller\CheckoutController::payInfo
-    methods: [GET]
+  path: /{_locale}/checkout/paymentinfo
+  defaults:
+    _locale: "%locale%"
+  requirements:
+    _locale: "%app.locales%"
+  controller: App\Controller\CheckoutController::payInfo
+  methods: [GET]
 
 checkout_pay_coupon:
-    path: /{_locale}/checkout/checkcouponapply
-    defaults:
-        _locale: '%locale%'
-    requirements:
-        _locale: '%app.locales%'
-    controller: App\Controller\CheckoutController::checkCoupon
-    methods: [POST]
+  path: /{_locale}/checkout/checkcouponapply
+  defaults:
+    _locale: "%locale%"
+  requirements:
+    _locale: "%app.locales%"
+  controller: App\Controller\CheckoutController::checkCoupon
+  methods: [POST]
 
 checkout_payment_post:
-    path: /{_locale}/checkout/payment/{sid}
-    defaults:
-        _locale: '%locale%'
-    requirements:
-        _locale: '%app.locales%'
-    controller: App\Controller\CheckoutController::processPayment
-    methods: [POST]
+  path: /{_locale}/checkout/payment/{sid}
+  defaults:
+    _locale: "%locale%"
+  requirements:
+    _locale: "%app.locales%"
+  controller: App\Controller\CheckoutController::processPayment
+  methods: [POST]
 
 checkout_payment_get:
-    path: /{_locale}/checkout/payment
-    requirements:
-        _locale: '%app.locales%'
-    methods: [GET]
-    defaults:
-        _locale: '%locale%'
-        _controller: FrameworkBundle:Redirect:redirect
-        route: checkout
+  path: /{_locale}/checkout/payment
+  requirements:
+    _locale: "%app.locales%"
+  methods: [GET]
+  defaults:
+    _locale: "%locale%"
+    _controller: FrameworkBundle:Redirect:redirect
+    route: checkout
 
 checkout:
-    path: /{_locale}/checkout/
-    requirements:
-        _locale: '%app.locales%'
-    defaults:
-        _locale: '%locale%'
-        _controller: FrameworkBundle:Redirect:redirect
-        route: checkout_userinfo
+  path: /{_locale}/checkout/
+  requirements:
+    _locale: "%app.locales%"
+  defaults:
+    _locale: "%locale%"
+    _controller: FrameworkBundle:Redirect:redirect
+    route: checkout_userinfo
 
 checkout_payment_simulation:
-    path: /checkout/simpayment
-    controller: App\Controller\CheckoutController::simulateProcessPayment
-    methods: [GET]
+  path: /checkout/simpayment
+  controller: App\Controller\CheckoutController::simulateProcessPayment
+  methods: [GET]
 
-# ======================================================= 
+# =======================================================
 # INVITATIONS
-# ======================================================= 
+# =======================================================
 
 acceptInvitation:
-    path: /{_locale}/acceptInvitation/{tokenId}
-    defaults:
-        _locale: '%locale%'
-    requirements:
-        _locale: '%app.locales%'
-    controller: App\Controller\InvitationsController::acceptInvitation
-    methods: [GET]
+  path: /{_locale}/acceptInvitation/{tokenId}
+  defaults:
+    _locale: "%locale%"
+  requirements:
+    _locale: "%app.locales%"
+  controller: App\Controller\InvitationsController::acceptInvitation
+  methods: [GET]
 
 inviteMember:
-    path: /{_locale}/inviteMember
-    defaults:
-        _locale: '%locale%'
-    requirements:
-        _locale: '%app.locales%'
-    controller: App\Controller\Profile::inviteMember
-    methods: [POST]
+  path: /{_locale}/inviteMember
+  defaults:
+    _locale: "%locale%"
+  requirements:
+    _locale: "%app.locales%"
+  controller: App\Controller\Profile::inviteMember
+  methods: [POST]
 
 removeMember:
-    path: /remMem/{pid}/{did}
-    defaults:
-        _locale: '%locale%'
-    requirements:
-        _locale: '%app.locales%'
-    controller: App\Controller\Profile::removeMember
+  path: /remMem/{pid}/{did}
+  defaults:
+    _locale: "%locale%"
+  requirements:
+    _locale: "%app.locales%"
+  controller: App\Controller\Profile::removeMember
 
 doAcceptInvitation:
-    path: /{_locale}/doAcceptInvitation/{tokenId}
-    defaults:
-        _locale: '%locale%'
-    requirements:
-        _locale: '%app.locales%'
-    controller: App\Controller\InvitationsController::doAcceptInvitation
-    methods: [GET]
+  path: /{_locale}/doAcceptInvitation/{tokenId}
+  defaults:
+    _locale: "%locale%"
+  requirements:
+    _locale: "%app.locales%"
+  controller: App\Controller\InvitationsController::doAcceptInvitation
+  methods: [GET]
 
-# ======================================================= 
+# =======================================================
 # LEGAL
-# ======================================================= 
+# =======================================================
 
 acerca:
-    path: /{_locale}/acerca
-    defaults:
-        _locale: '%locale%'
-    requirements:
-        _locale: '%app.locales%'
-    controller: App\Controller\LegalController::acerca
-    methods: [GET]
-    options:
-        sitemap:
-            changefreq: weekly
+  path: /{_locale}/acerca
+  defaults:
+    _locale: "%locale%"
+  requirements:
+    _locale: "%app.locales%"
+  controller: App\Controller\LegalController::acerca
+  methods: [GET]
+  options:
+    sitemap:
+      changefreq: weekly
 
 privacy_policy:
-    path: /{_locale}/privacy-policy
-    defaults:
-        _locale: '%locale%'
-    requirements:
-        _locale: '%app.locales%'
-    controller: App\Controller\LegalController::privacyPolicy
-    methods: [GET]
-    options:
-        sitemap:
-            changefreq: weekly
+  path: /{_locale}/privacy-policy
+  defaults:
+    _locale: "%locale%"
+  requirements:
+    _locale: "%app.locales%"
+  controller: App\Controller\LegalController::privacyPolicy
+  methods: [GET]
+  options:
+    sitemap:
+      changefreq: weekly
 
 global_privacy_policy:
-    path: /privacy-policy
-    defaults:
-        _locale: '%locale%'
-    requirements:
-        _locale: '%app.locales%'
-    controller: App\Controller\LegalController::_resolve_privacyPolicy
-    methods: [GET]
-    options:
-        sitemap:
-            changefreq: weekly
+  path: /privacy-policy
+  defaults:
+    _locale: "%locale%"
+  requirements:
+    _locale: "%app.locales%"
+  controller: App\Controller\LegalController::_resolve_privacyPolicy
+  methods: [GET]
+  options:
+    sitemap:
+      changefreq: weekly
 
 terms_conditions:
-    path: /{_locale}/terms-and-conditions
-    defaults:
-        _locale: '%locale%'
-    requirements:
-        _locale: '%app.locales%'
-    controller: App\Controller\LegalController::termsAndConditions
-    methods: [GET]
-    options:
-        sitemap:
-            changefreq: weekly
+  path: /{_locale}/terms-and-conditions
+  defaults:
+    _locale: "%locale%"
+  requirements:
+    _locale: "%app.locales%"
+  controller: App\Controller\LegalController::termsAndConditions
+  methods: [GET]
+  options:
+    sitemap:
+      changefreq: weekly
 
 global_terms_conditions:
-    path: /terms-and-conditions
-    defaults:
-        _locale: '%locale%'
-    requirements:
-        _locale: '%app.locales%'
-    controller: App\Controller\LegalController::_resolve_termsAndConditions
-    methods: [GET]
-    options:
-        sitemap:
-            changefreq: weekly
+  path: /terms-and-conditions
+  defaults:
+    _locale: "%locale%"
+  requirements:
+    _locale: "%app.locales%"
+  controller: App\Controller\LegalController::_resolve_termsAndConditions
+  methods: [GET]
+  options:
+    sitemap:
+      changefreq: weekly
 
 doc_conditions:
-    path: /{_locale}/physicians-conditions
-    defaults:
-        _locale: '%locale%'
-    requirements:
-        _locale: '%app.locales%'
-    controller: App\Controller\LegalController::docConditions
-    methods: [GET]
-    options:
-        sitemap:
-            changefreq: weekly
+  path: /{_locale}/physicians-conditions
+  defaults:
+    _locale: "%locale%"
+  requirements:
+    _locale: "%app.locales%"
+  controller: App\Controller\LegalController::docConditions
+  methods: [GET]
+  options:
+    sitemap:
+      changefreq: weekly
 
 terms_use:
-    path: /{_locale}/terms-of-use
-    defaults:
-        _locale: '%locale%'
-    requirements:
-        _locale: '%app.locales%'
-    controller: App\Controller\LegalController::termsOfUse
-    methods: [GET]
-    options:
-        sitemap:
-            changefreq: weekly
+  path: /{_locale}/terms-of-use
+  defaults:
+    _locale: "%locale%"
+  requirements:
+    _locale: "%app.locales%"
+  controller: App\Controller\LegalController::termsOfUse
+  methods: [GET]
+  options:
+    sitemap:
+      changefreq: weekly
 
 global_terms_use:
-    path: /terms-of-use
-    defaults:
-        _locale: '%locale%'
-    requirements:
-        _locale: '%app.locales%'
-    controller: App\Controller\LegalController::_resolve_termsOfUse
-    methods: [GET]
-    options:
-        sitemap:
-            changefreq: weekly
+  path: /terms-of-use
+  defaults:
+    _locale: "%locale%"
+  requirements:
+    _locale: "%app.locales%"
+  controller: App\Controller\LegalController::_resolve_termsOfUse
+  methods: [GET]
+  options:
+    sitemap:
+      changefreq: weekly
 
 faq:
-    path: /{_locale}/faq
-    defaults:
-        _locale: '%locale%'
-    requirements:
-        _locale: '%app.locales%'
-    controller: App\Controller\LegalController::faq
-    methods: [GET]
-    options:
-        sitemap:
-            changefreq: weekly
+  path: /{_locale}/faq
+  defaults:
+    _locale: "%locale%"
+  requirements:
+    _locale: "%app.locales%"
+  controller: App\Controller\LegalController::faq
+  methods: [GET]
+  options:
+    sitemap:
+      changefreq: weekly
 
 hw_guarantee:
-    path: /garantia-hardware
-    defaults:
-        _locale: '%locale%'
-    requirements:
-        _locale: '%app.locales%'
-    controller: App\Controller\LegalController::hwGuarantee
-    methods: [GET]
+  path: /garantia-hardware
+  defaults:
+    _locale: "%locale%"
+  requirements:
+    _locale: "%app.locales%"
+  controller: App\Controller\LegalController::hwGuarantee
+  methods: [GET]
 
 hw_guarantee_loc:
-    path: /{_locale}/garantia-hardware
-    defaults:
-        _locale: '%locale%'
-    requirements:
-        _locale: '%app.locales%'
-    controller: App\Controller\LegalController::hwGuaranteeLoc
-    methods: [GET]
+  path: /{_locale}/garantia-hardware
+  defaults:
+    _locale: "%locale%"
+  requirements:
+    _locale: "%app.locales%"
+  controller: App\Controller\LegalController::hwGuaranteeLoc
+  methods: [GET]
 
 distribuidores:
-    path: /distribuidores
-    defaults:
-        _locale: '%locale%'
-    requirements:
-        _locale: '%app.locales%'
-    controller: App\Controller\DefaultController::resellers
-    methods: [GET]
+  path: /distribuidores
+  defaults:
+    _locale: "%locale%"
+  requirements:
+    _locale: "%app.locales%"
+  controller: App\Controller\DefaultController::resellers
+  methods: [GET]
 
-# ======================================================= 
+# =======================================================
 # PRESSRELEASES
-# ======================================================= 
+# =======================================================
 
 pressreleases:
-    path: /prensa
-    defaults:
-        _locale: '%locale%'
-    requirements:
-        _locale: '%app.locales%'
-    controller: App\Controller\PressReleasesController::index
-    methods: [GET]
+  path: /prensa
+  defaults:
+    _locale: "%locale%"
+  requirements:
+    _locale: "%app.locales%"
+  controller: App\Controller\PressReleasesController::index
+  methods: [GET]
 
 press_secnacdep:
-    path: /prensa/secretaria-nacional-deporte-recibio-aparatos-prevenir-problemas-cardiacos
-    defaults:
-        _locale: '%locale%'
-    requirements:
-        _locale: '%app.locales%'
-    controller: App\Controller\PressReleasesController::secnacdep
-    methods: [GET]
+  path: /prensa/secretaria-nacional-deporte-recibio-aparatos-prevenir-problemas-cardiacos
+  defaults:
+    _locale: "%locale%"
+  requirements:
+    _locale: "%app.locales%"
+  controller: App\Controller\PressReleasesController::secnacdep
+  methods: [GET]
 
 press_webinar:
-    path: /prensa/webinar-de-telemedicina-cardiológica
-    defaults:
-        _locale: '%locale%'
-    requirements:
-        _locale: '%app.locales%'
-    controller: App\Controller\PressReleasesController::webinar
-    methods: [GET]
+  path: /prensa/webinar-de-telemedicina-cardiológica
+  defaults:
+    _locale: "%locale%"
+  requirements:
+    _locale: "%app.locales%"
+  controller: App\Controller\PressReleasesController::webinar
+  methods: [GET]
 
-# ======================================================= 
+# =======================================================
 # API
-# ======================================================= 
+# =======================================================
 api_getCitiesByCountry:
-    path: /api/getCitiesByCountry/{countryCode}
-    controller: App\Controller\AuthController::getCitiesByCountry
-    methods: [GET]
+  path: /api/getCitiesByCountry/{countryCode}
+  controller: App\Controller\AuthController::getCitiesByCountry
+  methods: [GET]
 
 api_searchCity:
-    path: /api/searchCity/{countryCode}/{term}
-    controller: App\Controller\AuthController::searchCity
-    methods: [GET]
+  path: /api/searchCity/{countryCode}/{term}
+  controller: App\Controller\AuthController::searchCity
+  methods: [GET]
 
 api_checkEmail:
-    path: /api/user/checkEmail
-    controller: App\Controller\AuthController::checkEmail
-    methods: [GET]
-    
+  path: /api/user/checkEmail
+  controller: App\Controller\AuthController::checkEmail
+  methods: [GET]
+
 api_login:
-    path: /api/user/login
-    controller: App\Controller\AuthController::loginAjax
-    methods: [POST]
+  path: /api/user/login
+  controller: App\Controller\AuthController::loginAjax
+  methods: [POST]
 
 api_ventanillalogin:
-    path: /api/user/ventanillalogin
-    controller: App\Controller\AuthController::ventanillaloginAjax
-    methods: [POST]
+  path: /api/user/ventanillalogin
+  controller: App\Controller\AuthController::ventanillaloginAjax
+  methods: [POST]
 
 api_register:
-    path: /api/user/register
-    controller: App\Controller\AuthController::registerAjax
-    methods: [POST]
+  path: /api/user/register
+  controller: App\Controller\AuthController::registerAjax
+  methods: [POST]
 
 api_getFamilyPlanData:
-    path: /api/getFamilyPlanData
-    controller: App\Controller\Profile::getFamilyPlanData
-    methods: [GET]
+  path: /api/getFamilyPlanData
+  controller: App\Controller\Profile::getFamilyPlanData
+  methods: [GET]
 
-
-
-# ======================================================= 
+# =======================================================
 # SYSTEM
-# ======================================================= 
+# =======================================================
 _errors:
-    resource: '@TwigBundle/Resources/config/routing/errors.xml'
-    prefix:   /_error
+  resource: "@TwigBundle/Resources/config/routing/errors.xml"
+  prefix: /_error
 
 presta_sitemap:
-    resource: "@PrestaSitemapBundle/Resources/config/routing.yml"
+  resource: "@PrestaSitemapBundle/Resources/config/routing.yml"
